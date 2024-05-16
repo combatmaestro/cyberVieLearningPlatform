@@ -1,0 +1,14 @@
+.mainContainer {
+  background: white;
+  background-image: url("../Images/ProfileBack2.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+@media only screen and (max-width: 420px) {
+  .mainContainer {
+    padding-bottom: 50px;
+  }
+}

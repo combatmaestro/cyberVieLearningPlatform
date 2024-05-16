@@ -1,0 +1,15 @@
+.sidebar-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: stretch;
+  min-height: 100vh;
+  font-weight: normal;
+
+  margin-top: 0;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  background: #232f3e;
+}

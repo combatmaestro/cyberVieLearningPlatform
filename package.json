@@ -1,0 +1,31 @@
+{
+  "name": "cybervie-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "SET NODE_ENV=DEVELOPMENT& nodemon server/index.js",
+    "prod": "SET NODE_ENV=PRODUCTION& nodemon server/index.js",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false && npm install --prefix client && npm run build --prefix client",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.26.2",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "google-auth-library": "^7.1.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.13",
+    "nodemailer": "^6.6.3",
+    "razorpay": "^2.0.6",
+    "suneditor": "^2.41.2",
+    "suneditor-react": "^3.1.2"
+  }
+}
