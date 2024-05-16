@@ -23,6 +23,7 @@ import {
 } from '../constants/userConstants'
 import axios from 'axios'
 
+const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
 // function getCookie(cookieName) {
 //   // Split the cookie string into individual cookies
 //   const cookies = document.cookie.split(';');
@@ -83,7 +84,7 @@ export const userGoogleLogin = (info) => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'POST',
-      url: '/user/authenticate',
+      url: `${backendUrl}/user/authenticate`,
       data: {
         token: info.credential,
       },
