@@ -15,7 +15,7 @@ import {
 } from "../constants/moduleConstants";
 
 
-
+const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
 function getCookie(cookieName) {
   // Split the cookie string into individual cookies
   const cookies = document.cookie.split(';');
@@ -67,7 +67,7 @@ export const getAllModules = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: "GET",
-      url: "/module/getall",
+      url: `${backendUrl}/module/getall`,
     });
     dispatch({
       type: GET_MODULE_SUCCESS,
