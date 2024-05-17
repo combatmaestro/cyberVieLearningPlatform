@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   ADMIN_TOPIC_REQUEST,
   ADMIN_TOPIC_SUCCESS,
@@ -29,8 +30,6 @@ if(localStorage.getItem("token")){
   )
 }
 
-
-import axios from 'axios'
 
 export const getAdminTopic = (id) => async (dispatch) => {
   dispatch({

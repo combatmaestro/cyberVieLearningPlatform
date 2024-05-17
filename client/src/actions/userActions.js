@@ -1,3 +1,4 @@
+import axios from 'axios'
 import {
   USER_REFRESH_FAILURE,
   USER_REFRESH_REQUEST,
@@ -21,7 +22,7 @@ import {
   EDIT_USER_SUCCESS,
   EDIT_USER_FAILURE,
 } from '../constants/userConstants'
-import axios from 'axios'
+
 
 if(localStorage.getItem("token")){
   axios.interceptors.request.use(
