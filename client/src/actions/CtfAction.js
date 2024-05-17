@@ -11,6 +11,20 @@ import {
   EDIT_CTF_SUCCESS,
 } from '../constants/CtfConstants'
 
+if(localStorage.getItem("token")){
+  axios.interceptors.request.use(
+    config => {
+      const accessToken = localStorage.getItem("token");
+      config.headers.authorization = `Bearer ${accessToken}`;
+      return config;
+    },
+    error =>{
+      return Promise.reject(error);
+    }
+  )
+}
+
+
 export const getAdminCtf = (id) => async (dispatch) => {
   dispatch({
     type: ADMIN_CTF_REQUEST,

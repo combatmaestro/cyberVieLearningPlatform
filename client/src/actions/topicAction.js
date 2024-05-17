@@ -16,6 +16,20 @@ import {
   ADMIN_UPDATE_CONTENT_FAILURE,
 } from '../constants/topicConstants'
 
+if(localStorage.getItem("token")){
+  axios.interceptors.request.use(
+    config => {
+      const accessToken = localStorage.getItem("token");
+      config.headers.authorization = `Bearer ${accessToken}`;
+      return config;
+    },
+    error =>{
+      return Promise.reject(error);
+    }
+  )
+}
+
+
 import axios from 'axios'
 
 export const getAdminTopic = (id) => async (dispatch) => {

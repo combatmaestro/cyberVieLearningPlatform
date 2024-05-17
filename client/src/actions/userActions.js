@@ -23,41 +23,22 @@ import {
 } from '../constants/userConstants'
 import axios from 'axios'
 
-const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
-// function getCookie(cookieName) {
-//   // Split the cookie string into individual cookies
-//   const cookies = document.cookie.split(';');
-  
-//   // Loop through each cookie to find the one with the specified name
-//   for (let i = 0; i < cookies.length; i++) {
-//     let cookie = cookies[i];
-    
-//     // Remove leading spaces (if any)
-//     while (cookie.charAt(0) === ' ') {
-//       cookie = cookie.substring(1);
-//     }
-    
-//     // Check if this cookie has the specified name
-//     if (cookie.indexOf(cookieName + '=') === 0) {
-//       // Return the value of the cookie
-//       return cookie.substring(cookieName.length + 1, cookie.length);
-//     }
-//   }
-  
-//   // If the cookie with the specified name is not found, return null
-//   return null;
-// }
+if(localStorage.getItem("token")){
+  axios.interceptors.request.use(
+    config => {
+      const accessToken = localStorage.getItem("token");
+      config.headers.authorization = `Bearer ${accessToken}`;
+      return config;
+    },
+    error =>{
+      return Promise.reject(error);
+    }
+  )
+}
 
-// const accessToken = getCookie('cybervie');
-// axios.interceptors.request.use(
-//   config => {
-//     config.headers.authorization = `Bearer ${accessToken}`;
-//     return config;
-//   },
-//   error =>{
-//     return Promise.reject(error);
-//   }
-// )
+
+const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
+
 const userGoogleLoginRequest = () => {
   return {
     type: USER_SIGNIN_REQUEST,
