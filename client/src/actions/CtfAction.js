@@ -24,6 +24,7 @@ if(localStorage.getItem("token")){
   )
 }
 
+const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
 
 export const getAdminCtf = (id) => async (dispatch) => {
   dispatch({
@@ -33,7 +34,7 @@ export const getAdminCtf = (id) => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `/topic/admin/getctfs?id=${id}`,
+      url: `${backendUrl}/topic/admin/getctfs?id=${id}`,
     })
     dispatch({
       type: ADMIN_CTF_SUCCESS,
@@ -60,7 +61,7 @@ export const addNewCtf = (id, info) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post(`/ctf/admin/seed?id=${id}`, info, config)
+    const { data } = await axios.post(`${backendUrl}/ctf/admin/seed?id=${id}`, info, config)
     dispatch({
       type: ADD_CTF_SUCCESS,
       payload: data.data,
@@ -92,7 +93,7 @@ export const editCurrentCtf = (id, info) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.put(`/ctf/admin/update?id=${id}`, info, config)
+    const { data } = await axios.put(`${backendUrl}/ctf/admin/update?id=${id}`, info, config)
     dispatch({
       type: EDIT_CTF_SUCCESS,
       payload: data.data,

@@ -30,6 +30,8 @@ if(localStorage.getItem("token")){
   )
 }
 
+const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
+
 
 export const getAdminTopic = (id) => async (dispatch) => {
   dispatch({
@@ -39,7 +41,7 @@ export const getAdminTopic = (id) => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `/module/admin/details?id=${id}`,
+      url: `${backendUrl}/module/admin/details?id=${id}`,
     })
     // console.log("daa", data);
     dispatch({
@@ -69,7 +71,7 @@ export const addNewTopic = (id, info) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      `/topic/admin/seed?id=${id}`,
+      `${backendUrl}/topic/admin/seed?id=${id}`,
       info,
       config
     )
@@ -105,7 +107,7 @@ export const editCurrentTopic = (id, info) => async (dispatch) => {
     }
 
     const { data } = await axios.put(
-      `/topic/admin/update?id=${id}`,
+      `${backendUrl}/topic/admin/update?id=${id}`,
       info,
       config
     )
@@ -133,7 +135,7 @@ export const getContentTopic = (id) => async (dispatch) => {
   })
 
   try {
-    const { data } = await axios.get(`/topic/admin/getcontent?id=${id}`)
+    const { data } = await axios.get(`${backendUrl}/topic/admin/getcontent?id=${id}`)
     // console.log(data.data);
     dispatch({
       type: ADMIN_GET_CONTENT_SUCCESS,
@@ -161,7 +163,7 @@ export const updateContent = (id, info) => async (dispatch) => {
     }
 
     const { data } = await axios.post(
-      `/topic/admin/content?id=${id}`,
+      `${backendUrl}/topic/admin/content?id=${id}`,
       info,
       config
     )

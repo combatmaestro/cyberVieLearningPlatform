@@ -86,7 +86,7 @@ export const getModule = (id) => async (dispatch) => {
   try {
     const { data } = await axios({
       method: "GET",
-      url: `/module/details?id=${id}`,
+      url: `${backendUrl}/module/details?id=${id}`,
     });
     dispatch({
       type: GET_SPECIFIC_MODULE_SUCCESS,
@@ -116,7 +116,7 @@ export const editCurrentModule = (id, info) => async (dispatch) => {
     };
 
     const { data } = await axios.put(
-      `/module/admin/update?id=${id}`,
+      `${backendUrl}/module/admin/update?id=${id}`,
       info,
       config
     );

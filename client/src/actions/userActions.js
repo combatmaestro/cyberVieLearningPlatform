@@ -111,7 +111,7 @@ export const userRefresh = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: '/user/getDetails',
+      url: `${backendUrl}/user/getDetails`,
     })
 
     dispatch(userRefreshSuccess(data))
@@ -130,7 +130,7 @@ export const userSignout = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: '/user/signout',
+      url: `${backendUrl}/user/signout`,
     })
 
     dispatch({
@@ -211,7 +211,7 @@ export const adminGetAllUsers = () => async (dispatch) => {
   try {
     const res = await axios({
       method: 'get',
-      url: '/user/admin/allUsers',
+      url: `${backendUrl}/user/admin/allUsers`,
     })
     // console.log('get all users', res)
     dispatch({
@@ -235,7 +235,7 @@ export const editCertainUser = (id, data) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `/user/admin/editUser?id=${id}`,
+      url: `${backendUrl}/user/admin/editUser?id=${id}`,
       data,
       headers: {
         'Content-Type': 'multipart/form-data',
