@@ -15,7 +15,7 @@ function RenderQuestion({ ctf, addProgress }) {
   const [answer, setAnswer] = useState("");
   const [answerErrorText, setAnswerErrorText] = useState("");
   const [openSuccess, setOpenSuccess] = useState(false);
-
+  const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
   useEffect(() => {
     if (responses.indexOf(ctf._id) > -1) {
       setCompleted(true);
@@ -34,7 +34,7 @@ function RenderQuestion({ ctf, addProgress }) {
       setShowBackdrop(true);
       axios({
         method: "POST",
-        url: "/ctf/submit",
+        url: `${backendUrl}/ctf/submit`,
         data: {
           moduleId: moduleData._id,
           questionId: ctf._id,
