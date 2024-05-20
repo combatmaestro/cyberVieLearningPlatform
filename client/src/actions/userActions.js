@@ -183,7 +183,7 @@ export const getLeaderBoard = (page) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post('/user/leaderboard', { page }, config)
+    const { data } = await axios.post(`${backendUrl}/user/leaderboard`, { page }, config)
     // console.log(data)
     dispatch({
       type: LEADERBOARD_SUCCESS,
