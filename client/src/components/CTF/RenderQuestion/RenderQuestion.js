@@ -30,7 +30,7 @@ function RenderQuestion({ ctf, addProgress }) {
   };
 
   const submitHandler = () => {
-    if (answer.toLowerCase.localeCompare(ctf.answer.toLowerCase) === 0) {
+    if (answer.toLowerCase().localeCompare(ctf.answer.toLowerCase()) === 0) {
       setShowBackdrop(true);
       axios({
         method: "POST",
