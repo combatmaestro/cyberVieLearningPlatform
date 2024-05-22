@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 
 const sendEmail = async (options) => {
+  console.log("Sending email")  
   try {
     let transporter = nodemailer.createTransport({
       service: "gmail",
@@ -15,12 +16,12 @@ const sendEmail = async (options) => {
         pass:"hwjb crva uika ounm"
       },
     });
-    transporter.on("token", (token) => {
-      console.log("A new access token was generated");
-      console.log("User: %s", token.user);
-      console.log("Access Token: %s", token.accessToken);
-      console.log("Expires: %s", new Date(token.expires));
-    });
+    // transporter.on("token", (token) => {
+    //   console.log("A new access token was generated");
+    //   console.log("User: %s", token.user);
+    //   console.log("Access Token: %s", token.accessToken);
+    //   console.log("Expires: %s", new Date(token.expires));
+    // });
     // setup e-mail data with unicode symbols
     let mailOptions = {
       from: "adarshsahu2510@gmail.com", // sender address
