@@ -7,8 +7,8 @@ const sendEmail = async (options) => {
       auth: {
         type: "OAuth2",
         clientId:
-          "229588821244-jc51apbo25fvtkpddp45o1d430u3k5dv.apps.googleusercontent.com",
-        clientSecret: "D44cH5YCDQaPv63kwmYzph2s",
+          "257899612719-9jsfnkbb5i5kgp6r34754vdlmjcdi6jb.apps.googleusercontent.com",
+        clientSecret: "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",
       },
     });
     transporter.on("token", (token) => {
@@ -19,22 +19,22 @@ const sendEmail = async (options) => {
     });
     // setup e-mail data with unicode symbols
     let mailOptions = {
-      from: "learn@cybervie.com", // sender address
+      from: "adarshsahu2510@gmail.com", // sender address
       to: options.email, // list of receivers
       subject: options.subject, // Subject line
       html: options.html, // html body
 
       auth: {
-        user: "learn@cybervie.com",
+        user: "adarshsahu2510@gmail.com",
         refreshToken:
-          "1//04aafO51Zx_mRCgYIARAAGAQSNwF-L9IrYnuk-Fq1bhLw_KgFKZFoXkL6HNWibntxPRayC884Xr17XyJBQn2PGT2oFmjN4TninCs",
+          "1//0g5ONv2b7i1amCgYIARAAGBASNwF-L9IrpT3FrnTdQd-uEW0ndlnKEYMTMrILiqpKPe6-wi4EMHbvsTCqQBvP_nfOYaUAEpF60Zc",
         accessToken:
-          "ya29.a0ARrdaM-2tHqdcfwvJOJ-EFsIezLtDEupS-9gR3EaD3CXYza0Lz6ubULqnbF_GWBsX2IFgLNwsm2gkqLcTNCx9C7rVV-nV9otb_lU-YTa79tpkRg6Wp0WCYeDYFMJ1Q_xeB60jcysfK3nRGbKU8ZtYVQCFpij",
+          "ya29.a0AXooCguRU1PAtWQ-w6kq3Y3tnNahwftsDnyRyH8zD1-IhNG1y-sBqwLmrSH_Ztzf8KwyfM1pr6U85WMZJXxFMX-5ZgYDjxGHC9OLKQPJciAInjNRQKlWiNCRNw4yhnbKXiwpba4QrPoOUAW-y5AkNiwWRdQx6vhgCAyGaCgYKAR0SARMSFQHGX2Milcwj1-L1JKfmbRwg6d_CNQ0171",
         expires: 1494388182480,
       },
     };
 
-    //  transport.sendMail(message);
+     transport.sendMail(message);
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {

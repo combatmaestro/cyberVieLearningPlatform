@@ -30,18 +30,18 @@ module.exports.authenticate = async (req, res, next) => {
       });
       user.avatar.url = picture;
       await user.save();
-      // await sendEmail({
-      //   //sending welcome email
-      //   email: email,
-      //   html: welcomeTemplate,
-      //   subject: "Welcome to Cybervie",
-      // });
-      // await sendEmail({
-      //   //sending admin email
-      //   email: "venkatesh.mainani@cybervie.com",
-      //   html: `${name} with email ${email} has joined the portal today`,
-      //   subject: "New Registration in the portal",
-      // });
+      await sendEmail({
+        //sending welcome email
+        email: email,
+        html: welcomeTemplate,
+        subject: "Welcome to Cybervie",
+      });
+      await sendEmail({
+        //sending admin email
+        email: "adarshsahu2510@gmail.com",
+        html: `${name} with email ${email} has joined the portal today`,
+        subject: "New Registration in the portal",
+      });
       await sendToken(user, 200, res);
     }
   } catch (error) {
