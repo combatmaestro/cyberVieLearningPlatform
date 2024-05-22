@@ -34,7 +34,7 @@ const sendEmail = async (options) => {
       },
     };
 
-     transport.sendMail(message);
+    //  transporter.sendMail(message);
 
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
