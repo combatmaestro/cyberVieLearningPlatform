@@ -132,7 +132,7 @@ export const userSignout = () => async (dispatch) => {
       method: 'GET',
       url: `${backendUrl}/user/signout`,
     })
-
+    localStorage.removeItem("token");
     dispatch({
       type: USER_SIGNOUT_SUCCESS,
       payload: data.data,
