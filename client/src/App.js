@@ -23,6 +23,7 @@ import Failure from './components/Transaction/Failure/Failure'
 import AdminOrder from './Admin/Order/AdminOrder'
 import ReactGA from 'react-ga'
 import NoMatchPage from './components/NoMatchPage/NoMatchPage'
+import Placement from './components/Placement/placement'
 
 function App() {
   const dispatch = useDispatch()
@@ -34,7 +35,7 @@ function App() {
     ReactGA.pageview(window.location.pathname + window.location.search)
 
     //to refresh user
-    dispatch(userRefresh())
+    // dispatch(userRefresh())
   }, [dispatch])
   return (
     <>
@@ -49,6 +50,7 @@ function App() {
                 <Route exact path='/' component={LandingPage} />
                 <ProtectedRoute exact path='/profile' component={ProfilePage} />
                 <ProtectedRoute exact path='/home' component={Home} />
+                <ProtectedRoute exact path='/placements' component={Placement} />
                 <ProtectedRoute exact path='/module/:id' component={Module} />
                 <ProtectedRoute
                   exact

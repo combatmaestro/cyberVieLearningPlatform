@@ -243,9 +243,11 @@ export default function Header() {
                     <Typography className={classes.headerTitle} variant="h6">
                       Certificates
                     </Typography>
-                    <Typography className={classes.headerTitle} variant="h6">
-                      Placement
-                    </Typography>
+                    <Link to="/placements">
+                      <Typography className={classes.headerTitle} variant="h6">
+                        Placement
+                      </Typography>
+                    </Link>
                     <IconButton
                       aria-label="account of current user"
                       aria-controls="menu-appbar"

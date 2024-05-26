@@ -1,0 +1,32 @@
+.educations-header {
+  font-size: 40px;
+  line-height: 1.1;
+  font-family: "Noto Sans JP";
+  text-align: center;
+}
+
+.degree-card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.degree-card {
+  display: flex;
+  width: 45%; /* Adjust the width to fit two cards in a row */
+  margin: 2.5%; /* Add margin for spacing */
+  justify-content: center;
+  align-items: center;
+}
+@media (max-width: 1380px) {
+  .educations-header {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 768px) {
+  .educations-header {
+    font-size: 30px;
+  }
+}
