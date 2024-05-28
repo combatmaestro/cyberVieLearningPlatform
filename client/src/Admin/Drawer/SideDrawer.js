@@ -102,6 +102,18 @@ const Sidebar = () => {
                 </Box>
               </Link>
             </List>
+            <List className={classes.list}>
+              <Link to="/admin/batches">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Batches</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
           </>
         )}
       </div>

@@ -232,6 +232,11 @@ export default function Header() {
               {!isMobile ? (
                 <>
                   <Box display="flex" alignItems="center">
+                  <Link to="/batch">
+                      <Typography className={classes.headerTitle} variant="h6">
+                        Batches
+                      </Typography>
+                    </Link>
                     <a
                       href="https://www.cybervie.com/cyber-security-training-program/"
                       target="_blank"

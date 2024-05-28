@@ -24,6 +24,8 @@ import AdminOrder from './Admin/Order/AdminOrder'
 import ReactGA from 'react-ga'
 import NoMatchPage from './components/NoMatchPage/NoMatchPage'
 import Placement from './components/Placement/placement'
+import Batch from './Admin/Batches/Batch'
+import BatchComp from './components/Batches/batchComp'
 
 function App() {
   const dispatch = useDispatch()
@@ -35,7 +37,7 @@ function App() {
     ReactGA.pageview(window.location.pathname + window.location.search)
 
     //to refresh user
-    dispatch(userRefresh())
+    // dispatch(userRefresh())
   }, [dispatch])
   return (
     <>
@@ -49,6 +51,7 @@ function App() {
               <Switch>
                 <Route exact path='/' component={LandingPage} />
                 <ProtectedRoute exact path='/profile' component={ProfilePage} />
+                <ProtectedRoute exact path='/batch' component={BatchComp} />
                 <ProtectedRoute exact path='/home' component={Home} />
                 <ProtectedRoute exact path='/placements' component={Placement} />
                 <ProtectedRoute exact path='/module/:id' component={Module} />
@@ -84,6 +87,13 @@ function App() {
                   component={AdminUsers}
                   roles={['admin']}
                 />
+                <ProtectedRoute
+                  exact
+                  path='/admin/batches'
+                  component={Batch}
+                  roles={['admin']}
+                />
+                
                 <ProtectedRoute
                   exact
                   path='/leaderboard'

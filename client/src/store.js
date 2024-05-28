@@ -15,17 +15,19 @@ import {
   getTopicContentReducer,
 } from "./reducers/topicReducer";
 import { ctfReducer } from "./reducers/ctfReducer";
-
 import { orderReducer } from "./reducers/orderReduer";
+import { getAllBatchReducer } from "./reducers/batchReducer"; // Import the batch reducer
 
 const initialState = {
   user: {},
   modules: {},
+  batches: {}
 };
 
 const reducer = combineReducers({
   user: userReducer,
   modules: getAllModuleReducer,
+  batches: getAllBatchReducer, // Add batch reducer here
   module: getSpecificModuleReducer,
   topics: getAdminTopicReducer,
   content: getTopicContentReducer,
@@ -40,4 +42,5 @@ const store = createStore(
   initialState,
   composeWithDevTools(applyMiddleware(thunk))
 );
+
 export default store;
