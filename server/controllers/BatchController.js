@@ -58,12 +58,11 @@ module.exports.enroll = catchAsyncErrors(async (req, res, next) => {
         subject: "Course Enrollment Request",
         html: `${studentName} with phone number ${phoneNumber} has requested to enroll for course ${module.title} today.`,
       };
-  
+      console.log("Email sent0");
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log("error is-> " + error);
         } else {
-          console.log("Email sent successfully");
           console.log("Email sent: " + info.response);
         }
       });
