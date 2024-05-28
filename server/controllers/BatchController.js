@@ -1,6 +1,7 @@
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const ErrorHandler = require("../utils/errorHandler");
 const Batch = require("../models/Batch");
+const nodemailer = require("nodemailer");
 const sendEmail = require("../utils/sendEmail");
 //->  /batch/admin/save
 module.exports.save = catchAsyncErrors(async (req, res, next) => {
@@ -35,13 +36,42 @@ module.exports.enroll = catchAsyncErrors(async (req, res, next) => {
 
   try {
     console.log("Sending email...");
-    await sendEmail({
-      email: "adarshsahu2510@gmail.com",
-      html: `${studentName} with phone number ${phoneNumber} has requested to enroll for course ${module.title} today.`,
-      subject: "Course Enrollment Request",
-    });
-
-    console.log("Email sent successfully");
+    // await sendEmail({
+    //   email: "adarshsahu2510@gmail.com",
+    //   html: `${studentName} with phone number ${phoneNumber} has requested to enroll for course ${module.title} today.`,
+    //   subject: "Course Enrollment Request",
+    // });
+    try {
+      console.log("Sending email...");
+  
+      let transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: "adarshsahu2510@gmail.com",
+          pass: "hwjb crva uika ounm"
+        },
+      });
+  
+      let mailOptions = {
+        from: "adarshsahu2510@gmail.com",
+        to: "adarshsahu2510@gmail.com", 
+        subject: "Course Enrollment Request",
+        html: `${studentName} with phone number ${phoneNumber} has requested to enroll for course ${module.title} today.`,
+      };
+  
+      transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+          console.log("error is-> " + error);
+        } else {
+          console.log("Email sent successfully");
+          console.log("Email sent: " + info.response);
+        }
+      });
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      return next(new ErrorHandler("Failed to send enrollment email", 500));
+    }
+    
     return res.status(200).json({
       success: true,
       message: "Enrollment request created",
