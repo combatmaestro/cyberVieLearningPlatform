@@ -76,7 +76,7 @@ function BatchList() {
               "Content-Type": "application/json",
             },
           };
-          const { data } = await axios.post(`/batch/admin/studentEnroll`, requestData, config);
+          const { data } = await axios.post(`${backendUrl}/batch/admin/studentEnroll`, requestData, config);
           setRequestSubmitted(true);
     //   if (data.ok) {
     //     console.log("Request successful:", requestData);
