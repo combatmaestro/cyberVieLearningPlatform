@@ -34,6 +34,8 @@ function BatchList() {
   const [studentName, setStudentName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [reqSubmitted, setRequestSubmitted] = useState(false);
+  const user = useSelector((state) => state.user)
+  const { data } = user
   useEffect(() => {
     dispatch(getAllBatches());
   }, [dispatch]);
@@ -64,6 +66,7 @@ function BatchList() {
     const requestData = {
       studentName,
       phoneNumber,
+      email:data.email,
       module: selectedModule,
     };
 
@@ -73,7 +76,7 @@ function BatchList() {
               "Content-Type": "application/json",
             },
           };
-          const { data } = await axios.post(`${backendUrl}/batch/admin/studentEnroll`, requestData, config);
+          const { data } = await axios.post(`/batch/admin/studentEnroll`, requestData, config);
           setRequestSubmitted(true);
     //   if (data.ok) {
     //     console.log("Request successful:", requestData);

@@ -26,7 +26,7 @@ module.exports.getAllBatches = catchAsyncErrors(async (req, res, next) => {
 
 
 module.exports.enroll = catchAsyncErrors(async (req, res, next) => {
-  const { studentName, phoneNumber, module } = req.body;
+  const { studentName, phoneNumber, module , email } = req.body;
   console.log("Enroll request received:", req.body);
 
   if (!studentName || !phoneNumber || !module) {
@@ -35,12 +35,6 @@ module.exports.enroll = catchAsyncErrors(async (req, res, next) => {
   }
 
   try {
-    console.log("Sending email...");
-    // await sendEmail({
-    //   email: "adarshsahu2510@gmail.com",
-    //   html: `${studentName} with phone number ${phoneNumber} has requested to enroll for course ${module.title} today.`,
-    //   subject: "Course Enrollment Request",
-    // });
     try {
       console.log("Sending email...");
   
@@ -56,7 +50,7 @@ module.exports.enroll = catchAsyncErrors(async (req, res, next) => {
         from: "adarshsahu2510@gmail.com",
         to: "adarshsahu2510@gmail.com", 
         subject: "Course Enrollment Request",
-        html: `${studentName} with phone number ${phoneNumber} has requested to enroll for course ${module.title} today.`,
+        html: `${studentName} with phone number ${phoneNumber} and ${email} has requested to enroll for course ${module.title} today.`,
       };
       console.log("Email sent0");
       transporter.sendMail(mailOptions, function (error, info) {
