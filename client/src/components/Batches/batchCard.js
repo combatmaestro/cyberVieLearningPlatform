@@ -78,6 +78,7 @@ function BatchList() {
           };
           const { data } = await axios.post(`${backendUrl}/batch/admin/studentEnroll`, requestData, config);
           setRequestSubmitted(true);
+          
     //   if (data.ok) {
     //     console.log("Request successful:", requestData);
         
