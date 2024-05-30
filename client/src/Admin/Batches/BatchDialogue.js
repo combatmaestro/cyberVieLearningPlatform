@@ -57,7 +57,7 @@ function BatchDialogue(props) {
       className={classes.root}
     >
       <DialogTitle id="form-dialog-title">
-        {module ? 'Edit Module' : 'Create Module'}
+        {module ? 'Edit Batch' : 'Create Batch'}
       </DialogTitle>
       <DialogContent>
         <form

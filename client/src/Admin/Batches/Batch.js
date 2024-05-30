@@ -154,7 +154,7 @@ const Batch = () => {
             startDate: new Date(module.startDate).toLocaleDateString(),
             endDate: new Date(module.endDate).toLocaleDateString(),
             fee: module.fee,
-            discoutedFee:module.discountFee,
+            discoutedFee:module.discountedFee,
             actions: (
               <>
                 <Tooltip title='Edit' placement='top' arrow>
