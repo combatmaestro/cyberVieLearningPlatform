@@ -14,13 +14,13 @@ router.post(
   );
   router.post(
     "/admin/studentEnroll",
-    isAuthenticatedUser,
+    // isAuthenticatedUser,
     moduleController.enroll
   );
 
 
   router.get("/admin/getall", 
-  isAuthenticatedUser,
+  // isAuthenticatedUser,
    moduleController.getAllBatches);
 
   module.exports = router;

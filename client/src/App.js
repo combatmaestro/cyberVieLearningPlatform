@@ -51,7 +51,7 @@ function App() {
               <Switch>
                 <Route exact path='/' component={LandingPage} />
                 <ProtectedRoute exact path='/profile' component={ProfilePage} />
-                <ProtectedRoute exact path='/batch' component={BatchComp} />
+                <Route exact path='/batch' component={BatchComp} />
                 <ProtectedRoute exact path='/home' component={Home} />
                 <ProtectedRoute exact path='/placements' component={Placement} />
                 <ProtectedRoute exact path='/module/:id' component={Module} />
