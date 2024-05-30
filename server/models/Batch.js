@@ -21,6 +21,10 @@ const moduleSchema = new mongoose.Schema({
   fee: {
     type: String,
     default: 'free',
+  },
+  discountedFee: {
+    type: String,
+    default: 'free',
   }
 
 });

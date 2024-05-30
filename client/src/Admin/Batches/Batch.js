@@ -65,7 +65,7 @@ const Batch = () => {
   const handleClose = () => {
     setOpen(false)
   }
-  const submitHandler = async (e, title, description, startDate, endDate, courseFee) => {
+  const submitHandler = async (e, title, description, startDate, endDate, courseFee , discountFee) => {
     e.preventDefault()
     setOpen(false) //closing modal
     // console.log(title, description, radioValue, checked)
@@ -94,6 +94,7 @@ const Batch = () => {
     formData.set('startDate', startDate);
     formData.set('endDate', endDate);
     formData.set('fee', courseFee);
+    formData.set('discountedFee', discountFee);
       const { success } = await dispatch(addNewBatch(formData))
       if (success) {
         setMessage('Batch created Successfully')
@@ -113,11 +114,11 @@ const Batch = () => {
               field: 'title',
               sort: 'asc',
             },
-            {
-              label: 'Description',
-              field: 'description',
-              sort: 'asc',
-            },
+            // {
+            //   label: 'Description',
+            //   field: 'description',
+            //   sort: 'asc',
+            // },
             {
               label: 'Start Date',
               field: 'startDate',
@@ -131,6 +132,11 @@ const Batch = () => {
             {
               label: 'Fee',
               field: 'fee',
+              sort: 'asc',
+            },
+            {
+              label: 'Discounted Fee',
+              field: 'discountedFee',
               sort: 'asc',
             },
             {
@@ -148,6 +154,7 @@ const Batch = () => {
             startDate: new Date(module.startDate).toLocaleDateString(),
             endDate: new Date(module.endDate).toLocaleDateString(),
             fee: module.fee,
+            discoutedFee:module.discountFee,
             actions: (
               <>
                 <Tooltip title='Edit' placement='top' arrow>

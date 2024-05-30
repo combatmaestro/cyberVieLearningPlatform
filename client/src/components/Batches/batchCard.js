@@ -15,6 +15,7 @@ import ModuleListLoader from "../ModulesList/ModuleListLoader";
 import { useStyles } from "./style";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import ErrorBar from '../../Admin/SnackBar/ErrorBar'
 // const useDialogStyles = makeStyles((theme) => ({
 //     dialogContentText: {
 //       whiteSpace: 'pre-wrap',  // Preserve whitespace and wrap long text
@@ -33,7 +34,10 @@ function BatchList() {
   const [selectedModule, setSelectedModule] = useState(null);
   const [studentName, setStudentName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [reqSubmitted, setRequestSubmitted] = useState(false);
+  const [openFailure, setOpenFailure] = useState(false);
+  const [message, setMessage] = useState('')
   const user = useSelector((state) => state.user)
   const { data } = user
   useEffect(() => {
@@ -58,15 +62,46 @@ function BatchList() {
     setSelectedModule(null);
     setStudentName("");
     setPhoneNumber("");
+    setEmail("")
     setRequestSubmitted(false);
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const phoneRegex = /^\d{10}$/;
+    return phoneRegex.test(phoneNumber);
+  };
+
+  const validateName = (name) => {
+    const nameRegex = /^[A-Za-z\s]+$/;
+    return nameRegex.test(name);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!validateName(studentName)) {
+        setMessage("Please enter a valid name (letters and spaces only).");
+        return;
+      }
+  
+      if (!validatePhoneNumber(phoneNumber)) {
+        setMessage("Please enter a valid 10-digit phone number.");
+        return;
+      }
+  
+      if (!validateEmail(email)) {
+        setMessage("Please enter a valid email address.");
+        return;
+      }
+  
     const requestData = {
       studentName,
       phoneNumber,
-      email:data.email,
+      email:email,
       module: selectedModule,
     };
 
@@ -78,7 +113,7 @@ function BatchList() {
           };
           const { data } = await axios.post(`${backendUrl}/batch/admin/studentEnroll`, requestData, config);
           setRequestSubmitted(true);
-          
+
     //   if (data.ok) {
     //     console.log("Request successful:", requestData);
         
@@ -90,14 +125,24 @@ function BatchList() {
     }
   };
 
+  const handleCloseBar = (event, reason) => {
+    setOpenFailure(false)
+  }
+
   if (loading && !error) return <ModuleListLoader />;
   return (
+    <>
+    <ErrorBar
+        openFailure={openFailure}
+        message={message}
+        handleClose={handleCloseBar}
+      />
     <div className={classes.root}>
       {moduleData.map((module) => (
         <div
           key={module._id}
           className={classes.module}
-          style={{ height: "260px" }}
+          style={{ height: "290px" }}
         >
           <div className={classes.titleBold}>{module.title}</div>
           <div className={classes.description}>{module.description}</div>
@@ -108,6 +153,9 @@ function BatchList() {
             End Date : {formatDate(module.endDate)}
           </div>
           <div className={classes.description}>Course Fee : ₹ {module.fee}</div>
+          <div className={classes.description}>
+            Discounted Fee : <del>₹ {module.fee}</del> <span>₹ {module.discountedFee}</span>
+          </div>
           <br />
           <div className={classes.button}>
             <Button variant="outlined" onClick={() => handleOpen(module)}>
@@ -144,6 +192,15 @@ function BatchList() {
                 onChange={(e) => setStudentName(e.target.value)}
               />
               <TextField
+                autoFocus
+                margin="dense"
+                label="Email"
+                type="text"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
                 margin="dense"
                 label="Phone Number"
                 type="tel"
@@ -172,6 +229,7 @@ function BatchList() {
         </DialogActions>
       </Dialog>
     </div>
+    </>
   );
 }
 

@@ -16,7 +16,7 @@ module.exports.save = catchAsyncErrors(async (req, res, next) => {
 });
 module.exports.getAllBatches = catchAsyncErrors(async (req, res, next) => {
   
-  const modules = await Batch.find({}).select('title description startDate endDate fee')
+  const modules = await Batch.find({}).select('title description startDate endDate fee discountedFee')
 
   return res.status(200).json({
     success: true,

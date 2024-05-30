@@ -44,7 +44,10 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: 250,
     lineHeight: '28px',
     fontFamily: 'Noto Sans JP',
-
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    
     [theme.breakpoints.down(830)]: {
       fontSize: 18,
       lineHeight: '25px',

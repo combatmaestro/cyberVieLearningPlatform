@@ -27,6 +27,7 @@ function BatchDialogue(props) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
   const [courseFee, setCourseFee] = useState('');
+  const [discountFee,setDiscountFee] = useState('');
 
   useEffect(() => {
     if (module) {
@@ -36,6 +37,7 @@ function BatchDialogue(props) {
       setStartDate(module.startDate || '');
       setEndDate(module.endDate || '');
       setCourseFee(module.fee || '');
+      setDiscountFee(module.discountFee || '');
     } else {
       setChecked(false);
       setTitle('');
@@ -43,6 +45,7 @@ function BatchDialogue(props) {
       setStartDate('');
       setEndDate('');
       setCourseFee('');
+      setDiscountFee('');
     }
   }, [open, module]);
 
@@ -60,7 +63,7 @@ function BatchDialogue(props) {
         <form
           id="module-form"
           onSubmit={(e) =>
-            submitHandler(e, title, description, startDate, endDate, courseFee, checked)
+            submitHandler(e, title, description, startDate, endDate, courseFee,discountFee, checked)
           }
         >
           <TextField
@@ -118,7 +121,21 @@ function BatchDialogue(props) {
             InputLabelProps={{
               shrink: true,
             }}
+
             onChange={(e) => setCourseFee(e.target.value)}
+          />
+          <TextField
+            name="discountFee"
+            label="Discount Fee"
+            type="text"
+            fullWidth
+            value={discountFee}
+            className={classes.dateLabel}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            
+            onChange={(e) => setDiscountFee(e.target.value)}
           />
         </form>
       </DialogContent>
