@@ -114,11 +114,6 @@ const Batch = () => {
               field: 'title',
               sort: 'asc',
             },
-            // {
-            //   label: 'Description',
-            //   field: 'description',
-            //   sort: 'asc',
-            // },
             {
               label: 'Start Date',
               field: 'startDate',
@@ -154,7 +149,7 @@ const Batch = () => {
             startDate: new Date(module.startDate).toLocaleDateString(),
             endDate: new Date(module.endDate).toLocaleDateString(),
             fee: module.fee,
-            discoutedFee:module.discountedFee,
+            discountedFee:module.discountedFee,
             actions: (
               <>
                 <Tooltip title='Edit' placement='top' arrow>
