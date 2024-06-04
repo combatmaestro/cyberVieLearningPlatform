@@ -26,6 +26,8 @@ import NoMatchPage from './components/NoMatchPage/NoMatchPage'
 import Placement from './components/Placement/placement'
 import Batch from './Admin/Batches/Batch'
 import BatchComp from './components/Batches/batchComp'
+import Progress from './components/Progress/Progress'
+import TrackStudent from './Admin/Tracking/trackStudent'
 
 function App() {
   const dispatch = useDispatch()
@@ -62,6 +64,11 @@ function App() {
                 />
                 <ProtectedRoute
                   exact
+                  path='/progress'
+                  component={Progress}
+                />
+                <ProtectedRoute
+                  exact
                   path='/transactionStatus/success'
                   component={Success}
                 />
@@ -93,7 +100,12 @@ function App() {
                   component={Batch}
                   roles={['admin']}
                 />
-                
+                 <ProtectedRoute
+                  exact
+                  path='/admin/StudentProgress'
+                  component={TrackStudent}
+                  roles={['admin']}
+                />
                 <ProtectedRoute
                   exact
                   path='/leaderboard'

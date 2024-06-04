@@ -24,6 +24,8 @@ router.get(
   moduleController.getTopicDetails
 );
 
+router.post("/allDetails", moduleController.getModuleDetails)
+
 router.put(
   "/admin/update",
   isAuthenticatedUser,

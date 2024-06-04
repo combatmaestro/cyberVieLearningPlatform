@@ -85,7 +85,7 @@ function AdminModules() {
       formData.set('description', description)
       formData.set('type', radioValue)
       formData.set('hidden', checked)
-
+      formData.set('batch_id','6659efd036b23d000948aa5c')
       const { success } = await dispatch(
         editCurrentModule(editModule._id, formData)
       )

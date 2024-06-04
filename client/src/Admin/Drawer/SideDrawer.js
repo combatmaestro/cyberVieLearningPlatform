@@ -114,6 +114,18 @@ const Sidebar = () => {
                 </Box>
               </Link>
             </List>
+            <List className={classes.list}>
+              <Link to="/admin/StudentProgress">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Tracking</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
           </>
         )}
       </div>

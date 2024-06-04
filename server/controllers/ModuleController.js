@@ -6,7 +6,7 @@ const ErrorHandler = require('../utils/errorHandler')
 
 module.exports.getAllModule = catchAsyncErrors(async (req, res, next) => {
   console.log(req)
-  const modules = await Module.find({}).select('title description type hidden')
+  const modules = await Module.find({hidden: false}).select('title description type hidden')
 
   return res.status(200).json({
     success: true,
@@ -28,6 +28,8 @@ module.exports.getDetails = catchAsyncErrors(async (req, res, next) => {
       },
     },
   })
+
+  console.log("user",req.user)
 
   if (!module) {
     return next(new ErrorHandler('Module not found', 404))
@@ -109,3 +111,56 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
     data: module,
   })
 })
+
+// /allDetails
+module.exports.getModuleDetails = catchAsyncErrors(async (req, res, next) => {
+
+  console.log("getModuleDetails function is called",req);
+  // const moduleId = req.body.id;
+  const modules = await Module.find({hidden: false}).select('title description type hidden')
+  let allModulesData = []
+  for(mod of modules) {
+    const moduleId = mod._id;
+    const module = await Module.findById(moduleId)
+    .populate({
+      path: 'topic',
+      match: { hidden: false },
+      populate: {
+        path: 'ctf',
+        match: { hidden: false },
+        options: {
+          sort: {
+            sno: 1,
+          },
+        },
+      },
+    })
+  
+    if (!module) {
+      return next(new ErrorHandler('Module not found', 404));
+    }
+  
+    let totalQuestions = 0;
+    module.topic.forEach((topic) => {
+      totalQuestions += topic.ctf.length;
+    });
+    console.log("user!------------------------------------>",module.title,totalQuestions)
+  
+    const allResponses = await User.findById(req.body.user._id).select('responses')
+    const responsesId = allResponses.responses.get(moduleId)
+    const responses = await Responses.findById(responsesId)
+    const totalResponses = responses ? responses.responses.length : [];
+    let responseBody = {
+      moduleTitle: module.title,
+      totalQuestions: totalQuestions,
+      totalResponses : totalResponses
+    }
+    allModulesData.push(responseBody)
+
+  }
+  
+  return res.status(200).json({
+    success: true,
+    allModulesData
+  });
+});

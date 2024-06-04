@@ -3,6 +3,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const Batch = require("../models/Batch");
 const nodemailer = require("nodemailer");
 const sendEmail = require("../utils/sendEmail");
+
 //->  /batch/admin/save
 module.exports.save = catchAsyncErrors(async (req, res, next) => {
   console.log("req1111111111111111111111111",req);
@@ -24,6 +25,30 @@ module.exports.getAllBatches = catchAsyncErrors(async (req, res, next) => {
   })
 });
 
+module.exports.batchUpdate = catchAsyncErrors(async (req, res, next) => {
+
+
+  const newBatchData = {
+    title: req.body.title,
+    description: req.body.description,
+    startDate: req.body.startDate,
+    endDate: req.body.endDate,
+    fee: req.body.fee,
+    discountedFee: req.body.discountedFee
+  }
+
+  const module = await Batch.findByIdAndUpdate(req.query.id, newBatchData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  })
+
+  return res.status(200).json({
+    success: true,
+    message: 'Batch updated Success',
+    data: module,
+  })
+})
 
 module.exports.enroll = catchAsyncErrors(async (req, res, next) => {
   const { studentName, phoneNumber, module , email } = req.body;

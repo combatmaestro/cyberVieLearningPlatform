@@ -18,6 +18,12 @@ router.post(
     moduleController.enroll
   );
 
+  router.put(
+    "/admin/update",
+    isAuthenticatedUser,
+    authorizeRoles("admin", "teacher"),
+    moduleController.batchUpdate
+  );
 
   router.get("/admin/getall", 
   // isAuthenticatedUser,

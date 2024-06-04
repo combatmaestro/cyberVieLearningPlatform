@@ -196,6 +196,14 @@ export default function Header() {
           </ListItemIcon>
           <ListItemText>My Certificates</ListItemText>
         </ListItem>
+        <Link to="/progress">
+          <ListItem button>
+            <ListItemIcon>
+              <TableChartIcon />
+            </ListItemIcon>
+            <ListItemText>My Progress</ListItemText>
+          </ListItem>
+        </Link>
         <ListItem button>
           <ListItemIcon>
             <WorkIcon />

@@ -12,7 +12,7 @@ import BatchDialogue from "./BatchDialogue";
 import SuccessBar from '../SnackBar/SuccessBar'
 import ErrorBar from '../SnackBar/ErrorBar'
 import Loader from '../../components/Loader/Loader'
-import { addNewBatch,getAllBatches } from '../../actions/moduleAction';
+import { addNewBatch,getAllBatches ,editBatchModule} from '../../actions/moduleAction';
 const useStyles = makeStyles((theme) => ({
   root: {},
   create: {
@@ -48,13 +48,13 @@ const Batch = () => {
   }, [])
  
   const editModuleHandler = (module) => {
-    // setEditModule(module)
-    // setOpen(true)
+    setEditBatch(module)
+    setOpen(true)
   }
   const handleCloseBar = (event, reason) => {
-    // if (reason === 'clickaway') {
-    //   return
-    // }
+    if (reason === 'clickaway') {
+      return
+    }
     setOpenSuccess(false)
     setOpenFailure(false)
   }
@@ -69,40 +69,40 @@ const Batch = () => {
     e.preventDefault()
     setOpen(false) //closing modal
     // console.log(title, description, radioValue, checked)
-    // if (editModule) {
-    //   const formData = new FormData()
-    //   formData.set('title', title)
-    //   formData.set('description', description)
-    //   formData.set('type', radioValue)
-    //   formData.set('hidden', checked)
+    const formData = new FormData()
+    if (editBatch) {
+      formData.set('title', title);
+      formData.set('description', description);
+      formData.set('startDate', startDate);
+      formData.set('endDate', endDate);
+      formData.set('fee', courseFee);
+      formData.set('discountedFee', discountFee);
+        const { success } = await dispatch(editBatchModule(editBatch._id,formData))
+        if (success) {
+          setMessage('Batch created Successfully')
+          setOpenSuccess(true)
+        } else {
+          setMessage('Error in Batch creation')
+          setOpenFailure(true)
+        }
 
-    //   const { success } = await dispatch(
-    //     editCurrentModule(editModule._id, formData)
-    //   )
-    //   if (success) {
-    //     setMessage('Changes Saved Successfully')
-    //     setOpenSuccess(true)
-    //   } else {
-    //     setMessage('Error in saving changes')
-    //     setOpenFailure(true)
-    //   }
-    // } else {
-      const formData = new FormData()
-     
-    formData.set('title', title);
-    formData.set('description', description);
-    formData.set('startDate', startDate);
-    formData.set('endDate', endDate);
-    formData.set('fee', courseFee);
-    formData.set('discountedFee', discountFee);
-      const { success } = await dispatch(addNewBatch(formData))
-      if (success) {
-        setMessage('Batch created Successfully')
-        setOpenSuccess(true)
-      } else {
-        setMessage('Error in Batch creation')
-        setOpenFailure(true)
-      }
+    }else{
+  
+      formData.set('title', title);
+      formData.set('description', description);
+      formData.set('startDate', startDate);
+      formData.set('endDate', endDate);
+      formData.set('fee', courseFee);
+      formData.set('discountedFee', discountFee);
+        const { success } = await dispatch(addNewBatch(formData))
+        if (success) {
+          setMessage('Batch created Successfully')
+          setOpenSuccess(true)
+        } else {
+          setMessage('Error in Batch creation')
+          setOpenFailure(true)
+        }
+    }
     }
   
     if (loading) return <Loader />
@@ -155,7 +155,7 @@ const Batch = () => {
                 <Tooltip title='Edit' placement='top' arrow>
                   <button
                     className='btn btn-primary py-1 px-2 ml-2'
-                    onClick={() => setEditBatch(module)}
+                    onClick={() => editModuleHandler(module)}
                   >
                     <i className='far fa-edit'></i>
                   </button>

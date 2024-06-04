@@ -11,12 +11,16 @@ import {
   ADD_MODULE_REQUEST,
   ADD_MODULE_SUCCESS,
   ADD_MODULE_FAILURE,
+  GET_MODULE_DETAILS_REQUEST,
+  GET_MODULE_DETAILS_SUCCESS,
+  GET_MODULE_DETAILS_FAILURE,
 } from "../constants/moduleConstants";
 
 const initialState = {
   loading: true,
   data: "",
   error: "",
+  moduleDetails:null
 };
 
 export const getAllModuleReducer = (state = initialState, action) => {
@@ -70,6 +74,25 @@ export const getAllModuleReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+
+      case GET_MODULE_DETAILS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case GET_MODULE_DETAILS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        moduleDetails: action.payload,
+      };
+    case GET_MODULE_DETAILS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
     default:
       return state;
   }

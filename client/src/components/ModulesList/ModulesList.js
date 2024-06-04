@@ -15,10 +15,13 @@ function ModulesList() {
   const user = userData.data;
   const { loading, data = [], error } = modules;
   const history = useHistory();
-
+  
   useEffect(() => {
     dispatch(getAllModules());
+    console.log(data)
   }, [dispatch]);
+
+  
 
   const clickHandler = (id) => history.push(`/module/${id}`);
 
