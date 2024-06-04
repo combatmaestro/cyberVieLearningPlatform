@@ -6,7 +6,12 @@ import { getAllModules } from "../../actions/moduleAction";
 import ModuleListLoader from "./ModuleListLoader";
 import LockIcon from "@material-ui/icons/Lock";
 import { useStyles } from "./style";
-
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import { Link } from "react-router-dom";
+import { IconButton } from '@material-ui/core'
+import AccessAlarmsIcon from '@material-ui/icons/AccessAlarms';
 function ModulesList() {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -15,13 +20,11 @@ function ModulesList() {
   const user = userData.data;
   const { loading, data = [], error } = modules;
   const history = useHistory();
-  
+
   useEffect(() => {
     dispatch(getAllModules());
-    console.log(data)
+    console.log(data);
   }, [dispatch]);
-
-  
 
   const clickHandler = (id) => history.push(`/module/${id}`);
 
@@ -29,6 +32,23 @@ function ModulesList() {
 
   return (
     <div className={classes.root}>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <AccessAlarmsIcon className={classes.blink} />
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            <Link to="/batch" className={classes.blink}>
+              Click here and check out our Latest Live Courses!!
+            </Link>
+          </Typography>
+        </Toolbar>
+      </AppBar>
       {data.map((module) => {
         return (
           <>
