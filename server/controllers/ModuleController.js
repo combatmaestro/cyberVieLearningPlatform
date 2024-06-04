@@ -29,7 +29,7 @@ module.exports.getDetails = catchAsyncErrors(async (req, res, next) => {
     },
   })
 
-  console.log("user",req.user)
+ 
 
   if (!module) {
     return next(new ErrorHandler('Module not found', 404))
