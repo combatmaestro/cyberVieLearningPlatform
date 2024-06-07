@@ -245,14 +245,14 @@ export default function Header() {
                         Batches
                       </Typography>
                     </Link>
-                    <a
+                    {/* <a
                       href="https://www.cybervie.com/cyber-security-training-program/"
                       target="_blank"
                     >
                       <Typography className={classes.headerTitle} variant="h6">
                         Courses
                       </Typography>
-                    </a>
+                    </a> */}
                     <Typography className={classes.headerTitle} variant="h6">
                       Certificates
                     </Typography>

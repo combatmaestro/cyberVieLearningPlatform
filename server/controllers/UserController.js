@@ -81,10 +81,20 @@ module.exports.signout = catchAsyncErrors(async (req, res, next) => {
 });
 
 module.exports.update = catchAsyncErrors(async (req, res, next) => {
+  console.log("inside",req.body)
   const newUserData = {
     name: req.body.name,
     mobile: req.body.mobile,
+    education: req.body.education,
+    workingDomain: req.body.workingDomain,
+    experience: req.body.experience,
+    currentSalary: req.body.currentSalary,
+    expectedSalary: req.body.expectedSalary,
+    preferredLocation: req.body.preferredLocation,
   };
+
+   console.log(JSON.stringify(newUserData))
+
   const user = await User.findByIdAndUpdate(req.user._id, newUserData, {
     new: true,
     runValidators: true,
@@ -96,6 +106,7 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
     data: user,
   });
 });
+
 
 module.exports.leaderboard = catchAsyncErrors(async (req, res, next) => {
   const page = req.body.page;

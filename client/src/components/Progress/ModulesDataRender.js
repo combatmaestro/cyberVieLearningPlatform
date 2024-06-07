@@ -28,7 +28,7 @@ const ModulesDataRender = () => {
             {   user.role == "user" && user.tier == "free" ? 
                 moduleDetails.map((module) => (
 
-                  module.moduleTitle === "Prerequisite for Cyber Security" && 
+                  module.moduleTitle === "Prerequisite for Cybersecurity" && 
                     <ModuleAccordin 
                       module={module}
                     />

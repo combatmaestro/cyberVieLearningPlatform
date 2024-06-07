@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
+const mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema(
   {
@@ -38,21 +38,42 @@ const userSchema = new mongoose.Schema(
       of: mongoose.Schema.Types.ObjectId,
       default: {},
     },
-
     mobile: {
       type: String,
+    },
+    education: {
+      type: String,
+      // maxlength: [40, 'Education must be less than or equal to 40 characters'],
+    },
+    workingDomain: {
+      type: String,
+      // maxlength: [40, 'Working Domain must be less than or equal to 40 characters'],
+    },
+    experience: {
+      type: String,
+      // maxlength: [40, 'Experience must be less than or equal to 40 characters'],
+    },
+    currentSalary: {
+      type: Number,
+    },
+    expectedSalary: {
+      type: Number,
+    },
+    preferredLocation: {
+      type: String,
+      // maxlength: [40, 'Preferred Location must be less than or equal to 40 characters'],
     },
   },
   {
     timestamps: true,
   }
-)
+);
 
-//return jwt
+// Return JWT
 userSchema.methods.getJwtToken = function () {
-  return jwt.sign({ id: this._id }, "9D71AA85A1B9A", {
+  return jwt.sign({ id: this._id }, '9D71AA85A1B9A', {
     expiresIn: '7d',
-  })
-}
+  });
+};
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);

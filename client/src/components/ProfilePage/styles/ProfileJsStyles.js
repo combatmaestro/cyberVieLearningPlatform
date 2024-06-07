@@ -62,7 +62,7 @@ export const useStyles = makeStyles((theme) => ({
   avatarHolder: {
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    // justifyContent: "center",
     [theme.breakpoints.down(420)]: {
       marginTop: "20px",
     },
