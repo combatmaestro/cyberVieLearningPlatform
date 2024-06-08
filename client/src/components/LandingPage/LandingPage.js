@@ -68,7 +68,7 @@ function LandingPage() {
               <div className="LPGreeting">Welcome to Cybervie</div>
               <div className="LPHeader">CSEP</div>
               <div className="LPDescription">
-              Become a CyberSecurity Engineer with CSEP Certification.
+              Certified Security Engineer Professional.
               </div>
               <div className={classes.buttonContainer}>
                 <>
