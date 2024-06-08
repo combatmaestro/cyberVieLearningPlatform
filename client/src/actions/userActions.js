@@ -66,7 +66,7 @@ export const userGoogleLogin = (info) => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'POST',
-      url: `/user/authenticate`,
+      url: `${backendUrl}/user/authenticate`,
       data: {
         token: info.credential,
       },
@@ -158,7 +158,7 @@ export const updateUser = (info) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.put('/user/update', info, config)
+    const { data } = await axios.put(`${backendUrl}/user/update`, info, config)
     dispatch({
       type: USER_UPDATE_SUCCESS,
       payload: data.data,
