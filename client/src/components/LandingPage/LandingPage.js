@@ -65,8 +65,8 @@ function LandingPage() {
         <>
           <div className={classes.root}>
             <div className="LandingPageInfoContainer">
-              <div className="LPGreeting">Welcome to</div>
-              <div className="LPHeader">Cybervie</div>
+              <div className="LPGreeting">Welcome to Cybervie</div>
+              <div className="LPHeader">CSEP</div>
               <div className="LPDescription">
               Become a CyberSecurity Engineer with CSEP Certification.
               </div>
