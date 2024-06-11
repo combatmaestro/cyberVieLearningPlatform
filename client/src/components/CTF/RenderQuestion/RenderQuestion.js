@@ -15,7 +15,7 @@ function RenderQuestion({ ctf, addProgress }) {
   const [answer, setAnswer] = useState("");
   const [answerErrorText, setAnswerErrorText] = useState("");
   const [openSuccess, setOpenSuccess] = useState(false);
-  const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
+  const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app/"
   useEffect(() => {
     if (responses.indexOf(ctf._id) > -1) {
       setCompleted(true);

@@ -24,7 +24,7 @@ if(localStorage.getItem("token")){
   )
 }
 
-const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app/"
 
 export const getAdminCtf = (id) => async (dispatch) => {
   dispatch({

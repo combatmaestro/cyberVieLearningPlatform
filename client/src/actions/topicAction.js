@@ -30,7 +30,7 @@ if(localStorage.getItem("token")){
   )
 }
 
-const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app/"
 
 
 export const getAdminTopic = (id) => async (dispatch) => {

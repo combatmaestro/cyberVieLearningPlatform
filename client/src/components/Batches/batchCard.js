@@ -43,7 +43,7 @@ function BatchList() {
   useEffect(() => {
     dispatch(getAllBatches());
   }, [dispatch]);
-  const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app";
+  const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app/";
   const formatDate = (isoString) => {
     const date = new Date(isoString);
     const year = date.getFullYear();
