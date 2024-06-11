@@ -38,7 +38,7 @@ if(localStorage.getItem("token")){
 }
 
 
-const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app/"
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
 
 const userGoogleLoginRequest = () => {
   return {
