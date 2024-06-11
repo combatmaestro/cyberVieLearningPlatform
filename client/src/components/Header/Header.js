@@ -163,17 +163,14 @@ export default function Header() {
             <ListItemText>My Profile</ListItemText>
           </ListItem>
         </Link>
-        <a
-          href="https://www.cybervie.com/cyber-security-training-program/"
-          target="_blank"
-        >
+        <Link to="/batch" >
           <ListItem button>
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
-            <ListItemText>My Courses</ListItemText>
+            <ListItemText>Upcoming lIve Classes</ListItemText>
           </ListItem>
-        </a>
+        </Link>
         <Link to="/transaction">
           <ListItem button>
             <ListItemIcon>
