@@ -242,7 +242,7 @@ export default function Header() {
                   <Box display="flex" alignItems="center">
                   <Link to="/batch">
                       <Typography className={classes.headerTitle} variant="h6">
-                        Batches
+                        Upcoming Live Classes
                       </Typography>
                     </Link>
                     {/* <a
