@@ -38,7 +38,7 @@ module.exports.authenticate = async (req, res, next) => {
       });
       await sendEmail({
         //sending admin email
-        email: "adarshsahu2510@gmail.com",
+        email: "info@cybervie.com",
         html: `${name} with email ${email} has joined the portal today`,
         subject: "New Registration in the portal",
       });

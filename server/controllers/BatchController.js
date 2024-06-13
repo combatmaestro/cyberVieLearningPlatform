@@ -66,14 +66,14 @@ module.exports.enroll = catchAsyncErrors(async (req, res, next) => {
       let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-          user: "adarshsahu2510@gmail.com",
-          pass: "hwjb crva uika ounm"
+          user: "info@cybervie.com",
+          pass: "rtgp rsls upgz zctc"
         },
       });
   
       let mailOptions = {
-        from: "adarshsahu2510@gmail.com",
-        to: "adarshsahu2510@gmail.com", 
+        from: "info@cybervie.com",
+        to: "info@cybervie.com", 
         subject: "Course Enrollment Request",
         html: `${studentName} with phone number ${phoneNumber} and ${email} has requested to enroll for course ${module.title} today.`,
       };
