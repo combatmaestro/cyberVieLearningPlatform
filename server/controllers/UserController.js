@@ -5,7 +5,7 @@ const sendToken = require("../utils/sendToken");
 const { OAuth2Client } = require("google-auth-library");
 const { findByIdAndUpdate } = require("../models/User");
 const CLIENT_ID =
-  "257899612719-9jsfnkbb5i5kgp6r34754vdlmjcdi6jb.apps.googleusercontent.com";
+  "449086785583-9vop51gavcavffauj4v5jfmosfm2j988.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 const sendEmail = require("../utils/sendEmail");
 const welcomeTemplate = require("../utils/mailTemplate");

@@ -12,8 +12,8 @@ const sendEmail = async (options) => {
         // clientSecret: "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",
         // refreshToken: "1//0g5ONv2b7i1amCgYIARAAGBASNwF-L9IrpT3FrnTdQd-uEW0ndlnKEYMTMrILiqpKPe6-wi4EMHbvsTCqQBvP_nfOYaUAEpF60Zc",
         // accessToken: "ya29.a0AXooCguRU1PAtWQ-w6kq3Y3tnNahwftsDnyRyH8zD1-IhNG1y-sBqwLmrSH_Ztzf8KwyfM1pr6U85WMZJXxFMX-5ZgYDjxGHC9OLKQPJciAInjNRQKlWiNCRNw4yhnbKXiwpba4QrPoOUAW-y5AkNiwWRdQx6vhgCAyGaCgYKAR0SARMSFQHGX2Milcwj1-L1JKfmbRwg6d_CNQ0171",
-        user:"adarshsahu2510@gmail.com",
-        pass:"hwjb crva uika ounm"
+        user:"info@cybervie.com",
+        pass:"rtgp rsls upgz zctc"
       },
     });
     // transporter.on("token", (token) => {

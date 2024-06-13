@@ -10,7 +10,7 @@ import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 ReactDOM.render(
-  <GoogleOAuthProvider clientId="257899612719-9jsfnkbb5i5kgp6r34754vdlmjcdi6jb.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId="449086785583-9vop51gavcavffauj4v5jfmosfm2j988.apps.googleusercontent.com">
   <Provider store={store}>
     <LoaderProvider indicator={<Bars width="80" height="80" />}>
        <App />  
