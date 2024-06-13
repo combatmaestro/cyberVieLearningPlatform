@@ -24,7 +24,7 @@ const sendEmail = async (options) => {
     // });
     // setup e-mail data with unicode symbols
     let mailOptions = {
-      from: "adarshsahu2510@gmail.com", // sender address
+      from: "info@cybervie.com", // sender address
       to: options.email, // list of receivers
       subject: options.subject, // Subject line
       html: options.html, // html body
