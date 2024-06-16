@@ -122,7 +122,7 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
 
       let userMailOptions = {
         from: "info@cybervie.com",
-        to: "info@cybervie.com",
+        to: req.user.mail,
         subject:
           "Welcome to Cybervie CSEP Program – Your Journey to a Cybersecurity Career Begins Here!",
         html: ` <div class="se-component se-image-container __se__float-center" contenteditable="false" style="width:100%;">
