@@ -122,6 +122,7 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
         }
       });
       console.log("Updated User Data Email sent11");
+      console.log( req.user.mail)
       let userMailOptions = {
         from: "info@cybervie.com",
         to: req.user.mail,
