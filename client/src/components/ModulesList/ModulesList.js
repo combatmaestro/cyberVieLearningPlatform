@@ -29,7 +29,7 @@ function ModulesList() {
 
   return (
     <div className={classes.root}>
-      {data.map((module) => {
+      {data?.map((module) => {
         return (
           <>
             {module.hidden ? (
