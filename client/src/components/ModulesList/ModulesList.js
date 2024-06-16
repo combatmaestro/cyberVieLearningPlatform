@@ -29,7 +29,8 @@ function ModulesList() {
 
   return (
     <div className={classes.root}>
-      {data?.map((module) => {
+      {/* {data.length > 0 && ()} */}
+      {data.length > 0 ? data?.map((module) => {
         return (
           <>
             {module.hidden ? (
@@ -83,7 +84,7 @@ function ModulesList() {
             )}
           </>
         );
-      })}
+      }) : "" }
     </div>
   );
 }

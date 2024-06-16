@@ -27,7 +27,7 @@ import {
   EDIT_BATCH_SUCCESS,
   EDIT_BATCH_FAILURE,
 } from "../constants/batchConstants";
-const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app";
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app/";
 
 function getCookie(cookieName) {
   // Split the cookie string into individual cookies
