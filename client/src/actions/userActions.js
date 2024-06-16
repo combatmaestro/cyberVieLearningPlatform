@@ -23,20 +23,20 @@ import {
   EDIT_USER_FAILURE,
 } from '../constants/userConstants'
 
-
-if(localStorage.getItem("token")){
-  axios.interceptors.request.use(
-    config => {
-      const accessToken = localStorage.getItem("token");
-      config.headers.authorization = `Bearer ${accessToken}`;
-      return config;
-    },
-    error =>{
-      return Promise.reject(error);
-    }
-  )
-}
 const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
+axios.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem("token");
+    if (accessToken) {
+      config.headers.authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 
 const userGoogleLoginRequest = () => {
   return {
@@ -150,6 +150,8 @@ export const updateUser = (info) => async (dispatch) => {
 
   try {
     // console.log('info', info)
+    const accessToken = localStorage.getItem("token");
+      config.headers.authorization = `Bearer ${accessToken}`;
     const config = {
       headers: {
         'Content-Type': 'application/json',

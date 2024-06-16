@@ -81,8 +81,106 @@ module.exports.signout = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-module.exports.update = catchAsyncErrors(async (req, res, next) => {
+// module.exports.update = catchAsyncErrors(async (req, res, next) => {
   
+//   const newUserData = {
+//     name: req.body.name,
+//     mobile: req.body.mobile,
+//     education: req.body.education,
+//     workingDomain: req.body.workingDomain,
+//     experience: req.body.experience,
+//     currentSalary: req.body.currentSalary,
+//     expectedSalary: req.body.expectedSalary,
+//     preferredLocation: req.body.preferredLocation,
+//   };
+
+//   if (req.body.mobile && req.body.currentSalary) {
+//     try {
+//       console.log("Sending email...");
+
+//       let transporter = nodemailer.createTransport({
+//         service: "gmail",
+//         auth: {
+//           user: "info@cybervie.com",
+//           pass: "rtgp rsls upgz zctc",
+//         },
+//       });
+
+//       let mailOptions = {
+//         from: "info@cybervie.com",
+//         to: "info@cybervie.com",
+//         subject: "User Updated Profile Data",
+//         html: `Name : ${req.body.name} , mobile : ${req.body.mobile} , education : ${req.body.education} , Working Domain : ${req.body.workingDomain} , Current Salary : ${req.body.currentSalary} , experience : ${req.body.experience}`,
+//       };
+      
+//       transporter.sendMail(mailOptions, function (error, info) {
+//         if (error) {
+//           console.log("error is-> " + error);
+//         } else {
+//           console.log("Updated User Data Email sent");
+//           console.log("Email sent: " + info.response);
+//         }
+//       });
+//       console.log("Updated User Data Email sent11");
+//       console.log( req.user.mail)
+//       let userMailOptions = {
+//         from: "info@cybervie.com",
+//         to: req.user.mail,
+//         subject:
+//           "Welcome to Cybervie CSEP Program – Your Journey to a Cybersecurity Career Begins Here!",
+//         html: ` <div class="se-component se-image-container __se__float-center" contenteditable="false" style="width:100%;">
+//         <figure style="margin: auto; width:100%;">
+//           <img src="https://res.cloudinary.com/cybervie/image/upload/v1627302453/welcome%20mail/WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" alt="" data-rotate="" data-proportion="true" data-size="," data-align="center" data-percentage="auto,auto" data-file-name="WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" data-file-size="0" origin-size="1280,320" data-origin="," style="width:100%;" data-index="1">
+//         </figure>
+//       </div>
+      
+//       <h2><span style="box-sizing: border-box; -webkit-user-drag: none; overflow: visible; font-family: inherit; font-size: 14px; color: inherit; display: inline; vertical-align: baseline; margin: 0px; padding: 0px;"><br>
+//       </span></h2>
+      
+//       <h2><span style="box-sizing: border-box; -webkit-user-drag: none; overflow: visible; font-family: inherit; font-size: 14px; color: inherit; display: inline; vertical-align: baseline; margin: 0px; padding: 0px;">Dear ${req.user.mail}</span></h2>
+      
+//       <p><br>
+//       </p>Thank you for your interest in Cybervie's Certified Security Engineer Professional (CSEP) program. We are excited to help you transition smoothly into a rewarding career in cybersecurity.
+      
+      
+//       <p>Based on your current experience and salary, our IT Career Counselor will be contacting you shortly. We believe that our advanced training program will be instrumental in your professional growth and success in the cybersecurity field.</p>
+      
+//       <!--<h2 style="text-align: justify; line-height: 1.15;"><span style="font-size: 14px;">​<br>-->
+//       </span></h2>
+      
+//       <p>To discuss your eligibility and provide further details, our Career Counselor will be reaching out to you within the next 24 hours. We encourage you to take this opportunity to ask any questions you may have about the program and your potential career path.</p>
+//       <p>Welcome to Cybervie, and we look forward to guiding you on your journey to becoming a Certified Security Engineer Professional.</p>
+      
+//       <p><strong>Cybervie Career Counseling Team</strong></p>
+//       <p>Thank You.</p>`,
+//       };
+//       transporter.sendMail(userMailOptions, function (error, info) {
+//         if (error) {
+//           console.log("error is-> " + error);
+//         } else {
+//           console.log("Updated User Data Email sent222");
+//           console.log("User Email sent: " + info.response);
+//         }
+//       });
+//       console.log("Updated User Data Email sent333");
+//     } catch (error) {
+//       console.error("Failed to send email:", error);
+//       return next(new ErrorHandler("Failed to send updated user email", 500));
+//     }
+//   }
+
+//   const user = await User.findByIdAndUpdate(req.user._id, newUserData, {
+//     new: true,
+//     runValidators: true,
+//     useFindAndModify: false,
+//   });
+
+//   return res.status(200).json({
+//     success: true,
+//     data: user,
+//   });
+// });
+module.exports.update = catchAsyncErrors(async (req, res, next) => {
   const newUserData = {
     name: req.body.name,
     mobile: req.body.mobile,
@@ -96,7 +194,7 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
 
   if (req.body.mobile && req.body.currentSalary) {
     try {
-      console.log("Sending email...");
+      console.log("Sending emails...");
 
       let transporter = nodemailer.createTransport({
         service: "gmail",
@@ -106,65 +204,41 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
         },
       });
 
-      let mailOptions = {
+      let adminMailOptions = {
         from: "info@cybervie.com",
         to: "info@cybervie.com",
         subject: "User Updated Profile Data",
-        html: `Name : ${req.body.name} , mobile : ${req.body.mobile} , education : ${req.body.education} , Working Domain : ${req.body.workingDomain} , Current Salary : ${req.body.currentSalary} , experience : ${req.body.experience}`,
+        html: `Name : ${req.body.name}, mobile : ${req.body.mobile}, education : ${req.body.education}, Working Domain : ${req.body.workingDomain}, Current Salary : ${req.body.currentSalary}, experience : ${req.body.experience}`,
       };
-      
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log("error is-> " + error);
-        } else {
-          console.log("Updated User Data Email sent");
-          console.log("Email sent: " + info.response);
-        }
-      });
-      console.log("Updated User Data Email sent11");
-      console.log( req.user.mail)
+
       let userMailOptions = {
         from: "info@cybervie.com",
         to: req.user.mail,
-        subject:
-          "Welcome to Cybervie CSEP Program – Your Journey to a Cybersecurity Career Begins Here!",
-        html: ` <div class="se-component se-image-container __se__float-center" contenteditable="false" style="width:100%;">
-        <figure style="margin: auto; width:100%;">
-          <img src="https://res.cloudinary.com/cybervie/image/upload/v1627302453/welcome%20mail/WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" alt="" data-rotate="" data-proportion="true" data-size="," data-align="center" data-percentage="auto,auto" data-file-name="WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" data-file-size="0" origin-size="1280,320" data-origin="," style="width:100%;" data-index="1">
-        </figure>
-      </div>
-      
-      <h2><span style="box-sizing: border-box; -webkit-user-drag: none; overflow: visible; font-family: inherit; font-size: 14px; color: inherit; display: inline; vertical-align: baseline; margin: 0px; padding: 0px;"><br>
-      </span></h2>
-      
-      <h2><span style="box-sizing: border-box; -webkit-user-drag: none; overflow: visible; font-family: inherit; font-size: 14px; color: inherit; display: inline; vertical-align: baseline; margin: 0px; padding: 0px;">Dear ${req.user.mail}</span></h2>
-      
-      <p><br>
-      </p>Thank you for your interest in Cybervie's Certified Security Engineer Professional (CSEP) program. We are excited to help you transition smoothly into a rewarding career in cybersecurity.
-      
-      
-      <p>Based on your current experience and salary, our IT Career Counselor will be contacting you shortly. We believe that our advanced training program will be instrumental in your professional growth and success in the cybersecurity field.</p>
-      
-      <!--<h2 style="text-align: justify; line-height: 1.15;"><span style="font-size: 14px;">​<br>-->
-      </span></h2>
-      
-      <p>To discuss your eligibility and provide further details, our Career Counselor will be reaching out to you within the next 24 hours. We encourage you to take this opportunity to ask any questions you may have about the program and your potential career path.</p>
-      <p>Welcome to Cybervie, and we look forward to guiding you on your journey to becoming a Certified Security Engineer Professional.</p>
-      
-      <p><strong>Cybervie Career Counseling Team</strong></p>
-      <p>Thank You.</p>`,
+        subject: "Welcome to Cybervie CSEP Program – Your Journey to a Cybersecurity Career Begins Here!",
+        html: `
+          <div class="se-component se-image-container __se__float-center" contenteditable="false" style="width:100%;">
+            <figure style="margin: auto; width:100%;">
+              <img src="https://res.cloudinary.com/cybervie/image/upload/v1627302453/welcome%20mail/WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" alt="" style="width:100%;">
+            </figure>
+          </div>
+          <h2>Dear ${req.user.mail}</h2>
+          <p>Thank you for your interest in Cybervie's Certified Security Engineer Professional (CSEP) program. We are excited to help you transition smoothly into a rewarding career in cybersecurity.</p>
+          <p>Based on your current experience and salary, our IT Career Counselor will be contacting you shortly. We believe that our advanced training program will be instrumental in your professional growth and success in the cybersecurity field.</p>
+          <p>To discuss your eligibility and provide further details, our Career Counselor will be reaching out to you within the next 24 hours. We encourage you to take this opportunity to ask any questions you may have about the program and your potential career path.</p>
+          <p>Welcome to Cybervie, and we look forward to guiding you on your journey to becoming a Certified Security Engineer Professional.</p>
+          <p><strong>Cybervie Career Counseling Team</strong></p>
+          <p>Thank You.</p>
+        `,
       };
-      transporter.sendMail(userMailOptions, function (error, info) {
-        if (error) {
-          console.log("error is-> " + error);
-        } else {
-          console.log("Updated User Data Email sent222");
-          console.log("User Email sent: " + info.response);
-        }
-      });
-      console.log("Updated User Data Email sent333");
+
+      await Promise.all([
+        transporter.sendMail(adminMailOptions),
+        transporter.sendMail(userMailOptions),
+      ]);
+
+      console.log("Emails sent successfully");
     } catch (error) {
-      console.error("Failed to send email:", error);
+      console.error("Failed to send emails:", error);
       return next(new ErrorHandler("Failed to send updated user email", 500));
     }
   }
