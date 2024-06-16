@@ -112,15 +112,16 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
         subject: "User Updated Profile Data",
         html: `Name : ${req.body.name} , mobile : ${req.body.mobile} , education : ${req.body.education} , Working Domain : ${req.body.workingDomain} , Current Salary : ${req.body.currentSalary} , experience : ${req.body.experience}`,
       };
-      console.log("Updated User Data Email sent");
+      
       transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
           console.log("error is-> " + error);
         } else {
+          console.log("Updated User Data Email sent");
           console.log("Email sent: " + info.response);
         }
       });
-
+      console.log("Updated User Data Email sent11");
       let userMailOptions = {
         from: "info@cybervie.com",
         to: req.user.mail,
@@ -156,9 +157,11 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
         if (error) {
           console.log("error is-> " + error);
         } else {
+          console.log("Updated User Data Email sent222");
           console.log("User Email sent: " + info.response);
         }
       });
+      console.log("Updated User Data Email sent333");
     } catch (error) {
       console.error("Failed to send email:", error);
       return next(new ErrorHandler("Failed to send updated user email", 500));
