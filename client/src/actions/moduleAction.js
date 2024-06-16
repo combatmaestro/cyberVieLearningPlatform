@@ -104,7 +104,7 @@ export const getAllModules = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_MODULE_FAILURE,
-      payload: error.response.data.message,
+      payload: error?.response?.data?.message,
     });
   }
 };
