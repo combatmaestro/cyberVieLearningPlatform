@@ -5,8 +5,8 @@ const {
   authorizeRoles,
 } = require("../middlewares/authMiddleware");
 const router = express.Router();
-
-router.get("/getall", isAuthenticatedUser, moduleController.getAllModule);
+// router.get("/getall", isAuthenticatedUser, moduleController.getAllModule);
+router.get("/getall", moduleController.getAllModule);
 router.get("/details", isAuthenticatedUser, moduleController.getDetails);
 
 //admin controls
