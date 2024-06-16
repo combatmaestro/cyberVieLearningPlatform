@@ -81,7 +81,7 @@ module.exports.signout = catchAsyncErrors(async (req, res, next) => {
 });
 
 module.exports.update = catchAsyncErrors(async (req, res, next) => {
-  console.log("inside", req.body);
+  
   const newUserData = {
     name: req.body.name,
     mobile: req.body.mobile,
@@ -93,7 +93,7 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
     preferredLocation: req.body.preferredLocation,
   };
 
-  if (req.mobile && req.currentSalary) {
+  if (req.body.mobile && req.body.currentSalary) {
     try {
       console.log("Sending email...");
 
