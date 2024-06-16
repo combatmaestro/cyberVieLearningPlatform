@@ -3,6 +3,7 @@ const ErrorHandler = require("../utils/errorHandler");
 const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/sendToken");
 const { OAuth2Client } = require("google-auth-library");
+const nodemailer = require("nodemailer");
 const { findByIdAndUpdate } = require("../models/User");
 const CLIENT_ID =
   "449086785583-9vop51gavcavffauj4v5jfmosfm2j988.apps.googleusercontent.com";
