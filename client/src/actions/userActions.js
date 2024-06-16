@@ -36,9 +36,9 @@ if(localStorage.getItem("token")){
     }
   )
 }
+cyber-vie-learning-platform-client-ten.vercel.app
 
-
-const backendUrl = "https://cyber-vie-learning-platform-server.vercel.app"
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
 
 const userGoogleLoginRequest = () => {
   return {
