@@ -148,14 +148,13 @@ export const updateUser = (info) => async (dispatch) => {
     type: USER_UPDATE_REQUEST,
   })
 
+
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     }
-
-
     const { data } = await axios.put(`${backendUrl}/user/update`, info, config)
     dispatch({
       type: USER_UPDATE_SUCCESS,
