@@ -149,9 +149,6 @@ export const updateUser = (info) => async (dispatch) => {
   })
 
   try {
-    // console.log('info', info)
-    const accessToken = localStorage.getItem("token");
-      config.headers.authorization = `Bearer ${accessToken}`;
     const config = {
       headers: {
         'Content-Type': 'application/json',
