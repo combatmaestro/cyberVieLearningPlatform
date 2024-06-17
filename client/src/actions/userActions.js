@@ -23,13 +23,11 @@ import {
   EDIT_USER_FAILURE,
 } from '../constants/userConstants'
 
-const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
+
 axios.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("token");
-    if (accessToken) {
       config.headers.authorization = `Bearer ${accessToken}`;
-    }
     return config;
   },
   (error) => {
@@ -37,7 +35,7 @@ axios.interceptors.request.use(
   }
 );
 
-
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
 const userGoogleLoginRequest = () => {
   return {
     type: USER_SIGNIN_REQUEST,
