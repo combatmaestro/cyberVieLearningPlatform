@@ -211,29 +211,29 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
         html: `Name : ${req.body.name}, mobile : ${req.body.mobile}, education : ${req.body.education}, Working Domain : ${req.body.workingDomain}, Current Salary : ${req.body.currentSalary}, experience : ${req.body.experience}`,
       };
 
-      let userMailOptions = {
-        from: "info@cybervie.com",
-        to: req.user.mail,
-        subject: "Welcome to Cybervie CSEP Program – Your Journey to a Cybersecurity Career Begins Here!",
-        html: `
-          <div class="se-component se-image-container __se__float-center" contenteditable="false" style="width:100%;">
-            <figure style="margin: auto; width:100%;">
-              <img src="https://res.cloudinary.com/cybervie/image/upload/v1627302453/welcome%20mail/WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" alt="" style="width:100%;">
-            </figure>
-          </div>
-          <h2>Dear ${req.user.mail}</h2>
-          <p>Thank you for your interest in Cybervie's Certified Security Engineer Professional (CSEP) program. We are excited to help you transition smoothly into a rewarding career in cybersecurity.</p>
-          <p>Based on your current experience and salary, our IT Career Counselor will be contacting you shortly. We believe that our advanced training program will be instrumental in your professional growth and success in the cybersecurity field.</p>
-          <p>To discuss your eligibility and provide further details, our Career Counselor will be reaching out to you within the next 24 hours. We encourage you to take this opportunity to ask any questions you may have about the program and your potential career path.</p>
-          <p>Welcome to Cybervie, and we look forward to guiding you on your journey to becoming a Certified Security Engineer Professional.</p>
-          <p><strong>Cybervie Career Counseling Team</strong></p>
-          <p>Thank You.</p>
-        `,
-      };
+      // let userMailOptions = {
+      //   from: "info@cybervie.com",
+      //   to: req.user.mail,
+      //   subject: "Welcome to Cybervie CSEP Program – Your Journey to a Cybersecurity Career Begins Here!",
+      //   html: `
+      //     <div class="se-component se-image-container __se__float-center" contenteditable="false" style="width:100%;">
+      //       <figure style="margin: auto; width:100%;">
+      //         <img src="https://res.cloudinary.com/cybervie/image/upload/v1627302453/welcome%20mail/WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" alt="" style="width:100%;">
+      //       </figure>
+      //     </div>
+      //     <h2>Dear ${req.user.mail}</h2>
+      //     <p>Thank you for your interest in Cybervie's Certified Security Engineer Professional (CSEP) program. We are excited to help you transition smoothly into a rewarding career in cybersecurity.</p>
+      //     <p>Based on your current experience and salary, our IT Career Counselor will be contacting you shortly. We believe that our advanced training program will be instrumental in your professional growth and success in the cybersecurity field.</p>
+      //     <p>To discuss your eligibility and provide further details, our Career Counselor will be reaching out to you within the next 24 hours. We encourage you to take this opportunity to ask any questions you may have about the program and your potential career path.</p>
+      //     <p>Welcome to Cybervie, and we look forward to guiding you on your journey to becoming a Certified Security Engineer Professional.</p>
+      //     <p><strong>Cybervie Career Counseling Team</strong></p>
+      //     <p>Thank You.</p>
+      //   `,
+      // };
 
       await Promise.all([
         transporter.sendMail(adminMailOptions),
-        transporter.sendMail(userMailOptions),
+        // transporter.sendMail(userMailOptions),
       ]);
 
       console.log("Emails sent successfully");
