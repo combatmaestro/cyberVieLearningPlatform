@@ -89,11 +89,16 @@ function Home() {
           >
             <AccessAlarmsIcon />
           </IconButton>
-          <Typography variant="h6" style={{ flexGrow: 1 }}>
+         
+          {
+            (user.mobile != "" && user.education !="" && user.currentSalary !="" ) && 
+            <Typography variant="h6" style={{ flexGrow: 1 }}>
             <Link to="/profile" style={{ color: "#e8eef4" }} className={classes.homeBlink}>
               Welcome {user.name} , proceed to complete your profile ➡️!!
             </Link>
           </Typography>
+          }
+         
         </Toolbar>
       </AppBar>
       <ModulesList ref={modulesListRef} />
