@@ -18,26 +18,29 @@ function ModulesList() {
   
   useEffect(() => {
     dispatch(getAllModules(user));
-    console.log(data)
-  }, [dispatch]);
-
-  
+    console.log(data);
+  }, [dispatch, user]);
 
   const clickHandler = (id) => history.push(`/module/${id}`);
 
   if (loading && !error) return <ModuleListLoader />;
 
+  // Extract number from module description
+  const getNumberFromDescription = (description) => {
+    const match = description.match(/\d+/);
+    return match ? parseInt(match[0], 10) : Infinity;
+  };
+
+  // Sort modules based on the extracted number from description
+  const sortedModules = data.slice().sort((a, b) => getNumberFromDescription(a.description) - getNumberFromDescription(b.description));
+
   return (
     <div className={classes.root}>
-      {/* {data.length > 0 && ()} */}
-      {data.length > 0 ? data?.map((module) => {
+      {sortedModules.length > 0 ? sortedModules.map((module) => {
         return (
-          <>
-            {module.hidden ? (
-              ""
-            ) : (
+          <React.Fragment key={module._id}>
+            {!module.hidden && (
               <div
-                key={module._id}
                 className={classes.module}
                 style={{
                   background:
@@ -57,14 +60,11 @@ function ModulesList() {
                 <div className={classes.titleBold}>{module.title}</div>
                 {user.role === "user" &&
                 user.tier === "free" &&
-                module.type === "paid" ? (
+                module.type === "paid" && (
                   <div className={classes.lockIcon}>
                     <LockIcon />
                   </div>
-                ) : (
-                  ""
                 )}
-
                 <div className={classes.description}>{module.description}</div>
                 <div className={classes.button}>
                   {user.role === "user" &&
@@ -82,9 +82,9 @@ function ModulesList() {
                 </div>
               </div>
             )}
-          </>
+          </React.Fragment>
         );
-      }) : "" }
+      }) : ""}
     </div>
   );
 }
