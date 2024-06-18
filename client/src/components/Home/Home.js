@@ -80,6 +80,8 @@ function Home() {
   return (
     <div className={classes.root}>
       <h2 style={{ fontSize: 41 }}>Modules</h2>
+      {
+            !(user.mobile != "" && user.education !="" && user.currentSalary !="" ) && 
       <AppBar position="static" className={classes.appBar} style={{ width: appBarWidth }}>
         <Toolbar>
           <IconButton
@@ -90,17 +92,17 @@ function Home() {
             <AccessAlarmsIcon />
           </IconButton>
          
-          {
-            !(user.mobile != "" && user.education !="" && user.currentSalary !="" ) && 
+         
             <Typography variant="h6" style={{ flexGrow: 1 }}>
             <Link to="/profile" style={{ color: "#e8eef4" }} className={classes.homeBlink}>
               Welcome {user.name} , proceed to complete your profile ➡️!!
             </Link>
           </Typography>
-          }
+         
          
         </Toolbar>
       </AppBar>
+       }
       <ModulesList ref={modulesListRef} />
     </div>
   );
