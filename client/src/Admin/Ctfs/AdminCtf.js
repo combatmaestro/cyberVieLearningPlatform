@@ -153,7 +153,7 @@ function AdminCtfs() {
                 className='btn btn-primary py-1 px-2  ml-2'
                 onClick={() => editCtfHandler(ctf)}
               >
-                <i class='far fa-edit'></i>
+                <i className='far fa-edit'></i>
               </button>
             </Tooltip>
           </>

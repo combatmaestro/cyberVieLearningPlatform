@@ -18,6 +18,10 @@ const moduleSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  archive: {
+    type: Boolean,
+    required: true,
+  },
   fee: {
     type: String,
     default: 'free',

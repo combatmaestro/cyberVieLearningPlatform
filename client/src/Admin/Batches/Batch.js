@@ -42,6 +42,8 @@ const Batch = () => {
   const [openFailure, setOpenFailure] = useState(false)
   const modules = useSelector((state) => state.batches)
   const { loading, data: moduleData = [], error } = modules
+  const allUsers = useSelector((state) => state.allUsers);
+  const {allUsersData = [] } = allUsers;
   useEffect(() => {
     dispatch(getAllBatches())
     console.log(moduleData)
@@ -65,7 +67,7 @@ const Batch = () => {
   const handleClose = () => {
     setOpen(false)
   }
-  const submitHandler = async (e, title, description, startDate, endDate, courseFee , discountFee) => {
+  const submitHandler = async (e, title, description, startDate, endDate, courseFee , discountFee , checked) => {
     e.preventDefault()
     setOpen(false) //closing modal
     // console.log(title, description, radioValue, checked)
@@ -75,6 +77,7 @@ const Batch = () => {
       formData.set('description', description);
       formData.set('startDate', startDate);
       formData.set('endDate', endDate);
+      formData.set('archive', checked);
       formData.set('fee', courseFee);
       formData.set('discountedFee', discountFee);
         const { success } = await dispatch(editBatchModule(editBatch._id,formData))
@@ -93,6 +96,7 @@ const Batch = () => {
       formData.set('startDate', startDate);
       formData.set('endDate', endDate);
       formData.set('fee', courseFee);
+      formData.set('archive', checked);
       formData.set('discountedFee', discountFee);
         const { success } = await dispatch(addNewBatch(formData))
         if (success) {
@@ -104,11 +108,20 @@ const Batch = () => {
         }
     }
     }
+
+    const getUserCount = (batchId) => {
+      return allUsersData.filter(user => user.batch === batchId).length;
+    };
   
     if (loading) return <Loader />
     const mdbBatches = () => {
         const data = {
           columns: [
+            {
+              label: 'ID',
+              field: '_id',
+              sort: 'asc',
+            },
             {
               label: 'Title',
               field: 'title',
@@ -134,6 +147,7 @@ const Batch = () => {
               field: 'discountedFee',
               sort: 'asc',
             },
+            { label: 'Students', field: 'userCount', sort: 'asc' },
             {
               label: 'Actions',
               field: 'actions',
@@ -144,12 +158,14 @@ const Batch = () => {
     
         moduleData.forEach((module) => {
           data.rows.push({
+            _id: module._id,
             title: module.title,
             description: module.description,
             startDate: new Date(module.startDate).toLocaleDateString(),
             endDate: new Date(module.endDate).toLocaleDateString(),
             fee: module.fee,
             discountedFee:module.discountedFee,
+            userCount: getUserCount(module._id),
             actions: (
               <>
                 <Tooltip title='Edit' placement='top' arrow>

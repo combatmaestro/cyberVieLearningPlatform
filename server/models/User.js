@@ -29,6 +29,9 @@ const userSchema = new mongoose.Schema(
       enum: ['user', 'admin', 'teacher'],
       default: 'user',
     },
+    batch:{
+      type: String,
+    },
     marks: {
       type: Number,
       default: 0,

@@ -171,7 +171,7 @@ function AdminModules() {
                 className='btn btn-primary py-1 px-2  ml-2'
                 onClick={() => editModuleHandler(module)}
               >
-                <i class='far fa-edit'></i>
+                <i className='far fa-edit'></i>
               </button>
             </Tooltip>
           </>

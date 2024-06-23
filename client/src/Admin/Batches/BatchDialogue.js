@@ -6,6 +6,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { makeStyles } from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormLabel from '@material-ui/core/FormLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,11 +33,16 @@ function BatchDialogue(props) {
   const [courseFee, setCourseFee] = useState('');
   const [discountFee,setDiscountFee] = useState('');
 
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked)
+  }
+
   useEffect(() => {
     if (module) {
-      setChecked(module.hidden);
       setTitle(module.title);
       setDescription(module.description);
+      setChecked(module.archive);
       setStartDate(module.startDate || '');
       setEndDate(module.endDate || '');
       setCourseFee(module.fee || '');
@@ -137,6 +146,20 @@ function BatchDialogue(props) {
             
             onChange={(e) => setDiscountFee(e.target.value)}
           />
+          <FormLabel className={classes.tierLabel} component='legend'>
+              Archive Status
+            </FormLabel>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checked}
+                  onChange={handleChange}
+                  name='checkedB'
+                  color='primary'
+                />
+              }
+              label='Archive'
+            />
         </form>
       </DialogContent>
       <DialogActions>

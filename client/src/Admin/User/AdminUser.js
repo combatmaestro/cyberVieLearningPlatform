@@ -66,12 +66,13 @@ function AdminUser() {
     dispatch(adminGetAllUsers());
   }, []);
 
-  const submitHandler = async (e, tier, role, id) => {
+  const submitHandler = async (e, tier, role, id,selectedBatch) => {
     e.preventDefault();
     setOpen(false); //closing modal
     const formData = new FormData();
     formData.set("tier", tier);
     formData.set("role", role);
+    formData.set("batch",selectedBatch)
     const { success } = await dispatch(editCertainUser(id, formData));
     if (success) {
       setMessage("Changes Saved Successfully");
@@ -124,6 +125,7 @@ function AdminUser() {
         name: <span>{user.name}</span>,
         email: `${user.email}`,
         role: `${user.role === "user" ? "student" : user.role}`,
+        batch: user?.batch,
         tier:
           user.tier === "paid" ? (
             <p style={{ color: "blue" }}>Paid</p>
@@ -137,7 +139,7 @@ function AdminUser() {
                 className="btn btn-primary py-1 px-2  ml-2"
                 onClick={() => editUserHandler(user)}
               >
-                <i class="far fa-edit"></i>
+                <i className="far fa-edit"></i>
               </button>
             </Tooltip>
           </>
