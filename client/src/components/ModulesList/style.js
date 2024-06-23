@@ -33,7 +33,7 @@ export const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down(830)]: {
       width: 325,
-      height: 204,
+      height: 255,
     },
   },
 
@@ -46,7 +46,7 @@ export const useStyles = makeStyles((theme) => ({
     fontFamily: 'Noto Sans JP',
 
     [theme.breakpoints.down(830)]: {
-      fontSize: 18,
+      fontSize: 15,
       lineHeight: '25px',
     },
   },
@@ -101,4 +101,6 @@ export const useStyles = makeStyles((theme) => ({
       fontWeight: 400,
     },
   },
+
+  
 }))
