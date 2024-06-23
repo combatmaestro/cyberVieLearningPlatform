@@ -84,6 +84,7 @@ function ModulesList() {
                           <LockIcon />
                         </div>
                       )}
+                      
                     <div className={classes.description}>
                       {module.description}
                     </div>
