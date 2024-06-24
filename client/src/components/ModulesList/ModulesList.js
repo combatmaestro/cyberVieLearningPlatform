@@ -6,7 +6,7 @@ import { getAllModules } from "../../actions/moduleAction";
 import ModuleListLoader from "./ModuleListLoader";
 import LockIcon from "@material-ui/icons/Lock";
 import { useStyles } from "./style";
-import moduleImg from "./Cybersecurity_Training.png";
+import moduleImg from "./Cybersecurity_Training1.png";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 function ModulesList() {
