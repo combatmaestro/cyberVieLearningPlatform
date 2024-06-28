@@ -22,7 +22,7 @@ import ErrorBar from "../../Admin/SnackBar/ErrorBar";
 import ModuleListLoader from "../ModulesList/ModuleListLoader"; // Adjust path as per your file structure
 import { getAllBatches } from "../../actions/moduleAction";
 import { useDispatch, useSelector } from "react-redux";
-
+import cardImg from "./Cybersecurity_Training.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -111,6 +111,7 @@ const BatchList = () => {
   const [openFailure, setOpenFailure] = React.useState(false);
   const [message, setMessage] = React.useState("");
   const [showDescription, setShowDescription] = React.useState(false);
+
   React.useEffect(() => {
     dispatch(getAllBatches());
   }, [dispatch]);
@@ -236,7 +237,7 @@ const BatchList = () => {
                   <CardMedia
                     className={classes.media}
                     style={{ borderRadius: "10px" }}
-                    image="https://www.cm-alliance.com/hubfs/60776739_l%20(1).jpg" // Replace with your image URL
+                    image={cardImg} // Replace with your image URL
                     title={module.title}
                   />
 

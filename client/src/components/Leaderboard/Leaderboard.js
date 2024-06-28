@@ -7,8 +7,11 @@ import Pagination from 'react-js-pagination'
 import clsx from 'clsx'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import Cup from './Cup.svg'
 import CupFilled from './CupFilled.svg'
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 
     '& .prevNext': {
       backgroundColor: '#00B2FF',
-      margin: '0px 20px',
+      margin: '0px 6px',
       borderRadius: '8px',
       width: 80,
       textAlign: 'center',
@@ -71,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: 42,
 
     [theme.breakpoints.down(420)]: {
-      width: '90%',
+      width: '80%',
       marginTop: 12,
     },
 
@@ -155,11 +158,12 @@ function Leaderboard() {
     (state) => state.leaderBoard
   )
   const [page, setPage] = useState(1)
+  const [search, setSearch] = useState('');
   const { data } = user
 
   useEffect(() => {
-    dispatch(getLeaderBoard(page))
-  }, [page])
+    dispatch(getLeaderBoard(page, search));
+  }, [page, search.length>5]);
 
   const colorClassFinder = (index) => {
     if (page === 1) {
@@ -185,6 +189,9 @@ function Leaderboard() {
   const setCurrentPageNo = (pageNo) => {
     setPage(pageNo)
   }
+  const handleSearchChange = (event) => {
+    setSearch(event.target.value);
+  };
 
   if (loading) {
     return <Loader />
@@ -192,105 +199,49 @@ function Leaderboard() {
 
   return (
     <>
-      <Grid
-        container
-        direction='column'
-        alignItems='center'
-        className={classes.root}
-      >
+     
+      <Grid container direction="column" alignItems="center" className={classes.root}>
         <h1 className={classes.heading}>Leaderboard</h1>
-        <Box
-          display='flex'
-          flexDirection='row'
-          justifyContent='center'
-          className={classes.topperContainer}
-        >
-          <Box
-            display='flex'
-            flexDirection='column'
-            className={classes.topperBlock}
-          >
-            <div className={classes.topperImage}>
-              <img
-                src={topperData[1].avatar.url}
-                alt='profile'
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                }}
-              />
-            </div>
-            <p className={classes.details}>{topperData[1].name}</p>
-            <p className={classes.subDetails}>{topperData[1].marks}</p>
-          </Box>
-          <Box
-            display='flex'
-            flexDirection='column'
-            className={clsx(classes.topperBlock, classes.variation)}
-          >
-            <div className={classes.topperImage}>
-              <img
-                src={topperData[0].avatar.url}
-                alt='profile'
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                }}
-              />
-            </div>
-            <p className={classes.details}>{topperData[0].name}</p>
-            <p className={classes.subDetails}>{topperData[0].marks}</p>
-          </Box>
-          <Box
-            display='flex'
-            flexDirection='column'
-            className={classes.topperBlock}
-          >
-            <div className={classes.topperImage}>
-              <img
-                src={topperData[2].avatar.url}
-                alt='profile'
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                }}
-              />
-            </div>
-            <p className={classes.details}>{topperData[2].name}</p>
-            <p className={classes.subDetails}>{topperData[2].marks}</p>
-          </Box>
+        <TextField
+        value={search}
+        onChange={handleSearchChange}
+        label="Search User"
+        margin="normal"
+        variant="outlined"
+        type="search"
+      />
+        <Box display="flex" flexDirection="row" justifyContent="center" className={classes.topperContainer}>
+          {topperData.map((topper, index) => (
+            <Box display="flex" flexDirection="column" className={classes.topperBlock} key={index}>
+              <div className={classes.topperImage}>
+                <img
+                  src={topper.avatar.url}
+                  alt="profile"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    borderRadius: '50%',
+                  }}
+                />
+              </div>
+              <p className={classes.details}>{topper.name}</p>
+              <p className={classes.subDetails}>{topper.marks}</p>
+            </Box>
+          ))}
         </Box>
-        {/* table part */}
-        <Box
-          display='flex'
-          flexDirection='column'
-          justifyContent='center'
-          className={classes.tableContainer}
-        >
-          <Box
-            display='flex'
-            flexDirection='row'
-            justifyContent='space-between'
-            style={{ width: '100%' }}
-            className={classes.commonPadding}
-          >
+        <Box display="flex" flexDirection="column" justifyContent="center" className={classes.tableContainer}>
+          <Box display="flex" flexDirection="row" justifyContent="space-between" className={classes.commonPadding}>
             <span className={classes.commonWidth}>Rank</span>
             <span className={classes.commonWidth}>Name</span>
             <span className={classes.commonWidth}>Marks</span>
           </Box>
           {leaderData.map((data, index) => (
             <Box
-              display='flex'
-              flexDirection='row'
-              justifyContent='space-between'
-              style={{ width: '100%' }}
+              display="flex"
+              flexDirection="row"
+              justifyContent="space-between"
               key={data._id}
-              className={`${classes.commonPadding} ${colorClassFinder(
-                index + 1
-              )}`}
+              className={`${classes.commonPadding} ${colorClassFinder(index + 1)}`}
             >
               <div className={classes.commonWidth}>
                 <span>
@@ -315,18 +266,18 @@ function Leaderboard() {
           onChange={setCurrentPageNo}
           nextPageText={'Next'}
           prevPageText={'Prev'}
-          itemClass='page-item'
-          linkClass='page-link'
+          itemClass="page-item"
+          linkClass="page-link"
           hideFirstLastPages={true}
-          itemClassPrev='prevNext'
-          itemClassNext='prevNext'
-          linkClassPrev='colorWhite'
-          linkClassNext='colorWhite'
-          disabledClass='disable'
+          itemClassPrev="prevNext"
+          itemClassNext="prevNext"
+          linkClassPrev="colorWhite"
+          linkClassNext="colorWhite"
+          disabledClass="disable"
         />
       </Grid>
     </>
-  )
+  );
 }
 
 export default Leaderboard

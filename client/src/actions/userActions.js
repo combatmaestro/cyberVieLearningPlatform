@@ -166,7 +166,7 @@ export const updateUser = (info) => async (dispatch) => {
   }
 }
 
-export const getLeaderBoard = (page) => async (dispatch) => {
+export const getLeaderBoard = (page,search) => async (dispatch) => {
   dispatch({
     type: LEADERBOARD_REQUEST,
   })
@@ -178,7 +178,7 @@ export const getLeaderBoard = (page) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post(`${backendUrl}/user/leaderboard`, { page }, config)
+    const { data } = await axios.post(`${backendUrl}/user/leaderboard`, { page,search }, config)
     // console.log(data)
     dispatch({
       type: LEADERBOARD_SUCCESS,

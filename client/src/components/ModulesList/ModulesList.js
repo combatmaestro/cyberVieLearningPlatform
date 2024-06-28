@@ -70,13 +70,15 @@ function ModulesList() {
                       <Grid item xs={12} md={10}>
                         <div className={classes.titleBold}>{module.title}</div>
                       </Grid>
-                      <Grid item xs={12} md={2}>
+                      {!(user.role === "user" &&
+                      user.tier === "free" &&
+                      module.type === "paid") && <Grid item xs={12} md={2}>
                         <img
                           src={moduleImg}
                           style={{ width: 50, height: 50, marginRight: 10 }}
                         />
-                      </Grid>
-                    </Grid>
+                      </Grid>}
+                    </Grid> 
                     {user.role === "user" &&
                       user.tier === "free" &&
                       module.type === "paid" && (

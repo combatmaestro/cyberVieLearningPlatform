@@ -256,11 +256,14 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
 });
 
 module.exports.leaderboard = catchAsyncErrors(async (req, res, next) => {
-  const page = req.body.page;
+  const { page = 1, search = '' } = req.body; // Add search query
   const skip = 10 * (page - 1);
 
-  const total = await User.countDocuments({});
-  const userList = await User.find({})
+  // Create a search condition
+  const searchCondition = search ? { name: { $regex: search, $options: 'i' } } : {};
+
+  const total = await User.countDocuments(searchCondition); // Count total documents based on search condition
+  const userList = await User.find(searchCondition)
     .sort({ marks: -1 })
     .limit(10)
     .skip(skip)
@@ -291,12 +294,14 @@ module.exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 
 module.exports.editUser = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.query;
+  console.log(req.body)
   const user = await User.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
 
+  console.log(user)
   return res.status(200).json({
     success: true,
     data: user,
