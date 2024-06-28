@@ -37,14 +37,21 @@ function BatchDialogue(props) {
   const handleChange = (event) => {
     setChecked(event.target.checked)
   }
-
+  const formatDate = (date) => {
+    if (!date) return '';
+    const d = new Date(date);
+    const month = ('0' + (d.getMonth() + 1)).slice(-2);
+    const day = ('0' + d.getDate()).slice(-2);
+    const year = d.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
   useEffect(() => {
     if (module) {
       setTitle(module.title);
       setDescription(module.description);
       setChecked(module.archive);
-      setStartDate(module.startDate || '');
-      setEndDate(module.endDate || '');
+      setStartDate(formatDate(module.startDate)); // Format the start date
+      setEndDate(formatDate(module.endDate)); // Format the end date
       setCourseFee(module.fee || '');
       setDiscountFee(module.discountFee || '');
     } else {
