@@ -108,9 +108,11 @@ const Batch = () => {
         }
     }
     }
-
-    const getUserCount = (batchId) => {
-      return allUsersData.filter(user => user.batch === batchId).length;
+    
+    const getUserNames = (batchId) => {
+      const users = allUsersData.filter(user => user.batch === batchId);
+      console.log(users)
+      return users.map(user => user.name).join(', ');
     };
   
     if (loading) return <Loader />
@@ -165,7 +167,7 @@ const Batch = () => {
             endDate: new Date(module.endDate).toLocaleDateString(),
             fee: module.fee,
             discountedFee:module.discountedFee,
-            userCount: getUserCount(module._id),
+            userCount: getUserNames(module._id),
             actions: (
               <>
                 <Tooltip title='Edit' placement='top' arrow>

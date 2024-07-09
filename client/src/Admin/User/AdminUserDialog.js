@@ -43,6 +43,7 @@ function UserDialog(props) {
     dispatch(getAllBatches())
     setTier(user.tier);
     setRole(user.role);
+    setSelectedBatch(user.batch);
     
   }, [open]);
 
