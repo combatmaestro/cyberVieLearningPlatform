@@ -95,6 +95,7 @@ function Playground() {
   const [iframeSrc, setIframeSrc] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
   const [labStarted, setLabStarted] = useState(false);
+  const [creatingLab, setCreatingLab] = useState(false)
   const iframeRef = useRef(null);
 
   const onStart = () => {
@@ -103,6 +104,7 @@ function Playground() {
   };
 
   const onCreate = () => {
+    setCreatingLab(true);
     dispatch(createLab(user.email));
   };
 
@@ -119,7 +121,7 @@ function Playground() {
   useEffect(() => {
     if (labData?.labData?.url) {
       setIframeSrc(labData.labData.url);
-      
+      setLabStarted(false);
       const totalDuration = labData.labData.stats.monthlyTotalDuration;
       const activeDuration = labData.labData.stats.activeDuration;
       const initialTimeLeft = (totalDuration - activeDuration) * 60;
