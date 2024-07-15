@@ -409,7 +409,6 @@ module.exports.startSubscription = async (req, res) => {
         const stats = response.stats;
         const dataArray = JSON.parse(response.userAccess);
         const objData = {};
-        
         dataArray.forEach((item) => {
           if (item.description === "Web desktop.") {
             objData.url = item.value;
