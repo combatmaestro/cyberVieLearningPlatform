@@ -240,7 +240,7 @@ function Playground() {
             </div>
           ) }
           
-          {user.tier === "free" (
+          {user.tier === "free" && (
             <div
               className={classes.homeBlink}
               style={{
