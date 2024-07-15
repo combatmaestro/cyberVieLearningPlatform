@@ -388,6 +388,12 @@ module.exports.startSubscription = async (req, res) => {
           });
           const responseData = await fetchResponse.json();
 
+          //handle check responseData.messageCode === " 1031"
+          if(responseData.messageCode === "1031" || responseData.messageCode === "1024"  || responseData.messageCode ==="1025" || responseData.messageCode ==="1027" || responseData.messageCode === "1029" || responseData.messageCode ==="1030" || responseData.messageCode === "1032"){
+            if (responseData.messageCode) {
+              return handleErrorResponse(responseData.messageCode);
+            }
+          }else{
           if (responseData.userAccess === undefined) {
             console.log("userAccess is undefined, checking subscription again...");
             response = await checkSubscription();
