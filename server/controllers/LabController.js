@@ -216,19 +216,7 @@ module.exports.createNewLabForUser = async (req, res) => {
           MasterCredential
         );
         console.log(createSubscriptionResponse);
-      }
-      getSubscription(user, MasterCredential,"Create")
-        .then(async (responseData) => {
-          console.log("Response data1:", responseData);
-
-          // labCreated status check
-          if (
-            (responseData.action === "Stop" &&
-              responseData.status === "Complete") ||
-            (responseData.action === "Create" &&
-              responseData.status === "Complete")
-          ) {
-            var latestUserData = await User.findOne({ email });
+        var latestUserData = await User.findOne({ email });
             latestUserData.labCreated = true;
             await latestUserData.save();
             return res.status(200).json({
@@ -236,11 +224,31 @@ module.exports.createNewLabForUser = async (req, res) => {
               labCreated: true,
               data: latestUserData,
             });
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      }
+      // getSubscription(user, MasterCredential,"Create")
+      //   .then(async (responseData) => {
+      //     console.log("Response data1:", responseData);
+
+      //     // labCreated status check
+      //     if (
+      //       (responseData.action === "Stop" &&
+      //         responseData.status === "Complete") ||
+      //       (responseData.action === "Create" &&
+      //         responseData.status === "Complete")
+      //     ) {
+      //       var latestUserData = await User.findOne({ email });
+      //       latestUserData.labCreated = true;
+      //       await latestUserData.save();
+      //       return res.status(200).json({
+      //         success: true,
+      //         labCreated: true,
+      //         data: latestUserData,
+      //       });
+      //     }
+      //   })
+      //   .catch((error) => {
+      //     console.error("Error:", error);
+      //   });
     } catch (error) {
       console.error(error);
     }
@@ -340,56 +348,80 @@ module.exports.startSubscription = async (req, res) => {
   let cookieValue = "";
 
   if (user.labCreated) {
-    const MasterCredentials = await this.loginUser();
+    try {
+      const MasterCredentials = await loginUser();
 
-    token = MasterCredentials.credentials["token"];
-    cookieValue =
-      MasterCredentials.credentials["session_name"] +
-      "=" +
-      MasterCredentials.credentials["sessid"];
+      token = MasterCredentials.credentials["token"];
+      cookieValue =
+        MasterCredentials.credentials["session_name"] +
+        "=" +
+        MasterCredentials.credentials["sessid"];
 
-    const checkSubscription = async () => {
-      return await getSubscription(user, MasterCredentials, "Start");
-    };
+      const checkSubscription = async () => {
+        return await getSubscription(user, MasterCredentials, "Start");
+      };
 
-    let response = await checkSubscription();
+      let response = await checkSubscription();
 
-    // Retry mechanism if userAccess is undefined
-    for (let attempts = 0; attempts < 3; attempts++) {
-      console.log("Response data:", response);
+      // Retry mechanism if userAccess is undefined
+      for (let attempts = 0; attempts < 3; attempts++) {
+        console.log("Response data:", response);
 
-      if (
-        (response.status === "Complete" && response.action === "Stop") ||
-        (response.status === "Complete" && response.action === "Delete")
-      ) {
-        const headers = {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "X-CSRF-Token": token,
-          Cookie: cookieValue,
-        };
-        const objBody = {
-          subscriptionId: user.subscriptionId,
-        };
-        const urlEncodedData = new URLSearchParams(objBody).toString();
+        if (
+          (response.status === "Complete" && response.action === "Stop") ||
+          (response.status === "Complete" && response.action === "Delete")
+        ) {
+          const headers = {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRF-Token": token,
+            Cookie: cookieValue,
+          };
+          const objBody = {
+            subscriptionId: user.subscriptionId,
+          };
+          const urlEncodedData = new URLSearchParams(objBody).toString();
 
-        const fetchResponse = await fetch(url, {
-          method: "POST",
-          headers: headers,
-          body: urlEncodedData,
-        });
-        const responseData = await fetchResponse.json();
+          const fetchResponse = await fetch(url, {
+            method: "POST",
+            headers: headers,
+            body: urlEncodedData,
+          });
+          const responseData = await fetchResponse.json();
 
-        if (responseData.userAccess === undefined) {
-          console.log("userAccess is undefined, checking subscription again...");
-          response = await checkSubscription();
-          continue; // Retry the loop
-        }
+          if (responseData.userAccess === undefined) {
+            console.log("userAccess is undefined, checking subscription again...");
+            response = await checkSubscription();
+            continue; // Retry the loop
+          }
 
-        const objData = {};
-        const stats = responseData.stats;
+          const objData = {};
+          const stats = responseData.stats;
 
-        if (responseData.userAccess && typeof responseData.userAccess === 'string') {
-          const dataArray = JSON.parse(responseData.userAccess);
+          if (responseData.userAccess && typeof responseData.userAccess === 'string') {
+            const dataArray = JSON.parse(responseData.userAccess);
+            dataArray.forEach((item) => {
+              if (item.description === "Web desktop.") {
+                objData.url = item.value;
+              }
+            });
+
+            objData.stats = stats;
+
+            return res.status(200).json({
+              success: true,
+              labData: objData,
+            });
+          } else {
+            console.error('responseData.userAccess is not a valid JSON string or is undefined');
+            return res.status(500).json({
+              success: false,
+              message: 'Invalid user access data received from the server.'
+            });
+          }
+        } else {
+          const stats = response.stats;
+          const dataArray = JSON.parse(response.userAccess);
+          const objData = {};
           dataArray.forEach((item) => {
             if (item.description === "Web desktop.") {
               objData.url = item.value;
@@ -402,34 +434,28 @@ module.exports.startSubscription = async (req, res) => {
             success: true,
             labData: objData,
           });
-        } else {
-          console.error('responseData.userAccess is not a valid JSON string or is undefined');
         }
-      } else {
-        const stats = response.stats;
-        const dataArray = JSON.parse(response.userAccess);
-        const objData = {};
-        dataArray.forEach((item) => {
-          if (item.description === "Web desktop.") {
-            objData.url = item.value;
-          }
-        });
-
-        objData.stats = stats;
-
-        return res.status(200).json({
-          success: true,
-          labData: objData,
-        });
       }
-    }
 
-    return res.status(500).json({ success: false, message: 'User access could not be determined after multiple attempts.' });
+      return res.status(500).json({
+        success: false,
+        message: 'User access could not be determined after multiple attempts.'
+      });
+    } catch (error) {
+      console.error('Error in starting subscription:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'Internal server error occurred while starting the subscription.',
+        error: error.message
+      });
+    }
   } else {
-    return res.status(400).json({ success: false, message: 'Lab not created for the user.' });
+    return res.status(400).json({
+      success: false,
+      message: 'Lab not created for the user.'
+    });
   }
 };
-
 
 
 module.exports.stopLab = async (req, res) => {
