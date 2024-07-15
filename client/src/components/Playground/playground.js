@@ -133,7 +133,15 @@ function Playground() {
     if (labData?.labData?.MessageCode === "12000") {
       setLabStarted(false);
     }
+
+
+    if(labData?.labCreated){
+      console.log("Lab created",labData?.labCreated)
+    }
   }, [labData]);
+
+
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -232,7 +240,7 @@ function Playground() {
             </div>
           ) }
           
-          {user.tier === "free" (
+          {user.tier === "free" && (
             <div
               className={classes.homeBlink}
               style={{
