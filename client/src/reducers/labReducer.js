@@ -37,7 +37,7 @@ import {
       case GET_LAB_SUCCESS:
       case ADD_LAB_SUCCESS:
       case STOP_LAB_SUCCESS:
-        return { ...state, loading: false, labs: action.payload };
+        return { ...state, loading: false, labData: action.payload };
   
       case CREATE_LAB_SUCCESS:
         return { ...state, loading: false, labCreated: true, labData: action.payload };
