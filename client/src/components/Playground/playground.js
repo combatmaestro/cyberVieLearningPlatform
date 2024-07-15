@@ -120,7 +120,7 @@ function Playground() {
   }, [labData]);
 
   useEffect(() => {
-    if (labData?.labData?.MessageCode === "12000") {
+    if (labData?.labData?.labData?.MessageCode === "12000") {
       setLabStarted(false);
     }
   }, [labData]);
