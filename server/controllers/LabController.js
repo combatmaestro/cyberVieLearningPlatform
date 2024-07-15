@@ -349,7 +349,7 @@ module.exports.startSubscription = async (req, res) => {
 
   if (user.labCreated) {
     try {
-      const MasterCredentials = await loginUser();
+      const MasterCredentials = await this.loginUser();
 
       token = MasterCredentials.credentials["token"];
       cookieValue =
