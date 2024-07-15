@@ -99,7 +99,7 @@ function Playground() {
   const iframeRef = useRef(null);
 
   const onStart = () => {
-    setLabStarted(true);
+    // setLabStarted(true);
     dispatch(startLab(user.email));
   };
 
@@ -121,7 +121,7 @@ function Playground() {
   useEffect(() => {
     if (labData?.labData?.url) {
       setIframeSrc(labData.labData.url);
-      setLabStarted(false);
+      setLabStarted(true);
       const totalDuration = labData.labData.stats.monthlyTotalDuration;
       const activeDuration = labData.labData.stats.activeDuration;
       const initialTimeLeft = (totalDuration - activeDuration) * 60;
@@ -226,7 +226,7 @@ function Playground() {
         <CardContent
           style={{ position: "relative", height: "600px", width: "100%" }}
         >
-          {user.tier === "paid" && labStarted && user.labCreated && (
+          {user.tier === "paid" && !labStarted && user.labCreated && (
             <div
               className={classes.homeBlink}
               style={{
