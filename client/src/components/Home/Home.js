@@ -5,10 +5,11 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { IconButton } from "@material-ui/core";
+import { Button, IconButton, Box } from "@material-ui/core";
 import AccessAlarmsIcon from "@material-ui/icons/AccessAlarms";
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import { useSelector } from "react-redux";
-
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 8,
@@ -50,6 +51,16 @@ const useStyles = makeStyles((theme) => ({
     "50%": { opacity: 0.5 },
     "100%": { opacity: 1 },
   },
+  headerContainer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  playgroundButton: {
+    background: "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
+    marginRight: "6%",
+    color: "white"
+  },
 }));
 
 function Home() {
@@ -58,6 +69,7 @@ function Home() {
   const userData = useSelector((state) => state.user);
   const user = userData.data;
   const modulesListRef = useRef(null);
+  const history = useHistory()
   const [appBarWidth, setAppBarWidth] = useState("100%");
 
   useEffect(() => {
@@ -77,29 +89,30 @@ function Home() {
     };
   }, []);
 
+  const openPlayground = () => {
+    history.push('/playground')
+  }
+
   return (
     <div className={classes.root}>
+      <Box className={classes.headerContainer}>
       <h2 style={{ fontSize: 41 }}>Modules</h2>
+        <Button type="submit" variant='contained' className={classes.playgroundButton} onClick={openPlayground}>
+          Open Playground <TrendingUpIcon />
+        </Button>
+      </Box>
       {
-            !(user.mobile != "" && user.education !="" && user.currentSalary !="" ) && 
+        (user.mobile === "" && user.education === "" && user.currentSalary === "") && 
       <AppBar position="static" className={classes.appBar} style={{ width: appBarWidth }}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-          >
+            <IconButton edge="start" color="inherit" aria-label="menu">
             <AccessAlarmsIcon />
           </IconButton>
-         
-         
             <Typography variant="h6" style={{ flexGrow: 1 }}>
             <Link to="/profile" style={{ color: "#e8eef4" }} className={classes.homeBlink}>
-              Welcome {user.name} , proceed to complete your profile ➡️!!
+                Welcome {user.name}, proceed to complete your profile ➡️!!
             </Link>
           </Typography>
-         
-         
         </Toolbar>
       </AppBar>
        }

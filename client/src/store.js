@@ -10,6 +10,7 @@ import {
   leaderBoardReducer,
   getAllUsersReducer,
 } from "./reducers/userReducer";
+import { labReducer } from "./reducers/labReducer";
 import {
   getAdminTopicReducer,
   getTopicContentReducer,
@@ -35,6 +36,7 @@ const reducer = combineReducers({
   ctfs: ctfReducer,
   allUsers: getAllUsersReducer,
   orders: orderReducer,
+  lab: labReducer, // Add lab reducer here
 });
 
 const store = createStore(

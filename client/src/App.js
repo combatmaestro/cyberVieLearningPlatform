@@ -28,6 +28,8 @@ import Batch from './Admin/Batches/Batch'
 import BatchComp from './components/Batches/batchComp'
 import Progress from './components/Progress/Progress'
 import TrackStudent from './Admin/Tracking/trackStudent'
+import AdminLabs from './Admin/labs/adminLabs'
+import Playground from './components/Playground/playground'
 
 function App() {
   const dispatch = useDispatch()
@@ -56,6 +58,7 @@ function App() {
                 <Route exact path='/batch' component={BatchComp} />
                 <ProtectedRoute exact path='/home' component={Home} />
                 <ProtectedRoute exact path='/placements' component={Placement} />
+                <ProtectedRoute exact path='/playground' component={Playground} />
                 <ProtectedRoute exact path='/module/:id' component={Module} />
                 <ProtectedRoute
                   exact
@@ -87,6 +90,12 @@ function App() {
                   path='/admin/modules'
                   component={AdminModules}
                   roles={['admin', 'teacher']}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/admin/labs'
+                  component={AdminLabs}
+                  roles={['admin']}
                 />
                 <ProtectedRoute
                   exact

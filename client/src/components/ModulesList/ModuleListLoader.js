@@ -9,7 +9,7 @@ function ModuleListLoader() {
     <div className={classes.root}>
       {[...Array(15)].map((x, i) => {
         return (
-          <div className={classes.module}>
+          <div className={classes.module} key={i}>
             <Skeleton variant='text' height={40} />
             <Skeleton variant='text' height={40} />
             <br />

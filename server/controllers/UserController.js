@@ -22,8 +22,11 @@ module.exports.authenticate = async (req, res, next) => {
 
     const { name, email, picture } = ticket.getPayload();
     let user = await User.findOne({ email: email });
+    var filteredUsers = {};
     if (user) {
-      await sendToken(user, 200, res);
+      const token = user.getJwtToken();
+      const filteredUser = filterUserProperties(user);
+      await sendToken(filteredUser, token, 200, res);
     } else {
       user = await User.create({
         email,
@@ -43,29 +46,28 @@ module.exports.authenticate = async (req, res, next) => {
         html: `${name} with email ${email} has joined the portal today`,
         subject: "New Registration in the portal",
       });
-      await sendToken(user, 200, res);
+      const token = user.getJwtToken();
+      const filteredUser = filterUserProperties(user);
+      await sendToken(filteredUser, token, 200, res);
     }
   } catch (error) {
     console.log(error);
   }
 };
 
-module.exports.demo = () => {
-  return res.status(200).json({
-    success: true,
-    data: "hi",
-  });
-};
+
 module.exports.getDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user._id);
-
+  var filteredUsers = {};
   if (!user) {
     return next(new ErrorHandler("User not found", 404));
+  }else{
+    filteredUsers = filterUserProperties(user);
   }
 
   return res.status(200).json({
     success: true,
-    data: user,
+    data: filteredUsers,
   });
 });
 
@@ -248,10 +250,13 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
     runValidators: true,
     useFindAndModify: false,
   });
-
+  var filteredUsers = {};
+  if (user) {
+    filteredUsers = filterUserProperties(user)
+  }
   return res.status(200).json({
     success: true,
-    data: user,
+    data: filteredUsers
   });
 });
 
@@ -283,27 +288,55 @@ module.exports.leaderboard = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+
 module.exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
-  const AllUsers = await User.find({}).sort({ createdAt: -1 });
+  const allUsers = await User.find({}).sort({ createdAt: -1 });
+  const filteredUsers = allUsers.map(filterUserProperties);
 
   return res.status(200).json({
     success: true,
-    data: AllUsers,
+    data: filteredUsers,
   });
 });
 
 module.exports.editUser = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.query;
-  console.log(req.body)
-  const user = await User.findByIdAndUpdate(id, req.body, {
+  console.log(req.body);
+  
+  const updatedUser = await User.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
     useFindAndModify: false,
   });
 
-  console.log(user)
+  console.log(updatedUser);
+  const filteredUser = filterUserProperties(updatedUser);
+
   return res.status(200).json({
     success: true,
-    data: user,
+    data: filteredUser,
   });
 });
+
+function filterUserProperties(user) {
+  const objectToSend = {
+    avatar: user.avatar,
+    tier: user.tier,
+    role: user.role,
+    marks: user.marks,
+    responses: user.responses,
+    _id: user._id,
+    email: user.email,
+    name: user.name,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+
+  if (user.labCreated !== undefined) {
+    objectToSend.labCreated = user.labCreated;
+  }
+
+  return objectToSend;
+}
+
+

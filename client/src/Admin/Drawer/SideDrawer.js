@@ -126,6 +126,18 @@ const Sidebar = () => {
                 </Box>
               </Link>
             </List>
+            <List className={classes.list}>
+              <Link to="/admin/labs">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Labs</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
           </>
         )}
       </div>

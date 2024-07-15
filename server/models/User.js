@@ -12,6 +12,34 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Please enter the email'],
       unique: [true, 'Email Already Exists'],
     },
+    firstName:{
+      type: String,
+      required: false,
+    },
+    lastName:{
+      type: String,
+      required: false
+    },
+    userName:{
+      type: String,
+      required: false
+    },
+    password:{
+      type: String,
+      required: false
+    },
+    nuveProStatus:{
+      type: String,
+      required: false
+    },
+    subscriptionId:{
+      type: String,
+      required: false
+    },
+    labCreated:{
+      type:Boolean,
+      required: false
+    },
     avatar: {
       url: {
         type: String,
