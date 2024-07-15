@@ -83,7 +83,7 @@ export const fetchLabs = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: "GET",
-      url: `/lab/adminRequest`,
+      url: `${backendUrl}/lab/adminRequest`,
     });
     dispatch(getLabSuccess(data.data));
   } catch (error) {
@@ -92,7 +92,7 @@ export const fetchLabs = () => async (dispatch) => {
 };
 export const stopLab = (email) => async (dispatch) => {
   try {
-    const { data } = await axios.get(`/lab/stopLab?email=${email}`);
+    const { data } = await axios.get(`${backendUrl}/lab/stopLab?email=${email}`);
     dispatch(stopLabSuccess(data));
   } catch (error) {
     console.log(error);
@@ -115,7 +115,7 @@ const stopLabFailure = (error) => ({
 export const createLab = (email) => async (dispatch) => {
   dispatch(createLabRequest());
   try {
-    const { data } = await axios.get(`/lab/createLab?email=${email}`);
+    const { data } = await axios.get(`${backendUrl}/lab/createLab?email=${email}`);
     dispatch(createLabSuccess(data.data));
   } catch (error) {
     dispatch(createLabFailure(error.response.data.message));
@@ -126,7 +126,7 @@ export const createLab = (email) => async (dispatch) => {
 export const startLab = (email) => async (dispatch) => {
   dispatch(startLabRequest());
   try {
-    const { data } = await axios.get(`/lab/startLab?email=${email}`);
+    const { data } = await axios.get(`${backendUrl}/lab/startLab?email=${email}`);
     dispatch(startLabSuccess(data.labData));
   } catch (error) {
     dispatch(startLabFailure(error.response.data.message));
