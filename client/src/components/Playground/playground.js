@@ -84,10 +84,12 @@ function Playground() {
   const dispatch = useDispatch();
   const [iframeSrc, setIframeSrc] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
+  const [creatingLab, setCreatingLab] = useState(false);
   const [labStarted, setLabStarted] = useState(false);
   const iframeRef = useRef(null);
 
   const onStart = () => {
+    setCreatingLab(true);
     dispatch(startLab(user.email));
   };
 
@@ -109,6 +111,7 @@ function Playground() {
     if (labData?.labData?.url) {
       setIframeSrc(labData.labData.url);
       setLabStarted(true);
+      setCreatingLab(false);
       const totalDuration = labData.labData.stats.monthlyTotalDuration;
       const activeDuration = labData.labData.stats.activeDuration;
       const initialTimeLeft = (totalDuration - activeDuration) * 60;
@@ -207,7 +210,7 @@ function Playground() {
         <CardContent
           style={{ position: "relative", height: "600px", width: "100%" }}
         >
-          {creatingLab && !labStarted && (
+          { !labStarted && (
             <div
               className={classes.homeBlink}
               style={{
