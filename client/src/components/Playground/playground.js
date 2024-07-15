@@ -216,7 +216,7 @@ function Playground() {
         <CardContent
           style={{ position: "relative", height: "600px", width: "100%" }}
         >
-          {user.tier === "paid" && labStarted && user.labCreated ? (
+          {user.tier === "paid" && labStarted && user.labCreated && (
             <div
               className={classes.homeBlink}
               style={{
@@ -228,7 +228,9 @@ function Playground() {
             >
               Starting Lab ...
             </div>
-          ) : (
+          ) }
+          
+          {user.tier === "free" (
             <div
               className={classes.homeBlink}
               style={{
