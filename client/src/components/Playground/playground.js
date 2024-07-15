@@ -39,24 +39,14 @@ const useStyles = makeStyles((theme) => ({
   },
   homeBlink: {
     animation: `$homeBlink 1s linear infinite`,
-    color: "white",
     color: "transparent",
     background: "linear-gradient(90deg, blue, orange)",
     backgroundClip: "text",
-    textAlign: "center",
+    WebkitBackgroundClip: "text",
     textAlign: "center",
     marginBottom: "10px",
     fontSize: "30px",
-    fontWeight:"bold"
-  },
-  homeblinkSmall: {
-    animation: `$homeBlink 1s linear infinite`,
-    color: "white",
-    fontFamily: "cursive",
-    textAlign: "center",
-    "@media (max-width: 600px)": {
-      fontSize: "small", // Responsive font size for h6 on small screens
-    },
+    fontWeight: "bold",
   },
   "@keyframes homeBlink": {
     "0%": { opacity: 0 },
@@ -73,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     marginBottom: "10px",
     fontSize: "30px",
-    fontWeight:"bold"
+    fontWeight: "bold",
   },
   "@keyframes blink-animation": {
     "0%, 100%": {
@@ -95,16 +85,13 @@ function Playground() {
   const [iframeSrc, setIframeSrc] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
   const [labStarted, setLabStarted] = useState(false);
-  const [creatingLab, setCreatingLab] = useState(false)
   const iframeRef = useRef(null);
 
   const onStart = () => {
-    // setLabStarted(true);
     dispatch(startLab(user.email));
   };
 
   const onCreate = () => {
-    setCreatingLab(true);
     dispatch(createLab(user.email));
   };
 
@@ -131,30 +118,24 @@ function Playground() {
 
   useEffect(() => {
     if (labData?.labData?.MessageCode === "12000") {
-      // setLabStarted(false);
-    }
-
-
-    if(labData?.labCreated){
-      console.log("Lab created",labData?.labCreated)
+      setLabStarted(false);
     }
   }, [labData]);
 
-
-
-
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prevTime) => {
-        if (prevTime <= 0) {
-          clearInterval(timer);
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
+    if (labStarted) {
+      const timer = setInterval(() => {
+        setTimeLeft((prevTime) => {
+          if (prevTime <= 0) {
+            clearInterval(timer);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
 
-    return () => clearInterval(timer);
+      return () => clearInterval(timer);
+    }
   }, [labStarted]);
 
   const toggleFullscreen = () => {
@@ -226,7 +207,7 @@ function Playground() {
         <CardContent
           style={{ position: "relative", height: "600px", width: "100%" }}
         >
-          {user.tier === "paid" && labStarted && user.labCreated && (
+          {creatingLab && !labStarted && (
             <div
               className={classes.homeBlink}
               style={{
@@ -238,7 +219,7 @@ function Playground() {
             >
               Starting Lab ...
             </div>
-          ) }
+          )}
           
           {user.tier === "free" && (
             <div
