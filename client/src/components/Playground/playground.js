@@ -121,7 +121,7 @@ function Playground() {
   useEffect(() => {
     if (labData?.labData?.url) {
       setIframeSrc(labData.labData.url);
-      // setLabStarted(false);
+      setLabStarted(true);
       const totalDuration = labData.labData.stats.monthlyTotalDuration;
       const activeDuration = labData.labData.stats.activeDuration;
       const initialTimeLeft = (totalDuration - activeDuration) * 60;
