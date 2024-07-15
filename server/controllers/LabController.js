@@ -424,6 +424,8 @@ module.exports.startSubscription = async (req, res) => {
               message: 'Invalid user access data received from the server.'
             });
           }
+          }
+          
         } else {
           const stats = response.stats;
           const dataArray = JSON.parse(response.userAccess);
@@ -461,6 +463,65 @@ module.exports.startSubscription = async (req, res) => {
       message: 'Lab not created for the user.'
     });
   }
+};
+const handleErrorResponse = (messageCode) => {
+  let message = '';
+
+  switch (messageCode) {
+    case "1018":
+      message = "Resource has already been deleted";
+      break;
+    case "1019":
+      message = "Plan deactivated";
+      break;
+    case "1020":
+      message = "Action cannot be performed";
+      break;
+    case "1021":
+      message = "Exception";
+      break;
+    case "1024":
+      message = "Cannot launch. Lab is already deleted.";
+      break;
+    case "1025":
+      message = "Cannot launch. Lab is already under deletion.";
+      break;
+    case "1026":
+      message = "Cannot launch. Lab is under creation.";
+      break;
+    case "1027":
+      message = "Cannot launch. Lab creation failed.";
+      break;
+    case "1028":
+      message = "Launch in progress.";
+      break;
+    case "1029":
+      message = "Cannot launch. Lab creation is pending.";
+      break;
+    case "1030":
+      message = "Cannot launch. Lab is suspended.";
+      break;
+    case "1031":
+      message = "Cannot launch. The lab period has expired.";
+      break;
+    case "1032":
+      message = "Cannot launch. Unknown error.";
+      break;
+    case "1034":
+      message = "Invalid arguments - Provision data is not defined in the plan.";
+      break;
+    case "1035":
+      message = "Access denied for user. Unauthorized User or Session timed out.";
+      break;
+    case "1040":
+      message = "Cleanup in progress.";
+      break;
+    default:
+      message = "User access could not be determined after multiple attempts.";
+      break;
+  }
+
+  return res.status(500).json({ success: false, message });
 };
 
 
