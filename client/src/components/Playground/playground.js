@@ -224,7 +224,7 @@ function Playground() {
                 transform: "translate(-50%, -50%)",
               }}
             >
-              Starting Lab ...
+              {message}
             </div>
           )}
           
