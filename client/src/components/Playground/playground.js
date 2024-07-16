@@ -86,14 +86,16 @@ function Playground() {
   const [timeLeft, setTimeLeft] = useState(0);
   const [creatingLab, setCreatingLab] = useState(false);
   const [labStarted, setLabStarted] = useState(false);
+  const [message,setMessage] = useState("Start Lab ...")
   const iframeRef = useRef(null);
 
   const onStart = () => {
-    setCreatingLab(true);
+    setMessage("Starting Lab ...")
     dispatch(startLab(user.email));
   };
 
   const onCreate = () => {
+    setMessage("Creating Lab ...")
     dispatch(createLab(user.email));
   };
 
@@ -111,6 +113,7 @@ function Playground() {
     if (labData?.labData?.url) {
       setIframeSrc(labData.labData.url);
       setLabStarted(true);
+      setMessage("")
       setCreatingLab(false);
       const totalDuration = labData.labData.stats.monthlyTotalDuration;
       const activeDuration = labData.labData.stats.activeDuration;
@@ -122,6 +125,7 @@ function Playground() {
   useEffect(() => {
     if (labData?.labData?.labData?.MessageCode === "12000") {
       setLabStarted(false);
+      setMessage("Start Lab ...")
     }
   }, [labData]);
 
