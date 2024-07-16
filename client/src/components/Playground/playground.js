@@ -100,6 +100,7 @@ function Playground() {
   };
 
   const onStop = () => {
+    setMessage("Stopping Lab ...")
     dispatch(stopLab(user.email));
   };
 
