@@ -1,6 +1,7 @@
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
 const Module = require('../models/Module')
 const Topic = require('../models/Topic')
+const SubTopic = require('../models/subTopics')
 const ErrorHandler = require('../utils/errorHandler')
 const cloudinary = require('cloudinary')
 
@@ -118,3 +119,63 @@ module.exports.uploadImage = catchAsyncErrors(async (req, res, next) => {
     })
   }
 })
+
+
+//-> /topic/admin/gettopics
+module.exports.getTopics = catchAsyncErrors(async (req, res, next) => {
+  const { moduleId } = req.query;
+
+  
+  const module = await Module.findById(moduleId).populate({
+    path: 'topic',
+    select: '_id topicName' // Only select _id and topicName fields
+  });
+  if (!module) {
+    return next(new ErrorHandler('Module not found', 404));
+  }
+
+  return res.status(200).json({
+    success: true,
+    message: 'Topics fetched successfully',
+    data: module.topic,
+  });
+});
+
+exports.addSubTopic = catchAsyncErrors(async (req, res, next) => {
+  const { topicId, subtopics } = req.body;
+
+  try {
+    const topic = await Topic.findById(topicId);
+
+    if (!topic) {
+      return res.status(404).json({
+        success: false,
+        message: 'Topic not found',
+      });
+    }
+
+    // Create subtopics and save them to the database
+    const createdSubtopics = await SubTopic.insertMany(subtopics);
+
+    // Get the IDs of the created subtopics
+    const subtopicIds = createdSubtopics.map(subtopic => subtopic._id);
+
+    // Append the subtopic IDs to the topic's subTopics array
+    for(let i = 0; i < subtopicIds.length; i++){
+      topic.subTopics.push(subtopicIds[i]);
+    }
+    // topic.subTopics = topic.subTopics.concat(subtopicIds);
+    await topic.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'SubTopics added successfully',
+      data: createdSubtopics,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});

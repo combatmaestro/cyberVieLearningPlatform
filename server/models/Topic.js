@@ -15,6 +15,12 @@ const topicSchema = new mongoose.Schema({
       ref: 'Ctf',
     },
   ],
+  subTopics: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'SubTopic',
+    },
+  ],
   complete: {
     type: Boolean,
     default: false,

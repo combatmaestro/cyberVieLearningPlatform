@@ -18,6 +18,9 @@ import {
   ALL_USERS_REQUEST,
   ALL_USERS_SUCCESS,
   ALL_USERS_FAILURE,
+  ALL_TEACHERS_REQUEST,
+  ALL_TEACHERS_SUCCESS,
+  ALL_TEACHERS_FAILURE,
   EDIT_USER_REQUEST,
   EDIT_USER_SUCCESS,
   EDIT_USER_FAILURE,
@@ -217,6 +220,30 @@ export const adminGetAllUsers = () => async (dispatch) => {
     console.log(error)
     dispatch({
       type: ALL_USERS_FAILURE,
+      payload: error,
+    })
+  }
+}
+
+export const adminGetAllTeachers = () => async (dispatch) => {
+  dispatch({
+    type: ALL_TEACHERS_REQUEST,
+  })
+
+  try {
+    const res = await axios({
+      method: 'get',
+      url: `/user/admin/getTeachers`,
+    })
+    // console.log('get all users', res)
+    dispatch({
+      type: ALL_TEACHERS_SUCCESS,
+      payload: res.data.data,
+    })
+  } catch (error) {
+    console.log(error)
+    dispatch({
+      type: ALL_TEACHERS_FAILURE,
       payload: error,
     })
   }

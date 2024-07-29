@@ -15,6 +15,12 @@ import {
   ADMIN_UPDATE_CONTENT_REQUEST,
   ADMIN_UPDATE_CONTENT_SUCCESS,
   ADMIN_UPDATE_CONTENT_FAILURE,
+  TOPIC_LIST_REQUEST,
+  TOPIC_LIST_SUCCESS,
+  TOPIC_LIST_FAIL,
+  SUBTOPIC_ADD_REQUEST,
+  SUBTOPIC_ADD_SUCCESS,
+  SUBTOPIC_ADD_FAILURE
 } from '../constants/topicConstants'
 
 if(localStorage.getItem("token")){
@@ -184,5 +190,52 @@ export const updateContent = (id, info) => async (dispatch) => {
     return {
       success: false,
     }
+  }
+}
+
+
+export const listTopics = (moduleId) => async (dispatch) => {
+  try {
+    dispatch({ type: TOPIC_LIST_REQUEST })
+
+    const { data } = await axios.get(`/topic/admin/gettopics?moduleId=${moduleId}`)
+
+    dispatch({
+      type: TOPIC_LIST_SUCCESS,
+      payload: data.data,
+    })
+  } catch (error) {
+    dispatch({
+      type: TOPIC_LIST_FAIL,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    })
+  }
+}
+
+export const addSubtopics = (assessmentData) => async (dispatch) => {
+  try {
+    dispatch({ type: SUBTOPIC_ADD_REQUEST })
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+
+    const { data } = await axios.post('/topic/admin/subtopics/save', assessmentData, config)
+
+    dispatch({
+      type: SUBTOPIC_ADD_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: SUBTOPIC_ADD_FAILURE,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    })
   }
 }

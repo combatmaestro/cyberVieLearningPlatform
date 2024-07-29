@@ -13,7 +13,7 @@ function CTF({ ctf, addProgress }) {
       </div>
       <div>
         {ctf.map((item, index) => (
-          <RenderQuestion ctf={item} addProgress={addProgress} />
+          <RenderQuestion ctf={item} key={index} addProgress={addProgress} />
         ))}
       </div>
     </div>

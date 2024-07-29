@@ -76,6 +76,30 @@ const Sidebar = () => {
             </Box>
           </Link>
         </List>
+        <List className={classes.list}>
+              <Link to="/admin/subTopics">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Sub Topics</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
+            <List className={classes.list}>
+              <Link to="/admin/assessment">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Assessment</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
         {data.role === "admin" && (
           <>
             <List className={classes.list}>
@@ -134,6 +158,18 @@ const Sidebar = () => {
                       <ReceiptIcon />
                     </ListItemIcon>
                     <ListItemText>Labs</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
+            <List className={classes.list}>
+              <Link to="/admin/classes">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Classes</ListItemText>
                   </ListItem>
                 </Box>
               </Link>

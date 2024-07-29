@@ -9,20 +9,22 @@ import {
   userReducer,
   leaderBoardReducer,
   getAllUsersReducer,
+  getAllTeachersReducer
 } from "./reducers/userReducer";
 import { labReducer } from "./reducers/labReducer";
 import {
   getAdminTopicReducer,
   getTopicContentReducer,
+  topicListReducer,
 } from "./reducers/topicReducer";
 import { ctfReducer } from "./reducers/ctfReducer";
 import { orderReducer } from "./reducers/orderReduer";
-import { getAllBatchReducer } from "./reducers/batchReducer"; // Import the batch reducer
-
+import { getAllBatchReducer } from "./reducers/batchReducer";
+import assessmentReducer from "./reducers/assessmentReducer";
 const initialState = {
   user: {},
   modules: {},
-  batches: {}
+  batches: {},
 };
 
 const reducer = combineReducers({
@@ -35,8 +37,11 @@ const reducer = combineReducers({
   leaderBoard: leaderBoardReducer,
   ctfs: ctfReducer,
   allUsers: getAllUsersReducer,
+  allTeachers: getAllTeachersReducer,
   orders: orderReducer,
-  lab: labReducer, // Add lab reducer here
+  lab: labReducer,
+  topicList: topicListReducer,
+  assessment: assessmentReducer
 });
 
 const store = createStore(

@@ -17,6 +17,12 @@ router.get(
   authorizeRoles('admin'),
   UserController.getAllUsers
 )
+router.get(
+  '/admin/getTeachers',
+  isAuthenticatedUser,
+  authorizeRoles('admin'),
+  UserController.getTeachers
+)
 router.post(
   '/admin/editUser',
   isAuthenticatedUser,

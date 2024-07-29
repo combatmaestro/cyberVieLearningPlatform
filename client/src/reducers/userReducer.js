@@ -20,6 +20,9 @@ import {
   EDIT_USER_REQUEST,
   EDIT_USER_SUCCESS,
   EDIT_USER_FAILURE,
+  ALL_TEACHERS_REQUEST,
+  ALL_TEACHERS_SUCCESS,
+  ALL_TEACHERS_FAILURE,
 } from '../constants/userConstants'
 
 const initialState = {
@@ -146,6 +149,7 @@ export const getAllUsersReducer = (
     loading: true,
     allUsersData: '',
     error: '',
+    allTeachersData: '',
   },
   action
 ) => {
@@ -157,12 +161,25 @@ export const getAllUsersReducer = (
         loading: true,
       }
 
+    case ALL_TEACHERS_REQUEST:
+      return{
+        ...state,
+        loading:true,
+      }
+
     case ALL_USERS_SUCCESS:
       return {
         loading: false,
         allUsersData: action.payload,
         error: '',
       }
+
+      case ALL_TEACHERS_SUCCESS:
+        return {
+          loading: false,
+          allTeachersData: action.payload,
+          error: '',
+        }
 
     case EDIT_USER_SUCCESS:
       return {
@@ -181,7 +198,49 @@ export const getAllUsersReducer = (
         error: action.payload,
       }
 
+      case ALL_TEACHERS_FAILURE:
+        return {
+          loading: false,
+          allTeachersData: '',
+          error: action.payload,
+        }
+
     default:
       return state
   }
 }
+
+
+export const getAllTeachersReducer = (state = {
+  loading: true,
+  error: null,
+  allTeachersData: [],
+}, action) => {
+  switch (action.type) {
+    case ALL_TEACHERS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null, // Reset error on request
+      };
+
+    case ALL_TEACHERS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        allTeachersData: action.payload,
+        error: null,
+      };
+
+    case ALL_TEACHERS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        allTeachersData: [],
+        error: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};

@@ -131,4 +131,9 @@ export const useStyles = makeStyles((theme) => ({
     minWidth: 29,
     marginLeft: 'auto',
   },
+  iframe: {
+    width: '100%',
+    height: '500px',
+    border: 'none',
+  },
 }))

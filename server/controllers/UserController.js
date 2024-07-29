@@ -319,6 +319,14 @@ module.exports.editUser = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+module.exports.getTeachers = catchAsyncErrors(async (req, res, next) =>{
+  const allTeachers = await User.find({ role: 'teacher' }).sort({ createdAt: -1 });
+  return res.status(200).json({
+    success: true,
+    data: allTeachers,
+  });
+})
+
 function filterUserProperties(user) {
   const objectToSend = {
     avatar: user.avatar,

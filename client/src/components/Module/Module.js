@@ -6,13 +6,15 @@ import { getModule } from '../../actions/moduleAction'
 import { Redirect } from 'react-router-dom'
 import { useStyles } from './style'
 import CongratulationsDialog from '../CongratulationsDialog/Dialog'
-
+import { Button } from '@material-ui/core'
+import { useHistory } from "react-router-dom";
 function Module(props) {
   document.title = 'Module'
   const classes = useStyles()
   const { id } = props.match.params
   const [expanded, setExpanded] = useState(false)
   const dispatch = useDispatch()
+  const history = useHistory()
   const module = useSelector((state) => state.module)
   const [showCongratulationsDialog, setShowCongratulationsDialog] =
     useState(false)
@@ -30,6 +32,9 @@ function Module(props) {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
+  const routeToAssessment =() => {
+    history.push(`assessment/${id}`)
+  }
 
   useEffect(() => {
     dispatch(getModule(id))
@@ -41,8 +46,12 @@ function Module(props) {
 
   return (
     <div className={classes.root}>
-      <h2 className='moduleHeader'>{moduleData.title}</h2>
-
+      <div className={classes.moduleHeaderContainer}>
+      <h2 className="moduleHeader">{moduleData.title}</h2>
+      <Button type="submit" variant="contained" className={classes.playgroundButton} onClick={routeToAssessment}>
+        Take Assessment
+      </Button>
+    </div>
       <div className={classes.accordionContainer}>
         {moduleData.topic.map((topic, index) => {
           return (

@@ -87,6 +87,11 @@ function App() {
                 />
                 <ProtectedRoute
                   exact
+                  path='/module/assessment/:id'
+                  component={QuestionSection}
+                />
+                <ProtectedRoute
+                  exact
                   path='/admin/modules'
                   component={AdminModules}
                   roles={['admin', 'teacher']}
@@ -107,6 +112,24 @@ function App() {
                   exact
                   path='/admin/batches'
                   component={Batch}
+                  roles={['admin']}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/admin/classes'
+                  component={AdminClasses}
+                  roles={['admin']}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/admin/assessment'
+                  component={Assessment}
+                  roles={['admin']}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/admin/subTopics'
+                  component={Subtopics}
                   roles={['admin']}
                 />
                  <ProtectedRoute

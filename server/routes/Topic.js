@@ -6,6 +6,8 @@ const {
   getContent,
   getCtf,
   uploadImage,
+  getTopics,
+  addSubTopic
 } = require("../controllers/TopicController");
 const {
   isAuthenticatedUser,
@@ -54,5 +56,22 @@ router.post(
   authorizeRoles("admin", "teacher"),
   uploadImage
 );
+
+router.get(
+  "/admin/gettopics",
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
+  getTopics
+);
+
+router.post(
+  "/admin/subtopics/save",
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
+  addSubTopic
+);
+
+
+
 
 module.exports = router;
