@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ModulesList from "../ModulesList/ModulesList";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,7 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllAssessmentsToReview } from "../../actions/assessmentAction";
 import ReviewList from "../QuestionsAdminReviewSection/ReviewCards";
-
+import ModuleOverview from "../Module/ModuleOverview";
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 8,
@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   playgroundButton: {
     background:
       "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
-    marginRight: "6%",
+    marginRight: "9%",
     color: "white",
   },
 }));
@@ -104,6 +104,7 @@ function Home() {
 
   return (
     <div className={classes.root}>
+      <ModuleOverview />
       {teacher && (
         <>
           <Box className={classes.headerContainer}>
@@ -114,17 +115,17 @@ function Home() {
       )}
       {!teacher && (
         <>
-      <Box className={classes.headerContainer}>
-      <h2 style={{ fontSize: 41 }}>Modules</h2>
+          <Box className={classes.headerContainer}>
+            <h2 style={{ fontSize: 41 }}>Modules</h2>
             <Button
               type="submit"
               variant="contained"
               className={classes.playgroundButton}
               onClick={openPlayground}
             >
-          Open Playground <TrendingUpIcon />
-        </Button>
-      </Box>
+              Open Playground <TrendingUpIcon />
+            </Button>
+          </Box>
           {user.mobile === "" &&
             user.education === "" &&
             user.currentSalary === "" && (
@@ -133,21 +134,21 @@ function Home() {
                 className={classes.appBar}
                 style={{ width: appBarWidth }}
               >
-        <Toolbar>
-            <IconButton edge="start" color="inherit" aria-label="menu">
-            <AccessAlarmsIcon />
-          </IconButton>
-            <Typography variant="h6" style={{ flexGrow: 1 }}>
+                <Toolbar>
+                  <IconButton edge="start" color="inherit" aria-label="menu">
+                    <AccessAlarmsIcon />
+                  </IconButton>
+                  <Typography variant="h6" style={{ flexGrow: 1 }}>
                     <Link
                       to="/profile"
                       style={{ color: "#e8eef4" }}
                       className={classes.homeBlink}
                     >
-                Welcome {user.name}, proceed to complete your profile ➡️!!
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
+                      Welcome {user.name}, proceed to complete your profile ➡️!!
+                    </Link>
+                  </Typography>
+                </Toolbar>
+              </AppBar>
             )}
           <ModulesList />
         </>
