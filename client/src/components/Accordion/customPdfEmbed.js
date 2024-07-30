@@ -24,11 +24,16 @@ const CustomPDFViewer = ({ file }) => {
   const pdfUrl = URL.createObjectURL(pdfBlob);
 
   return (
-    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js`}>
-      <div style={{ height: '500px' }}>
-        <Viewer fileUrl={pdfUrl} />
-      </div>
-    </Worker>
+    // <Worker workerUrl={`https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js`}>
+    //   <div style={{ height: '500px' }}>
+    //     <Viewer fileUrl={pdfUrl} />
+    //   </div>
+    // </Worker>
+    <embed
+        src={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=0"`}
+        title="PDF Viewer"
+        style={{ width: '100%', height: '700px', border: 'none' }}
+      />
   );
 };
 
