@@ -45,7 +45,7 @@ function App() {
     ReactGA.pageview(window.location.pathname + window.location.search)
 
     //to refresh user
-    // dispatch(userRefresh())
+    dispatch(userRefresh())
   }, [dispatch])
   return (
     <>

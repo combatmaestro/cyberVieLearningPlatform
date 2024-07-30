@@ -233,7 +233,7 @@ export const adminGetAllTeachers = () => async (dispatch) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `/user/admin/getTeachers`,
+      url: `${backendUrl}/user/admin/getTeachers`,
     })
     // console.log('get all users', res)
     dispatch({

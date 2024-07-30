@@ -198,7 +198,7 @@ export const listTopics = (moduleId) => async (dispatch) => {
   try {
     dispatch({ type: TOPIC_LIST_REQUEST })
 
-    const { data } = await axios.get(`/topic/admin/gettopics?moduleId=${moduleId}`)
+    const { data } = await axios.get(`${backendUrl}/topic/admin/gettopics?moduleId=${moduleId}`)
 
     dispatch({
       type: TOPIC_LIST_SUCCESS,
@@ -224,7 +224,7 @@ export const addSubtopics = (assessmentData) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post('/topic/admin/subtopics/save', assessmentData, config)
+    const { data } = await axios.post(`${backendUrl}/topic/admin/subtopics/save`, assessmentData, config)
 
     dispatch({
       type: SUBTOPIC_ADD_SUCCESS,
