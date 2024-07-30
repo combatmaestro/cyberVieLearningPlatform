@@ -32,7 +32,7 @@ import AdminLabs from './Admin/labs/adminLabs'
 import Playground from './components/Playground/playground'
 import AdminClasses from './Admin/scheduleClasses/adminClasses'
 import Assessment from './Admin/Assessment/assessment';
-import Subtopics from './Admin/SubTopics/subTopics';
+import Subtopics from './Admin/SubTopic/subTopics';
 import QuestionSection from './components/QuestionsSection/QuestionSection'
 
 function App() {
