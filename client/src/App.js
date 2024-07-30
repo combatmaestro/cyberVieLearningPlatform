@@ -30,7 +30,10 @@ import Progress from './components/Progress/Progress'
 import TrackStudent from './Admin/Tracking/trackStudent'
 import AdminLabs from './Admin/labs/adminLabs'
 import Playground from './components/Playground/playground'
-
+import AdminClasses from './Admin/scheduleClasses/adminClasses'
+import Assessment from './Admin/Assessment/assessment';
+import Subtopics from './Admin/SubTopics/subTopics'
+import QuestionSection from './components/QuestionsSection/QuestionSection'
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state) => state.user)
@@ -41,7 +44,7 @@ function App() {
     ReactGA.pageview(window.location.pathname + window.location.search)
 
     //to refresh user
-    dispatch(userRefresh())
+    // dispatch(userRefresh())
   }, [dispatch])
   return (
     <>
