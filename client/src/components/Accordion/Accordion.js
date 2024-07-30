@@ -86,6 +86,7 @@ export default function ControlledAccordion({
                   <div key={idx} className={classes.subtopic}>
                     <Typography style={{textAlign: 'center',fontSize:"2rem"}}variant="subtitle1">{subtopic.title}</Typography>
                     <CustomPDFViewer file={subtopic.file} title={subtopic.title} />
+                    
                   </div>
                 ))}
               </div>
