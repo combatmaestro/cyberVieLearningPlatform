@@ -9,4 +9,5 @@ router.use("/payment", require("./Payment"));
 router.use("/batch",require("./Batch"))
 router.use("/lab",require("./Lab"))
 router.use("/assessment",require("./assessment"))
+router.use("/class",require("./Class"))
 module.exports = router;

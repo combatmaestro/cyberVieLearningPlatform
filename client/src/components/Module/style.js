@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
       fontFamily: 'Montserrat',
       fontWeight: 'bold',
       textAlign: 'center',
-
+      marginLeft:"3%",
       [theme.breakpoints.down(469)]: {
         fontSize: 20,
         lineHeight: '24px',
@@ -33,5 +33,15 @@ export const useStyles = makeStyles((theme) => ({
     '& .accordionStyles': {
       marginBottom: 12,
     },
+  },
+  playgroundButton: {
+    background: "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
+    marginRight: "6%",
+    color: "white"
+  },
+  moduleHeaderContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between', // Optional: Adjusts space between items
   },
 }))

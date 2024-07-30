@@ -15,10 +15,8 @@ import {
   Grid,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllBatches } from "../../actions/moduleAction";
-
-
-
+// import { getAllBatches } from "../../actions/moduleAction";
+import { scheduleClass } from "../../actions/classAction";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiDialog-paperWidthSm": {
@@ -85,6 +83,29 @@ function AdminClassesDialog(props) {
     console.log(event.target.value);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Ensure the selected teacher is captured correctly
+    const selectedTeacherData = allTeachersData.find(
+      (teacher) => teacher._id === selectedTeacher
+    );
+
+    if (!selectedTeacherData) {
+      console.error("Selected teacher not found");
+      return;
+    }
+
+    // Dispatch the action with the correct parameters
+    dispatch(
+      scheduleClass(
+        selectedBatch,
+        selectedTeacherData._id,
+        selectedTeacherData.name,
+        time
+      )
+    );
+  };
+
   return (
     <>
       <Dialog
@@ -97,10 +118,7 @@ function AdminClassesDialog(props) {
           Schedule Classes For Batch
         </DialogTitle>
         <DialogContent>
-          <form
-            id="user-form"
-            // onSubmit={(e) => submitHandler(e, tier, role, user._id, selectedBatch)}
-          >
+          <form id="user-form">
             <FormControl variant="outlined" fullWidth margin="normal">
               <InputLabel id="select-batch-label">Select Batch</InputLabel>
               <Select
@@ -134,7 +152,7 @@ function AdminClassesDialog(props) {
                   Select Teacher
                 </MenuItem>
                {allTeachersData.map((teacher) => (
-                  <MenuItem key={teacher._id} value={teacher.name}>
+                  <MenuItem key={teacher._id} value={teacher._id}>
                     {teacher.name}
                   </MenuItem>
                 ))}
@@ -166,7 +184,12 @@ function AdminClassesDialog(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button type="submit" color="primary" form="user-form">
+          <Button
+            type="submit"
+            color="primary"
+            form="user-form"
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
         </DialogActions>

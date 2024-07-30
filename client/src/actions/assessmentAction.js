@@ -6,8 +6,14 @@ import {
   GET_ASSESSMENT_QUESTIONS_REQUEST,
   GET_ASSESSMENT_QUESTIONS_SUCCESS,
   GET_ASSESSMENT_QUESTIONS_FAILURE,
+  ASSESSMENT_REVIEW_REQUEST,
+  ASSESSMENT_REVIEW_SUCCESS,
+  ASSESSMENT_REVIEW_FAILURE ,
+  GET_ASSESSMENTS_TO_REVIEW_REQUEST,
+  GET_ASSESSMENTS_TO_REVIEW_SUCCESS,
+  GET_ASSESSMENTS_TO_REVIEW_FAILURE
 } from "../constants/assessmentConstants";
-
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
 // Action creator for adding an assessment request
 export const addAssessmentRequest = () => ({
   type: ADD_ASSESSMENT_REQUEST,
@@ -30,7 +36,7 @@ export const addAssessment = (data) => async (dispatch) => {
   try {
     const response = await axios({
       method: "post",
-      url: `/assessment/admin/save`,
+      url: `${backendUrl}/assessment/admin/save`,
       data,
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +71,7 @@ export const getAssessmentQuestionsRequest = () => ({
     try {
       const response = await axios({
         method: 'get',
-        url: `/assessment/module/${moduleId}`,
+        url: `${backendUrl}/assessment/module/${moduleId}`,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -75,3 +81,47 @@ export const getAssessmentQuestionsRequest = () => ({
       dispatch(getAssessmentQuestionsFailure(error.message));
     }
   };
+
+  export const submitAssessmentReview = (assessmentReview) => async (dispatch) => {
+    try {
+        dispatch({ type: ASSESSMENT_REVIEW_REQUEST });
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+
+        const { data } = await axios.post(`${backendUrl}/assessment/user/submitAnswers`, assessmentReview, config);
+
+        dispatch({
+            type: ASSESSMENT_REVIEW_SUCCESS,
+            payload: data
+        });
+    } catch (error) {
+        dispatch({
+            type: ASSESSMENT_REVIEW_FAILURE,
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+        });
+    }
+};
+
+export const getAllAssessmentsToReview = (teacherId) => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ASSESSMENTS_TO_REVIEW_REQUEST });
+
+    const { data } = await axios.get(`${backendUrl}/assessment/teacher/review/${teacherId}`);
+
+    dispatch({
+      type: GET_ASSESSMENTS_TO_REVIEW_SUCCESS,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ASSESSMENTS_TO_REVIEW_FAILURE,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};

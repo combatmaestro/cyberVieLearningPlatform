@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const QuestionSection = ({ match }) => {
+const QuestionsAdminReviewSection = ({ match }) => {
     const classes = useStyles();
     const { id } = match.params;
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -70,6 +70,8 @@ const QuestionSection = ({ match }) => {
     const { loading, questions, error } = useSelector(state => state.assessment);
     const [answers, setAnswers] = useState([]);
     const user = useSelector((state) => state.user);
+
+  
     useEffect(() => {
         dispatch(getAssessmentQuestions(id));
     }, [dispatch, id]);
@@ -115,8 +117,7 @@ const QuestionSection = ({ match }) => {
             userId:user.data._id,
             submittedBy:user.data.name,
             moduleId:id,
-            questionandanswers:answeredQuestions,
-            assessmentStatus:"submitted"
+            questionandanswers:answeredQuestions
         }
 
         dispatch(submitAssessmentReview(assesmentSubmit))
@@ -213,4 +214,4 @@ const QuestionSection = ({ match }) => {
     );
 };
 
-export default QuestionSection;
+export default QuestionsAdminReviewSection;

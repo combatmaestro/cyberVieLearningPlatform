@@ -250,14 +250,14 @@ export default function Header() {
                         Courses
                       </Typography>
                     </a> */}
-                    <Typography className={classes.headerTitle} variant="h6">
+                    {/* <Typography className={classes.headerTitle} variant="h6">
                       Certificates
                     </Typography>
                     <Link to="/placements">
                       <Typography className={classes.headerTitle} variant="h6">
                         Placement
                       </Typography>
-                    </Link>
+                    </Link> */}
                     <IconButton
                       aria-label="account of current user"
                       aria-controls="menu-appbar"

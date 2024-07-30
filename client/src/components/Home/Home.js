@@ -5,11 +5,14 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, IconButton, Box } from "@material-ui/core";
+import { Button, IconButton, Box, Grid } from "@material-ui/core";
 import AccessAlarmsIcon from "@material-ui/icons/AccessAlarms";
-import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import { useSelector } from "react-redux";
+import TrendingUpIcon from "@material-ui/icons/TrendingUp";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { getAllAssessmentsToReview } from "../../actions/assessmentAction";
+import ReviewList from "../QuestionsAdminReviewSection/ReviewCards";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     marginTop: 8,
@@ -57,9 +60,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
   },
   playgroundButton: {
-    background: "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
+    background:
+      "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
     marginRight: "6%",
-    color: "white"
+    color: "white",
   },
 }));
 
@@ -68,55 +72,86 @@ function Home() {
   const classes = useStyles();
   const userData = useSelector((state) => state.user);
   const user = userData.data;
-  const modulesListRef = useRef(null);
-  const history = useHistory()
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [appBarWidth, setAppBarWidth] = useState("100%");
+  const [teacher, setTeacher] = useState(false);
+  const [assessmentData, setAssessmentData] = useState([]);
+  const { loading, assessments, error } = useSelector(state => state.assessmentReview);
 
   useEffect(() => {
-    const updateAppBarWidth = () => {
-      if (modulesListRef.current) {
-        const width = modulesListRef.current.getBoundingClientRect().width;
-        setAppBarWidth(`${width}px`);
-      }
-    };
+    if (userData.data.role.includes("teacher")) {
+      setTeacher(true);
+      dispatch(getAllAssessmentsToReview(userData.data._id));
+    }
+  }, [dispatch, userData.data._id, userData.data.role]);
 
-    updateAppBarWidth(); // Initial calculation
-
-    window.addEventListener("resize", updateAppBarWidth); // Recalculate on window resize
-
-    return () => {
-      window.removeEventListener("resize", updateAppBarWidth); // Cleanup
-    };
-  }, []);
+  useEffect(() => {
+    if (assessments && assessments.length > 0) {
+      console.log("Assessments:", assessments);
+      setAssessmentData(assessments);
+    }
+  }, [assessments]);
 
   const openPlayground = () => {
-    history.push('/playground')
-  }
+    history.push("/playground");
+  };
+
+  const redirect = (assessmentId) => {
+    // Define the redirect logic here
+    history.push(`/review/${assessmentId}`);
+  };
 
   return (
     <div className={classes.root}>
+      {teacher && (
+        <>
+          <Box className={classes.headerContainer}>
+            <h2 style={{ fontSize: 41 }}>Review Assignments</h2>
+          </Box>
+          <ReviewList assessmentsData={assessmentData}/>
+        </>
+      )}
+      {!teacher && (
+        <>
       <Box className={classes.headerContainer}>
       <h2 style={{ fontSize: 41 }}>Modules</h2>
-        <Button type="submit" variant='contained' className={classes.playgroundButton} onClick={openPlayground}>
+            <Button
+              type="submit"
+              variant="contained"
+              className={classes.playgroundButton}
+              onClick={openPlayground}
+            >
           Open Playground <TrendingUpIcon />
         </Button>
       </Box>
-      {
-        (user.mobile === "" && user.education === "" && user.currentSalary === "") && 
-      <AppBar position="static" className={classes.appBar} style={{ width: appBarWidth }}>
+          {user.mobile === "" &&
+            user.education === "" &&
+            user.currentSalary === "" && (
+              <AppBar
+                position="static"
+                className={classes.appBar}
+                style={{ width: appBarWidth }}
+              >
         <Toolbar>
             <IconButton edge="start" color="inherit" aria-label="menu">
             <AccessAlarmsIcon />
           </IconButton>
             <Typography variant="h6" style={{ flexGrow: 1 }}>
-            <Link to="/profile" style={{ color: "#e8eef4" }} className={classes.homeBlink}>
+                    <Link
+                      to="/profile"
+                      style={{ color: "#e8eef4" }}
+                      className={classes.homeBlink}
+                    >
                 Welcome {user.name}, proceed to complete your profile ➡️!!
             </Link>
           </Typography>
         </Toolbar>
       </AppBar>
-       }
-      <ModulesList ref={modulesListRef} />
+            )}
+          <ModulesList />
+        </>
+      )}
     </div>
   );
 }
