@@ -14,7 +14,7 @@ const CustomPDFViewer = ({ file }) => {
   const pdfUrl = URL.createObjectURL(pdfBlob);
 
   return (
-    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@3.0.279/build/pdf.worker.min.js`}>
+    <Worker workerUrl={`https://unpkg.com/pdfjs-dist@2.6.347/build/pdf.worker.min.js`}>
       <div style={{ height: '500px' }}>
         <Viewer fileUrl={pdfUrl} />
       </div>
