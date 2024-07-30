@@ -34,6 +34,7 @@
     "suneditor": "^2.41.2",
     "suneditor-react": "^3.1.2",
     "web-vitals": "^1.1.2"
+    
   },
   "scripts": {
     "start": "react-scripts start",
