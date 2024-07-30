@@ -199,7 +199,6 @@ export const listTopics = (moduleId) => async (dispatch) => {
     dispatch({ type: TOPIC_LIST_REQUEST })
 
     const { data } = await axios.get(`${backendUrl}/topic/admin/gettopics?moduleId=${moduleId}`)
-
     dispatch({
       type: TOPIC_LIST_SUCCESS,
       payload: data.data,
