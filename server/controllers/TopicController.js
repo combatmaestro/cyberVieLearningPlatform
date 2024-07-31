@@ -158,7 +158,7 @@ exports.addSubTopic = catchAsyncErrors(async (req, res, next) => {
       topicName: topic.topicName,
     }));
     // Create subtopics and save them to the database
-    const createdSubtopics = await SubTopic.insertMany(subtopics);
+    const createdSubtopics = await SubTopic.insertMany(subtopicsWithTopicName);
 
     // Get the IDs of the created subtopics
     const subtopicIds = createdSubtopics.map(subtopic => subtopic._id);
