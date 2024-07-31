@@ -53,6 +53,7 @@ function Assessment() {
 
   useEffect(() => {
     dispatch(getAllAssessments());
+    dispatch(getAllModules());
   }, [dispatch]);
 
   const handleClickOpen = () => {
