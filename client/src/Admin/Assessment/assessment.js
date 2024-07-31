@@ -132,7 +132,7 @@ function Assessment() {
       selectedModule: selectedModule,
       questions: validQuestions
     }
-    await dispatch(addAssessment(assessmentData)).unwrap();
+    await dispatch(addAssessment(assessmentData))
     window.location.reload();
     // submitHandler(selectedModule, questions)
   }
