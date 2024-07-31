@@ -10,7 +10,7 @@ import SideDrawer from '../Drawer/SideDrawer'
 import SuccessBar from '../SnackBar/SuccessBar'
 import ErrorBar from '../SnackBar/ErrorBar'
 
-// material ui components
+//material ui components
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginLeft: 5,
     '& .MuiSvgIcon-root': {
-      width: 15,
+      widthL: 15,
       height: 15,
       color: '#4285f4',
     },
@@ -36,31 +36,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Subtopics() {
-  document.title = 'Subtopics'
+function Subtopics() {
+  document.title = 'Assessment'
   const classes = useStyles()
   const dispatch = useDispatch()
   const modules = useSelector((state) => state.modules)
   const { loading, data: moduleData = [], error } = modules
 
-  // for dialogue
+  //for dialogue
   const [open, setOpen] = useState(false)
   const [editModule, setEditModule] = useState(null)
   const [message, setMessage] = useState('')
   const [openSuccess, setOpenSuccess] = useState(false)
   const [openFailure, setOpenFailure] = useState(false)
-  const subtopicList = useSelector((state) => state.subtopics)
-  const { subtopics } = subtopicList
-
-  useEffect(() => {
-    dispatch(getAllSubtopics())
-  }, [dispatch])
-
   const handleClickOpen = () => {
     setEditModule(null)
     setOpen(true)
   }
-
   const handleClose = () => {
     setOpen(false)
   }
@@ -80,12 +72,12 @@ export default function Subtopics() {
 
   useEffect(() => {
     dispatch(getAllModules())
-  }, [dispatch])
+  }, [])
 
-  // submitting response
+  //submitting response
   const submitHandler = async (e, title, description, radioValue, checked) => {
     e.preventDefault()
-    setOpen(false) // closing modal
+    setOpen(false) //closing modal
     console.log(title, description, radioValue, checked)
     if (editModule) {
       const formData = new FormData()
@@ -93,7 +85,7 @@ export default function Subtopics() {
       formData.set('description', description)
       formData.set('type', radioValue)
       formData.set('hidden', checked)
-      formData.set('batch_id', '6659efd036b23d000948aa5c')
+      formData.set('batch_id','6659efd036b23d000948aa5c')
       const { success } = await dispatch(
         editCurrentModule(editModule._id, formData)
       )
@@ -127,13 +119,13 @@ export default function Subtopics() {
     const data = {
       columns: [
         {
-          label: 'Subtopic Name',
-          field: 'title',
+          label: 'Module ID',
+          field: 'id',
           sort: 'asc',
         },
         {
-          label: 'Topic Name',
-          field: 'topicName',
+          label: 'Title',
+          field: 'title',
           sort: 'asc',
         },
         {
@@ -141,15 +133,49 @@ export default function Subtopics() {
           field: 'type',
           sort: 'asc',
         },
+        {
+          label: 'Archive',
+          field: 'archive',
+          sort: 'asc',
+        },
+        {
+          label: 'Actions',
+          field: 'actions',
+        },
       ],
       rows: [],
     }
 
-    subtopics.forEach((subtopic) => {
+    moduleData.forEach((module) => {
       data.rows.push({
-        title: subtopic.title,
-        topicName: subtopic.topicName,
-        type: 'PDF', // Assuming type should be 'PDF' for all entries
+        id: module._id,
+        title: (
+          <Link to={`/admin/topics/${module._id}`}>
+            <span>{module.title}</span>
+            <span className={classes.icon}>
+              <ExitToAppIcon />
+            </span>
+          </Link>
+        ),
+        type:
+          module.type === 'paid' ? (
+            <p style={{ color: 'red' }}>Paid</p>
+          ) : (
+            <p style={{ color: 'green' }}>Free</p>
+          ),
+        archive: `${module.hidden}`,
+        actions: (
+          <>
+            <Tooltip title='Edit' placement='top' arrow>
+              <button
+                className='btn btn-primary py-1 px-2  ml-2'
+                onClick={() => editModuleHandler(module)}
+              >
+                <i className='far fa-edit'></i>
+              </button>
+            </Tooltip>
+          </>
+        ),
       })
     })
 
@@ -180,7 +206,7 @@ export default function Subtopics() {
                 alignItems='center'
                 justifyContent='space-between'
               >
-                <h1>All SubTopics</h1>
+                <h1>All Modules</h1>
                 <Button
                   className={classes.create}
                   size='small'
@@ -198,6 +224,7 @@ export default function Subtopics() {
         </Grid>
       </Grid>
 
+
       <SubtopicDialogue
         open={open}
         handleClose={handleClose}
@@ -208,3 +235,5 @@ export default function Subtopics() {
     </>
   )
 }
+
+export default Subtopics
