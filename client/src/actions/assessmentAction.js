@@ -45,8 +45,8 @@ export const addAssessment = (data) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(response);
-    dispatch(addAssessmentSuccess(response));
+    console.log(response.data.data);
+    dispatch(addAssessmentSuccess(response.data.data));
     
   } catch (error) {
     console.log(error);
