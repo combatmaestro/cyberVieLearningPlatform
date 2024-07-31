@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 
-import { scheduleClass } from "../../actions/classAction";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiDialog-paperWidthSm": {

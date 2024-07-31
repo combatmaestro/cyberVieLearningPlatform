@@ -15,6 +15,7 @@ import AdminClassesDialog from "./AdminClassesDialog";
 import Button from "@material-ui/core/Button";
 import { adminGetAllTeachers } from "../../actions/userActions";
 import { getAllBatches } from "../../actions/moduleAction";
+import { scheduleClass } from "../../actions/classAction";
 const useStyles = makeStyles((theme) => ({
   root: {},
   create: {

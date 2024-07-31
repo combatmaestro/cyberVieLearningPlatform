@@ -132,8 +132,9 @@ function SubtopicDialogue(props) {
       topicId: selectedTopic,
       subtopics: validSubtopics
     }
-    console.log(subTopicData)
-    dispatch(addSubtopics(subTopicData))
+    // console.log(subTopicData)
+    submitHandler(subTopicData)
+   
   }
 
   useEffect(() => {
