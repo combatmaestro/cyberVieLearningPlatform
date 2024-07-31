@@ -47,6 +47,10 @@ export const addAssessment = (data) => async (dispatch) => {
     });
     console.log(response.data.data);
     dispatch(addAssessmentSuccess(response.data.data));
+    dispatch({
+      type: GET_ALL_ASSESSMENTS_SUCCESS,
+      payload: response.data.data, // Adjust based on the actual structure of your response
+    });
   } catch (error) {
     console.log(error);
     dispatch(addAssessmentFailure(error.message));
