@@ -54,16 +54,16 @@ function AssessmentDialogue(props) {
   }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(selectedModule)
-    console.log(questions)
-    const validQuestions = questions.filter(question => question.title && question.marks)
-    const assessmentData={
-      selectedModule: selectedModule,
-      questions: validQuestions
-    }
-    dispatch(addAssessment(assessmentData))
-    // submitHandler(selectedModule, questions)
+    // e.preventDefault()
+    // console.log(selectedModule)
+    // console.log(questions)
+    // const validQuestions = questions.filter(question => question.title && question.marks)
+    // const assessmentData={
+    //   selectedModule: selectedModule,
+    //   questions: validQuestions
+    // }
+    // dispatch(addAssessment(assessmentData))
+    submitHandler(e,selectedModule, questions)
   }
 
   useEffect(() => {

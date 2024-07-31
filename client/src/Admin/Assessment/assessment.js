@@ -84,42 +84,55 @@ function Assessment() {
   }
 
   // submitting response
-  const submitHandler = async (e, title, description, radioValue, checked) => {
+  // const submitHandler = async (e, title, description, radioValue, checked) => {
+  //   e.preventDefault()
+  //   setOpen(false) //closing modal
+  //   console.log(title, description, radioValue, checked)
+  //   if (editModule) {
+  //     const formData = new FormData()
+  //     formData.set('title', title)
+  //     formData.set('description', description)
+  //     formData.set('type', radioValue)
+  //     formData.set('hidden', checked)
+  //     formData.set('batch_id','6659efd036b23d000948aa5c')
+  //     const { success } = await dispatch(
+  //       editCurrentModule(editModule._id, formData)
+  //     )
+  //     if (success) {
+  //       setMessage('Changes Saved Successfully')
+  //       setOpenSuccess(true)
+  //     } else {
+  //       setMessage('Error in saving changes')
+  //       setOpenFailure(true)
+  //     }
+  //   } else {
+  //     const formData = new FormData()
+  //     formData.set('title', title)
+  //     formData.set('description', description)
+  //     formData.set('type', radioValue)
+  //     formData.set('hidden', checked)
+  //     const { success } = await dispatch(addNewModule(formData))
+  //     if (success) {
+  //       setMessage('Module created Successfully')
+  //       setOpenSuccess(true)
+  //     } else {
+  //       setMessage('Error in created module')
+  //       setOpenFailure(true)
+  //     }
+  //   }
+  // }
+
+  const submitHandler = (e , selectedModule , questions) => {
     e.preventDefault()
-    setOpen(false) //closing modal
-    console.log(title, description, radioValue, checked)
-    if (editModule) {
-      const formData = new FormData()
-      formData.set('title', title)
-      formData.set('description', description)
-      formData.set('type', radioValue)
-      formData.set('hidden', checked)
-      formData.set('batch_id','6659efd036b23d000948aa5c')
-      const { success } = await dispatch(
-        editCurrentModule(editModule._id, formData)
-      )
-      if (success) {
-        setMessage('Changes Saved Successfully')
-        setOpenSuccess(true)
-      } else {
-        setMessage('Error in saving changes')
-        setOpenFailure(true)
-      }
-    } else {
-      const formData = new FormData()
-      formData.set('title', title)
-      formData.set('description', description)
-      formData.set('type', radioValue)
-      formData.set('hidden', checked)
-      const { success } = await dispatch(addNewModule(formData))
-      if (success) {
-        setMessage('Module created Successfully')
-        setOpenSuccess(true)
-      } else {
-        setMessage('Error in created module')
-        setOpenFailure(true)
-      }
+    console.log(selectedModule)
+    console.log(questions)
+    const validQuestions = questions.filter(question => question.title && question.marks)
+    const assessmentData={
+      selectedModule: selectedModule,
+      questions: validQuestions
     }
+    dispatch(addAssessment(assessmentData))
+    // submitHandler(selectedModule, questions)
   }
 
   if (loading) return <Loader />
