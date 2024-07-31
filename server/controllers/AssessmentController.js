@@ -163,3 +163,21 @@ module.exports.getAllAssessmentsToReview = async (req, res) => {
     });
   }
 };
+
+module.exports.getAllAssessments = catchAsyncErrors(async (req, res, next) => {
+  try {
+      const assessments = await Assessment.find().populate('Questions');
+
+      res.status(200).json({
+          success: true,
+          data: assessments,
+      });
+  } catch (error) {
+      console.error('Error fetching all assessments:', error);
+      res.status(500).json({
+          success: false,
+          message: 'Failed to fetch all assessments',
+          error: error.message,
+      });
+  }
+});

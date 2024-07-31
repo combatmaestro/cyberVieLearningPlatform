@@ -153,7 +153,10 @@ exports.addSubTopic = catchAsyncErrors(async (req, res, next) => {
         message: 'Topic not found',
       });
     }
-
+    const subtopicsWithTopicName = subtopics.map(subtopic => ({
+      ...subtopic,
+      topicName: topic.topicName,
+    }));
     // Create subtopics and save them to the database
     const createdSubtopics = await SubTopic.insertMany(subtopics);
 
@@ -171,6 +174,22 @@ exports.addSubTopic = catchAsyncErrors(async (req, res, next) => {
       success: true,
       message: 'SubTopics added successfully',
       data: createdSubtopics,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+exports.getAllSubTopics = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const subtopics = await SubTopic.find({}, 'title topicName');
+
+    res.status(200).json({
+      success: true,
+      data: subtopics,
     });
   } catch (error) {
     res.status(500).json({

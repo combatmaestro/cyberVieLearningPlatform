@@ -13,6 +13,10 @@ const subtopicSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  topicName:{
+    type: String,
+    required: true,
+  },
   hidden: {
     type: Boolean,
     default: false,

@@ -19,7 +19,10 @@ import {
   TOPIC_LIST_FAIL,
   SUBTOPIC_ADD_REQUEST,
   SUBTOPIC_ADD_SUCCESS,
-  SUBTOPIC_ADD_FAILURE
+  SUBTOPIC_ADD_FAILURE,
+  SUBTOPIC_LIST_REQUEST,
+  SUBTOPIC_LIST_SUCCESS,
+  SUBTOPIC_LIST_FAILURE
 } from "../constants/topicConstants";
 
 export const getAdminTopicReducer = (state = { loading: true }, action) => {
@@ -127,6 +130,20 @@ export const subtopicAddReducer = (state = {}, action) => {
     case SUBTOPIC_ADD_SUCCESS:
       return { loading: false, success: true, subtopics: action.payload }
     case SUBTOPIC_ADD_FAILURE:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+
+export const subtopicListReducer = (state = { subtopics: [] }, action) => {
+  switch (action.type) {
+    case SUBTOPIC_LIST_REQUEST:
+      return { loading: true, subtopics: [] }
+    case SUBTOPIC_LIST_SUCCESS:
+      return { loading: false, subtopics: action.payload }
+    case SUBTOPIC_LIST_FAILURE:
       return { loading: false, error: action.payload }
     default:
       return state

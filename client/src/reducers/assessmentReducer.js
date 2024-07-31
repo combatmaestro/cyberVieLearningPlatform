@@ -5,7 +5,10 @@ import {
     GET_ASSESSMENT_QUESTIONS_REQUEST,
     GET_ASSESSMENT_QUESTIONS_SUCCESS,
     GET_ASSESSMENT_QUESTIONS_FAILURE,
-  } from '../constants/assessmentConstants';
+  GET_ALL_ASSESSMENTS_REQUEST,
+  GET_ALL_ASSESSMENTS_SUCCESS,
+  GET_ALL_ASSESSMENTS_FAILURE,
+} from "../constants/assessmentConstants";
   
   const initialState = {
     loading: false,
@@ -16,6 +19,24 @@ import {
   
   const assessmentReducer = (state = initialState, action) => {
     switch (action.type) {
+    case GET_ALL_ASSESSMENTS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case GET_ALL_ASSESSMENTS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        assessment: action.payload,
+      };
+    case GET_ALL_ASSESSMENTS_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
       case ADD_ASSESSMENT_REQUEST:
       case GET_ASSESSMENT_QUESTIONS_REQUEST:
         return {

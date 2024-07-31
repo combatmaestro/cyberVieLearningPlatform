@@ -7,7 +7,8 @@ const {
   getCtf,
   uploadImage,
   getTopics,
-  addSubTopic
+  addSubTopic,
+  getAllSubTopics
 } = require("../controllers/TopicController");
 const {
   isAuthenticatedUser,
@@ -70,6 +71,16 @@ router.post(
   authorizeRoles("admin"),
   addSubTopic
 );
+
+router.get(
+  "/getAll/subtopics",
+  // isAuthenticatedUser,
+  // authorizeRoles("admin"),
+  getAllSubTopics
+);
+
+
+
 
 
 

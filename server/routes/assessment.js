@@ -19,7 +19,7 @@ router.post(
     authorizeRoles("admin"),
     assessmentController.assessmentReview
   );
-
+  router.get('/getAll', assessmentController.getAllAssessments);
   router.get(
     "/teacher/review/:teacherId",
     isAuthenticatedUser,
