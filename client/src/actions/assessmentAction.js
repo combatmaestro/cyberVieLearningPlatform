@@ -45,12 +45,9 @@ export const addAssessment = (data) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data.data);
-    dispatch(addAssessmentSuccess(response.data.data));
-    dispatch({
-      type: GET_ALL_ASSESSMENTS_SUCCESS,
-      payload: response.data.data, // Adjust based on the actual structure of your response
-    });
+    console.log(response);
+    dispatch(addAssessmentSuccess(response));
+    
   } catch (error) {
     console.log(error);
     dispatch(addAssessmentFailure(error.message));
@@ -83,7 +80,7 @@ export const getAssessmentQuestionsRequest = () => ({
           'Content-Type': 'application/json',
         },
       });
-      dispatch(getAssessmentQuestionsSuccess(response.data.data));
+    dispatch(getAssessmentQuestionsSuccess(response));
     } catch (error) {
       dispatch(getAssessmentQuestionsFailure(error.message));
     }
