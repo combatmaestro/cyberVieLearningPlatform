@@ -15,7 +15,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-// import { getAllBatches } from "../../actions/moduleAction";
+import { getAllBatches } from "../../actions/moduleAction";
 import { scheduleClass } from "../../actions/classAction";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +47,11 @@ function AdminClassesDialog(props) {
 
   const teachers = useSelector((state) => state.allTeachers);
   const { allTeachersData = [] } = teachers;
+
+  useEffect(()=>{
+    getAllBatches()
+  },[])
+
 
   const handleTimeChange = (event) => {
     setTime(event.target.value);
