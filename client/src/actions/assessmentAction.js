@@ -80,7 +80,7 @@ export const getAssessmentQuestionsRequest = () => ({
           'Content-Type': 'application/json',
         },
       });
-    dispatch(getAssessmentQuestionsSuccess(response));
+    dispatch(getAssessmentQuestionsSuccess(response.data.data));
     } catch (error) {
       dispatch(getAssessmentQuestionsFailure(error.message));
     }
