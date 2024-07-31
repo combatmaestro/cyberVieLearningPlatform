@@ -149,7 +149,7 @@ function Assessment() {
       rows: [],
     }
 
-    assessment.length > 0 && assessment?.forEach((assessment) => {
+    assessment?.forEach((assessment) => {
       data.rows.push({
         moduleName: getModuleNameById(assessment.moduleId),
         totalQuestions: assessment.Questions.length,
