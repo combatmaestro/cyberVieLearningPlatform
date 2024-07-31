@@ -14,7 +14,7 @@ import { adminGetAllUsers, editCertainUser } from "../../actions/userActions";
 import AdminClassesDialog from "./AdminClassesDialog";
 import Button from "@material-ui/core/Button";
 import { adminGetAllTeachers } from "../../actions/userActions";
-
+import { getAllBatches } from "../../actions/moduleAction";
 const useStyles = makeStyles((theme) => ({
   root: {},
   create: {
@@ -79,6 +79,7 @@ function AdminClasses() {
   useEffect(() => {
     dispatch(adminGetAllUsers());
     dispatch(adminGetAllTeachers());
+    dispatch(getAllBatches())
   }, []);
 
   const submitHandler = async (e, tier, role, id,selectedBatch) => {
