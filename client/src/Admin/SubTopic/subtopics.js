@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { MDBDataTable } from 'mdbreact'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllModules, addNewModule, editCurrentModule } from '../../actions/moduleAction'
-import { getAllSubtopics } from '../../actions/topicAction'
+import { getAllModules } from '../../actions/moduleAction'
+import { addNewModule, editCurrentModule } from '../../actions/moduleAction'
 import { Link } from 'react-router-dom'
 import SubtopicDialogue from './subtopicDialogue'
 import Loader from '../../components/Loader/Loader'
@@ -235,5 +235,3 @@ function Subtopics() {
     </>
   )
 }
-
-export default Subtopics
