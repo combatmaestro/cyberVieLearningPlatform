@@ -130,7 +130,7 @@ function AdminClassesDialog(props) {
                 <MenuItem value="" disabled>
                   Select a Batch For Allocation
                 </MenuItem>
-                {moduleData.map((batch) => (
+                {moduleData?.data?.map((batch) => (
                   <MenuItem key={batch._id} value={batch._id}>
                     {batch.title} - {batch._id}
                   </MenuItem>
