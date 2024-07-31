@@ -123,7 +123,7 @@ function Assessment() {
   //   }
   // }
 
-  const submitHandler = (e , selectedModule , questions) => {
+  const submitHandler = async(e , selectedModule , questions) => {
     e.preventDefault()
     console.log(selectedModule)
     console.log(questions)
@@ -132,7 +132,8 @@ function Assessment() {
       selectedModule: selectedModule,
       questions: validQuestions
     }
-    dispatch(addAssessment(assessmentData))
+    await dispatch(addAssessment(assessmentData)).unwrap();
+    window.location.reload();
     // submitHandler(selectedModule, questions)
   }
 
