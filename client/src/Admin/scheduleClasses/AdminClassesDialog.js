@@ -86,26 +86,7 @@ function AdminClassesDialog(props) {
   };
 
   const handleSubmit = (event) => {
-    event.preventDefault();
-    // Ensure the selected teacher is captured correctly
-    const selectedTeacherData = allTeachersData.find(
-      (teacher) => teacher._id === selectedTeacher
-    );
-
-    if (!selectedTeacherData) {
-      console.error("Selected teacher not found");
-      return;
-    }
-
-    // Dispatch the action with the correct parameters
-    dispatch(
-      scheduleClass(
-        selectedBatch,
-        selectedTeacherData._id,
-        selectedTeacherData.name,
-        time
-      )
-    );
+    submitHandler(event , allTeachersData ,selectedTeacher,selectedBatch,time)
   };
 
   return (

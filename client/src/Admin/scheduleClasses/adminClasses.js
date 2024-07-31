@@ -82,21 +82,28 @@ function AdminClasses() {
     dispatch(getAllBatches())
   }, []);
 
-  const submitHandler = async (e, tier, role, id,selectedBatch) => {
-    e.preventDefault();
-    setOpen(false); //closing modal
-    const formData = new FormData();
-    formData.set("tier", tier);
-    formData.set("role", role);
-    formData.set("batch",selectedBatch)
-    const { success } = await dispatch(editCertainUser(id, formData));
-    if (success) {
-      setMessage("Changes Saved Successfully");
-      setOpenSuccess(true);
-    } else {
-      setMessage("Error in saving changes");
-      setOpenFailure(true);
+  const handleSubmit = async(event , allTeachersData ,selectedTeacher,selectedBatch,time ) => {
+    event.preventDefault();
+    // Ensure the selected teacher is captured correctly
+    const selectedTeacherData = allTeachersData.find(
+      (teacher) => teacher._id === selectedTeacher
+    );
+
+    if (!selectedTeacherData) {
+      console.error("Selected teacher not found");
+      return;
     }
+
+    // Dispatch the action with the correct parameters
+   await dispatch(
+      scheduleClass(
+        selectedBatch,
+        selectedTeacherData._id,
+        selectedTeacherData.name,
+        time
+      )
+    );
+    window.location.reload();
   };
 
   const submitClassesHandler = async (e, tier, role) => {
@@ -219,7 +226,7 @@ function AdminClasses() {
         handleClose={handleScheduleClose}
         // user={editUser}
         classData={editUser}
-        submitHandler={submitClassesHandler}
+        submitHandler={handleSubmit}
       />
     </>
   );
