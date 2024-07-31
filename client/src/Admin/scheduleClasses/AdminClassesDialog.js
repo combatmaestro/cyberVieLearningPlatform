@@ -40,18 +40,19 @@ function AdminClassesDialog(props) {
   const dispatch = useDispatch();
   const [selectedBatch, setSelectedBatch] = useState(""); // State to handle selected batch
   const [selectedTeacher, setSelectedTeacher] = useState("");
-  const [time, setTime] = useState('');
-  
+  const [time, setTime] = useState("");
+
   const batches = useSelector((state) => state.batches);
   const { loading, data: moduleData = [], error } = batches;
 
   const teachers = useSelector((state) => state.allTeachers);
-  const {allTeachersData = [] } = teachers;
+  const { allTeachersData = [] } = teachers;
 
   const handleTimeChange = (event) => {
     setTime(event.target.value);
     console.log(event.target.value);
   };
+
   const timeOptions = [
     "8:00 AM",
     "9:00 AM",
@@ -75,8 +76,6 @@ function AdminClassesDialog(props) {
     setSelectedBatch(event.target.value);
     console.log(event.target.value);
   };
-
-
 
   const handleTeacherChange = (event) => {
     setSelectedTeacher(event.target.value);
@@ -151,7 +150,7 @@ function AdminClassesDialog(props) {
                 <MenuItem value="" disabled>
                   Select Teacher
                 </MenuItem>
-               {allTeachersData.map((teacher) => (
+                {allTeachersData.map((teacher) => (
                   <MenuItem key={teacher._id} value={teacher._id}>
                     {teacher.name}
                   </MenuItem>
@@ -160,7 +159,7 @@ function AdminClassesDialog(props) {
             </FormControl>
 
             <FormControl variant="outlined" fullWidth margin="normal">
-            <InputLabel id="select-time-label">Select Time</InputLabel>
+              <InputLabel id="select-time-label">Select Time</InputLabel>
               <Select
                 labelId="select-time-label"
                 id="select-time"
