@@ -195,7 +195,7 @@ function AdminClasses() {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <h1>All Classes</h1>
+                <h1>All Scheduled Classes</h1>
                 <Button
                   className={classes.create}
                   size="small"

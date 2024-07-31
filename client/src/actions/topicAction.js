@@ -20,7 +20,10 @@ import {
   TOPIC_LIST_FAIL,
   SUBTOPIC_ADD_REQUEST,
   SUBTOPIC_ADD_SUCCESS,
-  SUBTOPIC_ADD_FAILURE
+  SUBTOPIC_ADD_FAILURE,
+  SUBTOPIC_LIST_REQUEST,
+  SUBTOPIC_LIST_SUCCESS,
+  SUBTOPIC_LIST_FAILURE
 } from '../constants/topicConstants'
 
 if(localStorage.getItem("token")){
@@ -232,6 +235,27 @@ export const addSubtopics = (assessmentData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SUBTOPIC_ADD_FAILURE,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    })
+  }
+}
+
+export const getAllSubtopics = () => async (dispatch) => {
+  dispatch({
+    type: SUBTOPIC_LIST_REQUEST,
+  })
+
+  try {
+    const { data } = await axios.get(`${backendUrl}/topic/getAll/subtopics`)
+    dispatch({
+      type: SUBTOPIC_LIST_SUCCESS,
+      payload: data.data,
+    })
+  } catch (error) {
+    dispatch({
+      type: SUBTOPIC_LIST_FAILURE,
       payload: error.response && error.response.data.message
         ? error.response.data.message
         : error.message,

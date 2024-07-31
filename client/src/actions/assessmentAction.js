@@ -8,10 +8,13 @@ import {
   GET_ASSESSMENT_QUESTIONS_FAILURE,
   ASSESSMENT_REVIEW_REQUEST,
   ASSESSMENT_REVIEW_SUCCESS,
-  ASSESSMENT_REVIEW_FAILURE ,
+  ASSESSMENT_REVIEW_FAILURE,
   GET_ASSESSMENTS_TO_REVIEW_REQUEST,
   GET_ASSESSMENTS_TO_REVIEW_SUCCESS,
-  GET_ASSESSMENTS_TO_REVIEW_FAILURE
+  GET_ASSESSMENTS_TO_REVIEW_FAILURE,
+  GET_ALL_ASSESSMENTS_REQUEST,
+  GET_ALL_ASSESSMENTS_SUCCESS,
+  GET_ALL_ASSESSMENTS_FAILURE,
 } from "../constants/assessmentConstants";
 const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
 // Action creator for adding an assessment request
@@ -122,6 +125,23 @@ export const getAllAssessmentsToReview = (teacherId) => async (dispatch) => {
       payload: error.response && error.response.data.message
         ? error.response.data.message
         : error.message,
+    });
+  }
+};
+
+export const getAllAssessments = () => async (dispatch) => {
+  dispatch({ type: GET_ALL_ASSESSMENTS_REQUEST });
+
+  try {
+    const response = await axios.get(`${backendUrl}/assessment/getAll`); // Replace with your actual API endpoint
+    dispatch({
+      type: GET_ALL_ASSESSMENTS_SUCCESS,
+      payload: response.data.data, // Adjust based on the actual structure of your response
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_ASSESSMENTS_FAILURE,
+      payload: error.response ? error.response.data : error.message,
     });
   }
 };

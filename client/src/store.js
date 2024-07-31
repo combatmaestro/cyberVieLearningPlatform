@@ -16,6 +16,7 @@ import {
   getAdminTopicReducer,
   getTopicContentReducer,
   topicListReducer,
+  subtopicListReducer
 } from "./reducers/topicReducer";
 import { ctfReducer } from "./reducers/ctfReducer";
 import { orderReducer } from "./reducers/orderReduer";
@@ -46,6 +47,7 @@ const reducer = combineReducers({
   assessment: assessmentReducer,
   scheduleClass: scheduleClassReducer,
   assessmentReview: assessmentReviewReducer,
+  subtopics:subtopicListReducer,
 });
 
 const store = createStore(

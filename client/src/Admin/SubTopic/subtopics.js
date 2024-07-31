@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { MDBDataTable } from 'mdbreact'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllModules } from '../../actions/moduleAction'
-import { addNewModule, editCurrentModule } from '../../actions/moduleAction'
+import { getAllModules, addNewModule, editCurrentModule } from '../../actions/moduleAction'
+import { getAllSubtopics } from '../../actions/topicAction'
 import { Link } from 'react-router-dom'
-import AssessmentDialogue from './assessmentDialogue'
+import SubtopicDialogue from './subtopicDialogue'
 import Loader from '../../components/Loader/Loader'
 import SideDrawer from '../Drawer/SideDrawer'
 import SuccessBar from '../SnackBar/SuccessBar'
 import ErrorBar from '../SnackBar/ErrorBar'
-import { getAllAssessments } from '../../actions/assessmentAction'
-// material ui components
+
+//material ui components
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Box'
@@ -36,12 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Assessment() {
+function Subtopics() {
   document.title = 'Assessment'
   const classes = useStyles()
   const dispatch = useDispatch()
   const modules = useSelector((state) => state.modules)
-  const { data: moduleData = [] } = modules
+  const { loading, data: moduleData = [], error } = modules
 
   //for dialogue
   const [open, setOpen] = useState(false)
@@ -49,12 +49,6 @@ function Assessment() {
   const [message, setMessage] = useState('')
   const [openSuccess, setOpenSuccess] = useState(false)
   const [openFailure, setOpenFailure] = useState(false)
-  const { assessment, loading, error } = useSelector((state) => state.assessment);
-
-  useEffect(() => {
-    dispatch(getAllAssessments());
-  }, [dispatch]);
-
   const handleClickOpen = () => {
     setEditModule(null)
     setOpen(true)
@@ -76,13 +70,11 @@ function Assessment() {
     setOpen(true)
   }
 
-  // helper function to get module name by ID
-  const getModuleNameById = (id) => {
-    const module = moduleData.find(module => module._id === id)
-    return module ? module.title : 'Unknown Module'
-  }
+  useEffect(() => {
+    dispatch(getAllModules())
+  }, [])
 
-  // submitting response
+  //submitting response
   const submitHandler = async (e, title, description, radioValue, checked) => {
     e.preventDefault()
     setOpen(false) //closing modal
@@ -127,13 +119,13 @@ function Assessment() {
     const data = {
       columns: [
         {
-          label: 'Module Name',
-          field: 'moduleName',
+          label: 'Module ID',
+          field: 'id',
           sort: 'asc',
         },
         {
-          label: 'Total Questions',
-          field: 'totalQuestions',
+          label: 'Title',
+          field: 'title',
           sort: 'asc',
         },
         {
@@ -141,31 +133,49 @@ function Assessment() {
           field: 'type',
           sort: 'asc',
         },
-        // {
-        //   label: 'Actions',
-        //   field: 'actions',
-        // },
+        {
+          label: 'Archive',
+          field: 'archive',
+          sort: 'asc',
+        },
+        {
+          label: 'Actions',
+          field: 'actions',
+        },
       ],
       rows: [],
     }
 
-    assessment?.forEach((assessment) => {
+    moduleData.forEach((module) => {
       data.rows.push({
-        moduleName: getModuleNameById(assessment.moduleId),
-        totalQuestions: assessment.Questions.length,
-        type: 'Assessment',
-        // actions: (
-        //   <>
-        //     <Tooltip title='Edit' placement='top' arrow>
-        //       <button
-        //         className='btn btn-primary py-1 px-2 ml-2'
-        //         onClick={() => editModuleHandler(assessment)}
-        //       >
-        //         <i className='far fa-edit'></i>
-        //       </button>
-        //     </Tooltip>
-        //   </>
-        // ),
+        id: module._id,
+        title: (
+          <Link to={`/admin/topics/${module._id}`}>
+            <span>{module.title}</span>
+            <span className={classes.icon}>
+              <ExitToAppIcon />
+            </span>
+          </Link>
+        ),
+        type:
+          module.type === 'paid' ? (
+            <p style={{ color: 'red' }}>Paid</p>
+          ) : (
+            <p style={{ color: 'green' }}>Free</p>
+          ),
+        archive: `${module.hidden}`,
+        actions: (
+          <>
+            <Tooltip title='Edit' placement='top' arrow>
+              <button
+                className='btn btn-primary py-1 px-2  ml-2'
+                onClick={() => editModuleHandler(module)}
+              >
+                <i className='far fa-edit'></i>
+              </button>
+            </Tooltip>
+          </>
+        ),
       })
     })
 
@@ -196,7 +206,7 @@ function Assessment() {
                 alignItems='center'
                 justifyContent='space-between'
               >
-                <h1>All Assessments</h1>
+                <h1>All Modules</h1>
                 <Button
                   className={classes.create}
                   size='small'
@@ -214,7 +224,8 @@ function Assessment() {
         </Grid>
       </Grid>
 
-      <AssessmentDialogue
+
+      <SubtopicDialogue
         open={open}
         handleClose={handleClose}
         module={editModule}
@@ -225,4 +236,4 @@ function Assessment() {
   )
 }
 
-export default Assessment
+export default Subtopics
