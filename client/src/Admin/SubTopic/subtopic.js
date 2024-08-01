@@ -83,7 +83,7 @@ export default function Subtopics() {
   }, [dispatch])
 
   // submitting response
-  const submitHandler = async () => {
+  const submitHandler = async (subTopicData) => {
     await dispatch(addSubtopics(subTopicData))
     window.location.reload()
   }
