@@ -103,7 +103,7 @@ export default function Subtopics() {
       const subTopicObj = {
         fileName: subtopic.fileName,
         title: subtopic.title,
-        file: data
+        file: data.url
       };
       modifiedSubtopicsData.push(subTopicObj);
     }
