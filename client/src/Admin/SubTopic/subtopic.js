@@ -98,15 +98,15 @@ export default function Subtopics() {
   const submitHandler = async (subTopicData) => {
     console.log(subTopicData)
     const modifiedSubtopicsData = []
-    subTopicData.subtopics.map(async(subtopic)=>{
-      const data =await post(subtopic.file)
+    for (const subtopic of subTopicData.subtopics) {
+      const data = await post(subtopic.file);
       const subTopicObj = {
-        fileName : subtopic.fileName,
-        title : subtopic.title,
-        file : data
-      }
-      modifiedSubtopicsData.push(subTopicObj)
-    })
+        fileName: subtopic.fileName,
+        title: subtopic.title,
+        file: data
+      };
+      modifiedSubtopicsData.push(subTopicObj);
+    }
     const newObj = {
       topicId:subTopicData.topicId,
       subTopics:modifiedSubtopicsData
