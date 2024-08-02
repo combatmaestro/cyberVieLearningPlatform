@@ -12,7 +12,7 @@ import {
   
   const initialState = {
     loading: false,
-    assessment: null,
+  assessment: [],
     questions: [],
     error: null,
   };

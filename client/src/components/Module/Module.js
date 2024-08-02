@@ -108,12 +108,14 @@ function Module(props) {
             Guidelines for Assessment
           </Typography>
           <Typography variant="body1" paragraph>
-            • This assessment is a part of module 1: Pre-requisite for
-            Cybersecurity.
+            • This assessment is a part of module {moduleData.description} {" "}
+            {moduleData.title}
           </Typography>
           <Typography variant="body1" paragraph>
-            • The assessment contains 10 questions, out of which you have to
-            attempt any 7 questions.
+            • Please complete the following assessment to test your understanding of "{moduleData.title}"
+          </Typography>
+          <Typography variant="body1" paragraph>
+            • Answer all questions to the best of your ability.
           </Typography>
           <Typography variant="body1" paragraph>
             • You have 60 minutes to take this assessment.
@@ -148,6 +150,9 @@ function Module(props) {
             </Button>
           </Box>
         </Box>
+
+
+
       </Modal>
     </div>
   );

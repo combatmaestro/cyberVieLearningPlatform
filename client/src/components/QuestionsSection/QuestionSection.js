@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     },
     content: {
         width: "746px",
-        backgroundColor: "white",
+    // backgroundColor: "white",
         boxShadow: "none",
     },
     sidebar: {

@@ -1,6 +1,6 @@
 const ScheduledClass = require('../models/Class');
 
-exports.scheduleClass = async (req, res) => {
+module.exports.scheduleClass = async (req, res) => {
   const { batchId,teacherId, teacherName, time } = req.body;
 
   try {

@@ -47,10 +47,11 @@ export const addAssessment = (data) => async (dispatch) => {
     });
     console.log(response.data.data);
     dispatch(addAssessmentSuccess(response.data.data));
-    
+    return { status: 200, data: response.data.data };
   } catch (error) {
     console.log(error);
     dispatch(addAssessmentFailure(error.message));
+    return { status: error.response?.status || 500, error: error.message };
   }
 };
 
@@ -74,39 +75,51 @@ export const getAssessmentQuestionsRequest = () => ({
     dispatch(getAssessmentQuestionsRequest());
     try {
       const response = await axios({
-        method: 'get',
+      method: "get",
         url: `${backendUrl}/assessment/module/${moduleId}`,
         headers: {
-          'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         },
       });
     dispatch(getAssessmentQuestionsSuccess(response.data.data));
+    return { status: 200, data: response.data.data };
     } catch (error) {
       dispatch(getAssessmentQuestionsFailure(error.message));
+    return { status: error.response?.status || 500, error: error.message };
     }
   };
 
-  export const submitAssessmentReview = (assessmentReview) => async (dispatch) => {
+export const submitAssessmentReview =
+  (assessmentReview) => async (dispatch) => {
     try {
         dispatch({ type: ASSESSMENT_REVIEW_REQUEST });
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
-            }
+          "Content-Type": "application/json",
+        },
         };
 
-        const { data } = await axios.post(`${backendUrl}/assessment/user/submitAnswers`, assessmentReview, config);
+      const { data } = await axios.post(
+        `${backendUrl}/assessment/user/submitAnswers`,
+        assessmentReview,
+        config
+      );
 
         dispatch({
             type: ASSESSMENT_REVIEW_SUCCESS,
-            payload: data
+        payload: data,
         });
+      return { status: 200, data: response.data };
     } catch (error) {
         dispatch({
             type: ASSESSMENT_REVIEW_FAILURE,
-            payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
         });
+      return { status: error.response?.status || 500, error: error.message };
     }
 };
 
@@ -114,19 +127,24 @@ export const getAllAssessmentsToReview = (teacherId) => async (dispatch) => {
   try {
     dispatch({ type: GET_ASSESSMENTS_TO_REVIEW_REQUEST });
 
-    const { data } = await axios.get(`${backendUrl}/assessment/teacher/review/${teacherId}`);
+    const { data } = await axios.get(
+      `${backendUrl}/assessment/teacher/review/${teacherId}`
+    );
 
     dispatch({
       type: GET_ASSESSMENTS_TO_REVIEW_SUCCESS,
       payload: data.data,
     });
+    return { status: 200, data: response.data };
   } catch (error) {
     dispatch({
       type: GET_ASSESSMENTS_TO_REVIEW_FAILURE,
-      payload: error.response && error.response.data.message
+      payload:
+        error.response && error.response.data.message
         ? error.response.data.message
         : error.message,
     });
+    return { status: error.response?.status || 500, error: error.message };
   }
 };
 
@@ -139,10 +157,12 @@ export const getAllAssessments = () => async (dispatch) => {
       type: GET_ALL_ASSESSMENTS_SUCCESS,
       payload: response.data.data, // Adjust based on the actual structure of your response
     });
+    return { status: 200, data: response.data.data };
   } catch (error) {
     dispatch({
       type: GET_ALL_ASSESSMENTS_FAILURE,
       payload: error.response ? error.response.data : error.message,
     });
+    return { status: error.response?.status || 500, error: error.message };
   }
 };

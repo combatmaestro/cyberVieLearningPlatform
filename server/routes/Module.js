@@ -32,5 +32,10 @@ router.put(
   authorizeRoles("admin", "teacher"),
   moduleController.update
 );
+router.get(
+  "/admin/statistics",
+  isAuthenticatedUser,
+  moduleController.getAllStatistics
+);
 
 module.exports = router;

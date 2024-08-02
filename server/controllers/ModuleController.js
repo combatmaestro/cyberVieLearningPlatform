@@ -182,3 +182,64 @@ module.exports.getModuleDetails = catchAsyncErrors(async (req, res, next) => {
     allModulesData,
   });
 });
+
+
+// Controller to get total and completed counts
+module.exports.getAllStatistics = catchAsyncErrors(async (req, res, next) => {
+  try {
+    // Fetch all modules
+    const allModules = await Module.find({ hidden: false }).populate({
+      path: 'topic',
+      match: { hidden: false },
+      populate: {
+        path: 'subTopics',
+        match: { hidden: false },
+      },
+    });
+
+    let totalModules = allModules.length;
+    // let totalTopics = 0;
+    // let totalSubTopics = 0;
+    let completedModules = 0;
+    let completedTopics = 0;
+    let completedSubTopics = 0;
+
+    const { totalTopics, totalSubTopics } = allModules.reduce((acc, module) => {
+      acc.totalTopics += module.topic.length;
+      acc.totalSubTopics += module.topic.reduce((subAcc, topic) => subAcc + topic.subTopics.length, 0);
+      return acc;
+    }, { totalTopics: 0, totalSubTopics: 0 });
+
+    // Fetching user responses
+    // const userResponses = await User.findById(req.user._id).select('responses');
+    // const responses = await Responses.find({ _id: { $in: userResponses.responses } });
+
+    // for (const response of responses) {
+    //   if (response.isCompleted) completedModules += 1;
+    //   for (const topicResponse of response.topicResponses) {
+    //     if (topicResponse.isCompleted) completedTopics += 1;
+    //     for (const subTopicResponse of topicResponse.subTopicResponses) {
+    //       if (subTopicResponse.isCompleted) completedSubTopics += 1;
+    //     }
+    //   }
+    // }
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        totalModules,
+        totalTopics,
+        totalSubTopics,
+        completedModules,
+        completedTopics,
+        completedSubTopics,
+      },
+    });
+  } catch (error) {
+    console.error('Error in getModuleStatistics:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server Error',
+    });
+  }
+});
