@@ -119,7 +119,7 @@ function SubtopicDialogue(props) {
     const reader = new FileReader()
     reader.onloadend = () => {
       const base64String = reader.result.split(',')[1]
-      handleSubtopicChange(index, 'file', base64String)
+      handleSubtopicChange(index, 'file', file)
       handleSubtopicChange(index, 'fileName', file.name)
     }
     reader.readAsDataURL(file)

@@ -12,6 +12,7 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@vercel/blob": "^0.23.4",
     "axios": "^0.21.1",
     "mdbreact": "^5.0.2",
     "moment": "^2.29.1",

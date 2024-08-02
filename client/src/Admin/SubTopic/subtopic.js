@@ -18,6 +18,8 @@ import Button from '@material-ui/core/Button'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import Tooltip from '@material-ui/core/Tooltip'
 import {addSubtopics } from '../../actions/topicAction'
+import {put} from "@vercel/blob";
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   create: {
@@ -82,9 +84,34 @@ export default function Subtopics() {
     dispatch(getAllModules())
   }, [dispatch])
 
+
+
+  const post = async(fileData) =>{
+    const file = fileData;
+    const blob = await put(file.name,file,{
+      access: 'public',
+      token:process.env.BLOB_READ_WRITE_TOKEN
+    }) 
+    return blob
+  }
   // submitting response
   const submitHandler = async (subTopicData) => {
-    await dispatch(addSubtopics(subTopicData))
+    console.log(subTopicData)
+    const modifiedSubtopicsData = []
+    subTopicData.subtopics.map(async(subtopic)=>{
+      const data =await post(subtopic.file)
+      const subTopicObj = {
+        fileName : subtopic.fileName,
+        title : subtopic.title,
+        file : data
+      }
+      modifiedSubtopicsData.push(subTopicObj)
+    })
+    const newObj = {
+      topicId:subTopicData.topicId,
+      subTopics:modifiedSubtopicsData
+    }
+    await dispatch(addSubtopics(newObj))
     window.location.reload()
   }
 
