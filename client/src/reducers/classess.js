@@ -26,3 +26,20 @@ import {
     }
   };
   
+
+  export const getClassesReducer = (state = {
+    loading: false,
+    classData: [],
+    error: null
+  }, action) => {
+    switch (action.type) {
+      case GET_CLASSES_REQUEST:
+        return { ...state, loading: true };
+      case GET_CLASSES_SUCCESS:
+        return { ...state, loading: false, classData: action.payload };
+      case GET_CLASSES_FAILURE:
+        return { ...state, loading: false, error: action.payload };
+      default:
+        return state;
+    }
+  };
