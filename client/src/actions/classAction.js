@@ -48,7 +48,7 @@ export const fetchClasses = () => {
   return async (dispatch) => {
     dispatch(getClassesRequest());
     try {
-      const {data} = await axios.get('/class/admin/getAll'); // Replace with your API endpoint
+      const {data} = await axios.get(`${backendUrl}/class/admin/getAll`); // Replace with your API endpoint
       console.log(data.data);
       dispatch(getClassesSuccess(data.data));
     } catch (error) {
