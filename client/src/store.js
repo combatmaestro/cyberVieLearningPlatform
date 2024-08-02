@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import {
   getAllModuleReducer,
   getSpecificModuleReducer,
+  getAllStatsReducer
 } from "./reducers/moduleReducer";
 import {
   userReducer,
@@ -30,6 +31,7 @@ const initialState = {
   batches: {},
 };
 
+
 const reducer = combineReducers({
   user: userReducer,
   modules: getAllModuleReducer,
@@ -49,7 +51,9 @@ const reducer = combineReducers({
   assessmentReview: assessmentReviewReducer,
   subtopics:subtopicListReducer,
   getClasses: getClassesReducer,
+  allStats: getAllStatsReducer
 });
+
 
 const store = createStore(
   reducer,
@@ -57,4 +61,9 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk))
 );
 
+
 export default store;
+
+
+
+
