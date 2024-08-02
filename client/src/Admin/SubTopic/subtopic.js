@@ -87,10 +87,10 @@ export default function Subtopics() {
 
 
   const post = async(fileData) =>{
-    console.log(process.env.BLOB_READ_WRITE_TOKEN)
     const file = fileData;
     const blob = await put(file.name,file,{
       access: 'public',
+      token:process.env.REACT_APP_BLOB_READ_WRITE_TOKEN
     }) 
     return blob
   }
