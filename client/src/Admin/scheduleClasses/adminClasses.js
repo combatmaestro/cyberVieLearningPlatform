@@ -15,7 +15,8 @@ import AdminClassesDialog from "./AdminClassesDialog";
 import Button from "@material-ui/core/Button";
 import { adminGetAllTeachers } from "../../actions/userActions";
 import { getAllBatches } from "../../actions/moduleAction";
-import { scheduleClass } from "../../actions/classAction";
+import { scheduleClass,fetchClasses } from "../../actions/classAction";
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   create: {
@@ -39,8 +40,7 @@ function AdminClasses() {
   const classes = useStyles();
   const { id } = useParams();
   const dispatch = useDispatch();
-  const allUsers = useSelector((state) => state.allUsers);
-  const { loading, allUsersData = [] } = allUsers;
+  const { loading, classData, error } = useSelector((state) => state.getClasses);
 
   const [open, setOpen] = useState(false);
   const [editUser, setEditUser] = useState("");
@@ -53,17 +53,29 @@ function AdminClasses() {
     setOpen(false);
   };
 
+
+  
+  useEffect(() => {
+    dispatch(fetchClasses());
+  }, [dispatch]);
+
+  
+  useEffect(() => {
+    dispatch(getAllBatches())
+    dispatch(adminGetAllUsers());
+    dispatch(adminGetAllTeachers());
+  }, []);
   const handleScheduleClose = () => {
     setScheduleOpen(false);
   };
 
-  const editUserHandler = (user) => {
-    setEditUser(user);
+  const editUserHandler = () => {
+    setEditUser();
     setOpen(true);
   };
 
-  const handleClickOpen = (user) => {
-    setEditUser(user);
+  const handleClickOpen = () => {
+    // setEditUser(user);
     setScheduleClasses(null)
     setScheduleOpen(true)
   }
@@ -77,11 +89,6 @@ function AdminClasses() {
   };
   
 
-  useEffect(() => {
-    dispatch(adminGetAllUsers());
-    dispatch(adminGetAllTeachers());
-    dispatch(getAllBatches())
-  }, []);
 
   const handleSubmit = async(event , allTeachersData ,selectedTeacher,selectedBatch,time ) => {
     event.preventDefault();
@@ -111,71 +118,44 @@ function AdminClasses() {
 
   }
 
-  const mdbJobs = () => {
-    const data = {
+  const mdbJobs = (data, editUserHandler) => {
+    const dataCols = {
       columns: [
         {
-          label: "UserID",
-          field: "userid",
+          label: "Batch Id",
+          field: "batchId",
           sort: "asc",
         },
         {
-          label: "Name",
-          field: "name",
+          label: "Teacher Id",
+          field: "teacherId",
           sort: "asc",
         },
         {
-          label: "Email",
-          field: "email",
+          label: "Teacher Name",
+          field: "teacherName",
           sort: "asc",
         },
         {
-          label: "Role",
-          field: "role",
+          label: "Scheduled Time",
+          field: "time",
           sort: "asc",
         },
-        {
-          label: "Tier",
-          field: "tier",
-          sort: "asc",
-        },
-        {
-          label: "Actions",
-          field: "actions",
-        },
+        
       ],
       rows: [],
     };
 
-    allUsersData.forEach((user) => {
-      data.rows.push({
-        userid: user._id,
-        name: <span>{user.name}</span>,
-        email: `${user.email}`,
-        role: `${user.role === "user" ? "student" : user.role}`,
-        batch: user?.batch,
-        tier:
-          user.tier === "paid" ? (
-            <p style={{ color: "blue" }}>Paid</p>
-          ) : (
-            <p style={{ color: "green" }}>Free</p>
-          ),
-        actions: (
-          <>
-            <Tooltip title="Edit" placement="top" arrow>
-              <button
-                className="btn btn-primary py-1 px-2  ml-2"
-                onClick={() => editUserHandler(user)}
-              >
-                <i className="far fa-edit"></i>
-              </button>
-            </Tooltip>
-          </>
-        ),
+    classData?.forEach((classes) => {
+      dataCols.rows.push({
+        batchId: classes.batchId,
+        teacherId:classes.teacherId,
+        teacherName: classes.teacherName,
+        time: classes.time,
       });
     });
 
-    return data;
+    return dataCols;
   };
 
   if (loading) return <Loader />;

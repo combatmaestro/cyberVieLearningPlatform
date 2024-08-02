@@ -13,4 +13,10 @@ router.post(
     scheduleClassController.scheduleClass
   );
  
+  router.get(
+    "/admin/getAll",
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    scheduleClassController.getAllClasses
+  );
   module.exports = router;

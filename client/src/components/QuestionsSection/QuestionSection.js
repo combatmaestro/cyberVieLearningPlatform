@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { getAssessmentQuestions , submitAssessmentReview } from '../../actions/assessmentAction';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { Box, Button, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  getAssessmentQuestions,
+  submitAssessmentReview,
+} from "../../actions/assessmentAction";
+import { useDispatch, useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(3),
@@ -67,7 +70,9 @@ const QuestionSection = ({ match }) => {
     const { id } = match.params;
     const [currentIndex, setCurrentIndex] = useState(0);
     const dispatch = useDispatch();
-    const { loading, questions, error } = useSelector(state => state.assessment);
+  const { loading, questions, error } = useSelector(
+    (state) => state.assessment
+  );
     const [answers, setAnswers] = useState([]);
     const user = useSelector((state) => state.user);
     useEffect(() => {
@@ -76,12 +81,12 @@ const QuestionSection = ({ match }) => {
 
     useEffect(() => {
         if (questions?.Questions?.length > 0) {
-            setAnswers(Array(questions.Questions.length).fill(''));
+      setAnswers(Array(questions.Questions.length).fill(""));
         }
     }, [questions]);
 
     const handleNextQuestion = () => {
-        if (answers[currentIndex].trim() !== '') {
+    if (answers[currentIndex].trim() !== "") {
             if (currentIndex < questions[0].Questions.length - 1) {
                 setCurrentIndex(currentIndex + 1);
             } else {
@@ -103,25 +108,25 @@ const QuestionSection = ({ match }) => {
     };
 
     const handleSubmit = () => {
-        const answeredQuestions = questions[0]?.Questions?.map((question, index) => ({
-            
-            question:question.question,
-            answer:answers[index],
-            marksAllocated:question.totalMarks,
-            answerStatus:"under review",
-        }));
+    const answeredQuestions = questions[0]?.Questions?.map(
+      (question, index) => ({
+        question: question.question,
+        answer: answers[index],
+        marksAllocated: question.totalMarks,
+        answerStatus: "under review",
+      })
+    );
 
         const assesmentSubmit = {
-            userId:user.data._id,
-            submittedBy:user.data.name,
-            moduleId:id,
-            questionandanswers:answeredQuestions,
-            assessmentStatus:"submitted"
-        }
-
-        dispatch(submitAssessmentReview(assesmentSubmit))
+      userId: user.data._id,
+      submittedBy: user.data.name,
+      moduleId: id,
+      questionandanswers: answeredQuestions,
+      assessmentStatus: "submitted",
     };
 
+    dispatch(submitAssessmentReview(assesmentSubmit));
+    };
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -129,25 +134,26 @@ const QuestionSection = ({ match }) => {
     const currentQuestion = questions[0]?.Questions?.[currentIndex] || {};
 
     return (
+    <>
         <Box className={classes.root}>
             <Box className={classes.content}>
                 <Typography variant="h4" gutterBottom>
                     Question {currentQuestion?.sno}
                 </Typography>
-                <Typography variant="body1" style={{ marginBottom: '30px' }}>
+        <Typography variant="body1" style={{ marginBottom: "30px" }}>
                     {currentQuestion?.question}
                 </Typography>
                 <Box className={classes.questionBox}>
                     <textarea
                         placeholder="Write your answer here:"
                         style={{
-                            width: '100%',
-                            height: '450px',
-                            padding: '8px',
-                            borderRadius: '8px',
-                            border: '0.5px solid #ccc',
+              width: "100%",
+              height: "450px",
+              padding: "8px",
+              borderRadius: "8px",
+              border: "0.5px solid #ccc",
                         }}
-                        value={answers[currentIndex] || ''}
+            value={answers[currentIndex] || ""}
                         onChange={handleTextareaChange}
                     />
                     <Typography variant="caption" gutterBottom>
@@ -169,18 +175,23 @@ const QuestionSection = ({ match }) => {
                             background:
                                 "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
                         }}
-                        disabled={answers[currentIndex]?.trim() === ''}
+            disabled={answers[currentIndex]?.trim() === ""}
                     >
-                        {currentIndex === questions?.Questions?.length - 1 ? 'Submit' : 'Save & Proceed'}
+            {currentIndex === questions?.Questions?.length - 1
+              ? "Submit"
+              : "Save & Proceed"}
                     </Button>
                 </Box>
             </Box>
             <Box className={classes.sidebar}>
                 <Box className={classes.sidebarHeader}>
-                    <Typography style={{ marginBottom: '50px' }} variant="h6">
+          <Typography style={{ marginBottom: "50px" }} variant="h6">
                         Module Assessment
                     </Typography>
-                    <Button className={classes.endBtn} variant="outlined" color="secondary"
+          <Button
+            className={classes.endBtn}
+            variant="outlined"
+            color="secondary"
                         onClick={handleSubmit}
                     >
                         Save & End Test
@@ -189,10 +200,10 @@ const QuestionSection = ({ match }) => {
                 <Typography
                     variant="body2"
                     color="textSecondary"
-                    style={{ marginTop: '0px', marginBottom: '30px' }}
+          style={{ marginTop: "0px", marginBottom: "30px" }}
                 >
-                    • {answers.filter((answer) => answer.trim() !== '').length} Answered •{' '}
-                    {answers.filter((answer) => answer.trim() === '').length} Unanswered
+          • {answers.filter((answer) => answer.trim() !== "").length} Answered •{" "}
+          {answers.filter((answer) => answer.trim() === "").length} Unanswered
                 </Typography>
                 <Box className={classes.questionNav}>
                     {questions[0]?.Questions?.map((question, index) => (
@@ -200,7 +211,7 @@ const QuestionSection = ({ match }) => {
                             key={question._id}
                             className={`${classes.numBtn} ${
                                 answers[index] ? classes.completedNumBtn : ""
-                            } ${currentIndex === index ? classes.activeNumBtn : ''}`}
+              } ${currentIndex === index ? classes.activeNumBtn : ""}`}
                             variant="outlined"
                             onClick={() => setCurrentIndex(index)}
                         >
@@ -209,8 +220,17 @@ const QuestionSection = ({ match }) => {
                     ))}
                 </Box>
             </Box>
+      
         </Box>
-    );
+    {/* <Modal
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="simple-modal-title"
+    aria-describedby="simple-modal-description"
+  >
+    {body}
+  </Modal> */}
+  </>  );
 };
 
 export default QuestionSection;

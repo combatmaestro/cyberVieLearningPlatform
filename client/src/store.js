@@ -22,7 +22,7 @@ import { ctfReducer } from "./reducers/ctfReducer";
 import { orderReducer } from "./reducers/orderReduer";
 import { getAllBatchReducer } from "./reducers/batchReducer";
 import assessmentReducer from "./reducers/assessmentReducer";
-import { scheduleClassReducer } from "./reducers/classess";
+import { scheduleClassReducer , getClassesReducer  } from "./reducers/classess";
 import { assessmentReviewReducer } from "./reducers/assessmentReviewReducer";
 const initialState = {
   user: {},
@@ -48,6 +48,7 @@ const reducer = combineReducers({
   scheduleClass: scheduleClassReducer,
   assessmentReview: assessmentReviewReducer,
   subtopics:subtopicListReducer,
+  getClasses: getClassesReducer,
 });
 
 const store = createStore(

@@ -1,7 +1,10 @@
 import {
     SCHEDULE_CLASS_REQUEST,
     SCHEDULE_CLASS_SUCCESS,
-    SCHEDULE_CLASS_FAILURE
+    SCHEDULE_CLASS_FAILURE,
+    GET_CLASSES_REQUEST,
+    GET_CLASSES_SUCCESS,
+    GET_CLASSES_FAILURE
   } from '../constants/classess';
   
   const initialState = {
