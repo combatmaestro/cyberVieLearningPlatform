@@ -91,7 +91,6 @@ export default function Subtopics() {
     const file = fileData;
     const blob = await put(file.name,file,{
       access: 'public',
-      token:process.env.BLOB_READ_WRITE_TOKEN
     }) 
     return blob
   }
