@@ -163,7 +163,7 @@ function Assessment() {
     assessment?.forEach((assessment) => {
       data.rows.push({
         moduleName: getModuleNameById(assessment.moduleId),
-        totalQuestions: assessment.Questions.length,
+        totalQuestions: (assessment.Questions &&  assessment.Questions.length || 0),
         type: "Assessment",
         // actions: (
         //   <>

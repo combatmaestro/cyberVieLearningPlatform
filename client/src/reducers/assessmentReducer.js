@@ -48,7 +48,7 @@ import {
         return {
           ...state,
           loading: false,
-          assessment: action.payload,
+        assessment: [...state.assessment,action.payload ]
         };
       case GET_ASSESSMENT_QUESTIONS_SUCCESS:
         return {

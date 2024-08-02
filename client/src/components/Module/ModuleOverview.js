@@ -8,6 +8,7 @@ import ListAltIcon from "@material-ui/icons/ListAlt";
 import TimerIcon from "@material-ui/icons/Timer";
 import avtar from "./avtar.png";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     background:
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "50px",
     // boxShadow: '0px 1.84527px 15.6905px rgba(0, 0, 0, 0.22)',
     boxShadow: "0px 4px 4px 0px #DEDEDE40",
+
 
     padding: theme.spacing(3),
     display: "flex",
@@ -54,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     left: "-25px",
     borderRadius: "100px 100px 0px 100px",
 
+
   },
   icon: {
     fontSize: "3rem",
@@ -70,8 +73,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ModuleOverview = () => {
+
+const ModuleOverview = ({stats}) => {
   const classes = useStyles();
+
 
   return (
     <Box className={classes.root}>
@@ -105,21 +110,21 @@ const ModuleOverview = () => {
           <BookIcon className={classes.icon} color="primary" />
           <Box>
             <Typography className={classes.text}>Modules</Typography>
-            <Typography className={classes.subText}>1/11</Typography>
+            <Typography className={classes.subText}>{stats?.completedModules}/{stats?.totalModules}</Typography>
           </Box>
         </Box>
         <Box className={classes.iconBox}>
           <AssignmentIcon className={classes.icon} color="primary" />
           <Box>
             <Typography className={classes.text}>Topics</Typography>
-            <Typography className={classes.subText}>3/56</Typography>
+            <Typography className={classes.subText}>{stats?.completedTopics}/{stats?.totalTopics}</Typography>
           </Box>
         </Box>
         <Box className={classes.iconBox}>
           <ListAltIcon className={classes.icon} color="primary" />
           <Box>
             <Typography className={classes.text}>Sub-topics</Typography>
-            <Typography className={classes.subText}>10/232</Typography>
+            <Typography className={classes.subText}>{stats?.completedSubTopics}/{stats?.totalSubTopics}</Typography>
           </Box>
         </Box>
         <Box className={classes.iconBox}>
@@ -134,4 +139,11 @@ const ModuleOverview = () => {
   );
 };
 
+
 export default ModuleOverview;
+
+
+
+
+
+

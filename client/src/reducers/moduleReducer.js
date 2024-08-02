@@ -14,7 +14,11 @@ import {
   GET_MODULE_DETAILS_REQUEST,
   GET_MODULE_DETAILS_SUCCESS,
   GET_MODULE_DETAILS_FAILURE,
+  GET_MODULE_STATS_REQUEST,
+  GET_MODULE_STATS_SUCCESS,
+  GET_MODULE_STATS_FAILURE
 } from "../constants/moduleConstants";
+
 
 const initialState = {
   loading: true,
@@ -22,6 +26,7 @@ const initialState = {
   error: "",
   moduleDetails:null
 };
+
 
 export const getAllModuleReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -33,12 +38,14 @@ export const getAllModuleReducer = (state = initialState, action) => {
         loading: true,
       };
 
+
     case GET_MODULE_SUCCESS:
       return {
         loading: false,
         data: action.payload,
         error: "",
       };
+
 
     case EDIT_MODULE_SUCCESS:
       const editModule = action.payload;
@@ -50,14 +57,17 @@ export const getAllModuleReducer = (state = initialState, action) => {
         ),
       };
 
+
     case ADD_MODULE_SUCCESS:
       const addModule = action.payload;
+
 
       return {
         loading: false,
         error: "",
         data: [...state.data, addModule],
       };
+
 
     case GET_MODULE_FAILURE:
       return {
@@ -66,6 +76,7 @@ export const getAllModuleReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+
     case ADD_MODULE_FAILURE:
     case EDIT_MODULE_FAILURE:
       return {
@@ -73,6 +84,8 @@ export const getAllModuleReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+
+
 
 
       case GET_MODULE_DETAILS_REQUEST:
@@ -93,10 +106,14 @@ export const getAllModuleReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload,
       };
+
+
+   
     default:
       return state;
   }
 };
+
 
 export const getSpecificModuleReducer = (state = {}, action) => {
   switch (action.type) {
@@ -106,6 +123,7 @@ export const getSpecificModuleReducer = (state = {}, action) => {
         loading: true,
       };
 
+
     case GET_SPECIFIC_MODULE_SUCCESS:
       return {
         loading: false,
@@ -113,6 +131,7 @@ export const getSpecificModuleReducer = (state = {}, action) => {
         responses: action.payload.responses,
         error: "",
       };
+
 
     case GET_SPECIFIC_MODULE_FAILURE:
       return {
@@ -122,7 +141,50 @@ export const getSpecificModuleReducer = (state = {}, action) => {
         error: action.payload,
       };
 
+
     default:
       return state;
   }
 };
+
+
+
+
+export const getAllStatsReducer =(state ={
+  loading:false,
+  stats:{},
+  error:null
+}, action )=>{
+  switch(action.type){
+
+
+  case GET_MODULE_STATS_SUCCESS:
+      return{
+        loading:false,
+        stats:action.payload,
+        error:""
+      }
+    case GET_MODULE_STATS_REQUEST:
+      return{
+        ...state,
+        loading:true,
+      }
+
+
+    case GET_MODULE_STATS_FAILURE:
+      return{
+        loading:true,
+        error:action.payload,
+      }
+
+
+    default:
+      return state;
+}
+};
+
+
+
+
+
+

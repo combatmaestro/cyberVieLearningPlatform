@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, IconButton, Box, Grid } from "@material-ui/core";
 import AccessAlarmsIcon from "@material-ui/icons/AccessAlarms";
+import { getAllStats } from "../../actions/moduleAction";
 import TrendingUpIcon from "@material-ui/icons/TrendingUp";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -67,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 function Home() {
   document.title = "Home";
   const classes = useStyles();
@@ -77,7 +79,23 @@ function Home() {
   const [appBarWidth, setAppBarWidth] = useState("100%");
   const [teacher, setTeacher] = useState(false);
   const [assessmentData, setAssessmentData] = useState([]);
+  const [statisticsData,setstatisticsData] = useState({})
   const { loading, assessments, error } = useSelector(state => state.assessmentReview);
+  const {stats} = useSelector((state) => state.allStats)
+  // const {stats} = statistics
+  console.log(stats);
+ 
+  useEffect(()=>{
+    dispatch(getAllStats())
+  },[])
+
+
+
+
+  useEffect(()=>{
+    setstatisticsData(stats?.data)
+  },[stats])
+
 
   useEffect(() => {
     if (userData.data.role.includes("teacher")) {
@@ -86,6 +104,7 @@ function Home() {
     }
   }, [dispatch, userData.data._id, userData.data.role]);
 
+
   useEffect(() => {
     if (assessments && assessments.length > 0) {
       console.log("Assessments:", assessments);
@@ -93,18 +112,21 @@ function Home() {
     }
   }, [assessments]);
 
+
   const openPlayground = () => {
     history.push("/playground");
   };
+
 
   const redirect = (assessmentId) => {
     // Define the redirect logic here
     history.push(`/review/${assessmentId}`);
   };
 
+
   return (
     <div className={classes.root}>
-      <ModuleOverview />
+      <ModuleOverview stats = {statisticsData} />
       {teacher && (
         <>
           <Box className={classes.headerContainer}>
@@ -157,4 +179,11 @@ function Home() {
   );
 }
 
+
 export default Home;
+
+
+
+
+
+
