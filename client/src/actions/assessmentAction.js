@@ -110,7 +110,7 @@ export const submitAssessmentReview =
             type: ASSESSMENT_REVIEW_SUCCESS,
         payload: data,
         });
-      return { status: 200, data: response.data };
+      return { status: 200, data: data.data };
     } catch (error) {
         dispatch({
             type: ASSESSMENT_REVIEW_FAILURE,
@@ -135,7 +135,7 @@ export const getAllAssessmentsToReview = (teacherId) => async (dispatch) => {
       type: GET_ASSESSMENTS_TO_REVIEW_SUCCESS,
       payload: data.data,
     });
-    return { status: 200, data: response.data };
+    return { status: 200, data: data.data };
   } catch (error) {
     dispatch({
       type: GET_ASSESSMENTS_TO_REVIEW_FAILURE,
