@@ -7,7 +7,7 @@ const topicSchema = new mongoose.Schema({
   },
   content: {
     type: String,
-    default: '<p>No Content Available<p>',
+    default: '',
   },
   ctf: [
     {

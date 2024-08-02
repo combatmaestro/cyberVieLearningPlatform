@@ -109,7 +109,7 @@ export default function Subtopics() {
     }
     const newObj = {
       topicId:subTopicData.topicId,
-      subTopics:modifiedSubtopicsData
+      subtopics:modifiedSubtopicsData
     }
     await dispatch(addSubtopics(newObj))
     window.location.reload()
