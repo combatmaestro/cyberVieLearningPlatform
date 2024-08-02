@@ -15,6 +15,9 @@ import {
   GET_MODULE_DETAILS_FAILURE,
   GET_MODULE_DETAILS_SUCCESS,
   GET_MODULE_DETAILS_REQUEST,
+  GET_MODULE_STATS_REQUEST,
+  GET_MODULE_STATS_SUCCESS,
+  GET_MODULE_STATS_FAILURE
 } from "../constants/moduleConstants";
 import {
   GET_BATCH_REQUEST,
@@ -304,6 +307,44 @@ export const editBatchModule = (id, info) => async (dispatch) => {
       payload: error.response.data.message,
     });
 
+
+    return {
+      success: false,
+    };
+  }
+};
+
+
+export const getAllStats = () => async (dispatch) => {
+  dispatch({
+    type: GET_MODULE_STATS_REQUEST,
+  });
+
+
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+
+    const { data } = await axios.get(
+      `${backendUrl}/module/admin/statistics`,
+      // config
+    );
+    dispatch({
+      type: GET_MODULE_STATS_SUCCESS,
+      payload: data,
+    });
+    return {
+      success: true,
+    };
+  } catch (error) {
+    dispatch({
+      type: GET_MODULE_STATS_FAILURE,
+      payload: error.response,
+    });
     return {
       success: false,
     };
