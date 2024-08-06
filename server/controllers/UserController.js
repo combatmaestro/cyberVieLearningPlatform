@@ -63,7 +63,7 @@ module.exports.getDetails = catchAsyncErrors(async (req, res, next) => {
   if (!user) {
     return next(new ErrorHandler("User not found", 404));
   }else{
-    filteredUsers = filterUserProperties(user);
+    filteredUsers = specificfilterUserProperties(user);
   }
 
   return res.status(200).json({
@@ -253,7 +253,8 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
   });
   var filteredUsers = {};
   if (user) {
-    filteredUsers = filterUserProperties(user)
+    filteredUsers = specificfilterUserProperties(user)
+    
   }
   return res.status(200).json({
     success: true,
@@ -350,3 +351,31 @@ function filterUserProperties(user) {
 }
 
 
+function specificfilterUserProperties(user) {
+  const objectToSend = {
+    avatar: user.avatar,
+    tier: user.tier,
+    role: user.role,
+    marks: user.marks,
+    responses: user.responses,
+    _id: user._id,
+    email: user.email,
+    name: user.name,
+    batch:user.batch,
+    education:user.education,
+    currentSalary:user.currentSalary,
+    expectedSalary:user.expectedSalary,
+    preferredLocation:user.preferredLocation,
+    mobile: user.mobile,
+    workingDomain:user.workingDomain,
+    experience:user.experience,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
+
+  if (user.labCreated !== undefined) {
+    objectToSend.labCreated = user.labCreated;
+  }
+
+  return objectToSend;
+}
