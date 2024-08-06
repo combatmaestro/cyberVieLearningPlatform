@@ -26,7 +26,7 @@ module.exports.authenticate = async (req, res, next) => {
     var filteredUsers = {};
     if (user) {
       const token = user.getJwtToken();
-      const filteredUser = filterUserProperties(user);
+      const filteredUser = specificfilterUserProperties(user);
       await sendToken(filteredUser, token, 200, res);
     } else {
       user = await User.create({
