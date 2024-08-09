@@ -157,7 +157,7 @@ const QuestionSection = ({ match }) => {
 
   const handleSuccessModalClose = () =>{
     setShowSubmitted(false);
-    history.push("/")
+    history.push("/home")
   }
 
     if (loading) return <p>Loading...</p>;
