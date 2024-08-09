@@ -10,17 +10,16 @@ import SideDrawer from "../Drawer/SideDrawer";
 import SuccessBar from "../SnackBar/SuccessBar";
 import ErrorBar from "../SnackBar/ErrorBar";
 import { getAllAssessments } from "../../actions/assessmentAction";
-// material ui components
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import { addAssessment } from "../../actions/assessmentAction";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Tooltip from "@material-ui/core/Tooltip";
 import Modal from "@material-ui/core/Modal";
 import Typography from "@material-ui/core/Typography";
+
 const useStyles = makeStyles((theme) => ({
   root: {},
   create: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginLeft: 5,
     "& .MuiSvgIcon-root": {
-      widthL: 15,
+      width: 15,
       height: 15,
       color: "#4285f4",
     },
@@ -65,16 +64,13 @@ function Assessment() {
   const modules = useSelector((state) => state.modules);
   const { data: moduleData = [] } = modules;
 
-  //for dialogue
   const [open, setOpen] = useState(false);
   const [editModule, setEditModule] = useState(null);
   const [message, setMessage] = useState("");
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailure, setOpenFailure] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false);
-  const { assessment, loading, error } = useSelector(
-    (state) => state.assessment
-  );
+  const { assessment, loading, error } = useSelector((state) => state.assessment);
 
   useEffect(() => {
     dispatch(getAllAssessments());
@@ -85,6 +81,7 @@ function Assessment() {
     setEditModule(null);
     setOpen(true);
   };
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -102,7 +99,6 @@ function Assessment() {
     setOpen(true);
   };
 
-  // helper function to get module name by ID
   const getModuleNameById = (id) => {
     const module = moduleData.find((module) => module._id === id);
     return module ? module.title : "Unknown Module";
@@ -119,17 +115,17 @@ function Assessment() {
     };
     const response = await dispatch(addAssessment(assessmentData));
     if (response && response.status === 200) {
+      dispatch(getAllAssessments());
       setOpen(false);
       setSuccessModalOpen(true);
-      console.log(response);
     } else {
       setMessage(response?.error || "An error occurred");
       setOpenFailure(true);
     }
   };
+
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
-    window.location.reload();
   };
 
   if (loading) return <Loader />;
@@ -152,10 +148,6 @@ function Assessment() {
           field: "type",
           sort: "asc",
         },
-        // {
-        //   label: 'Actions',
-        //   field: 'actions',
-        // },
       ],
       rows: [],
     };
@@ -163,20 +155,8 @@ function Assessment() {
     assessment?.forEach((assessment) => {
       data.rows.push({
         moduleName: getModuleNameById(assessment.moduleId),
-        totalQuestions: (assessment.Questions &&  assessment.Questions.length || 0),
+        totalQuestions: (assessment.Questions && assessment.Questions.length) || 0,
         type: "Assessment",
-        // actions: (
-        //   <>
-        //     <Tooltip title='Edit' placement='top' arrow>
-        //       <button
-        //         className='btn btn-primary py-1 px-2 ml-2'
-        //         onClick={() => editModuleHandler(assessment)}
-        //       >
-        //         <i className='far fa-edit'></i>
-        //       </button>
-        //     </Tooltip>
-        //   </>
-        // ),
       });
     });
 
@@ -218,7 +198,6 @@ function Assessment() {
                   Create
                 </Button>
               </Box>
-
               <MDBDataTable data={mdbJobs()} bordered striped hover />
             </Grid>
           </Grid>

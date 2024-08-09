@@ -232,6 +232,10 @@ export const addSubtopics = (assessmentData) => async (dispatch) => {
       type: SUBTOPIC_ADD_SUCCESS,
       payload: data,
     })
+    return{
+      status:200,
+      data: data
+    }
   } catch (error) {
     dispatch({
       type: SUBTOPIC_ADD_FAILURE,

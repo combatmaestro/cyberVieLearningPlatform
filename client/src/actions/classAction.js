@@ -8,6 +8,7 @@ import {
   GET_CLASSES_FAILURE
 } from '../constants/classess';
 const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
+
 export const scheduleClass = (batchId, teacherId,teacherName, time) => async (dispatch) => {
   try {
     dispatch({ type: SCHEDULE_CLASS_REQUEST });
@@ -23,6 +24,10 @@ export const scheduleClass = (batchId, teacherId,teacherName, time) => async (di
       type: SCHEDULE_CLASS_SUCCESS,
       payload: data
     });
+    return{
+      status:200,
+      data:data,
+    }
   } catch (error) {
     dispatch({
       type: SCHEDULE_CLASS_FAILURE,
@@ -48,7 +53,7 @@ export const fetchClasses = () => {
   return async (dispatch) => {
     dispatch(getClassesRequest());
     try {
-      const {data} = await axios.get(`${backendUrl}/class/admin/getAll`); // Replace with your API endpoint
+      const {data} = await axios.get('/class/admin/getAll'); // Replace with your API endpoint
       console.log(data.data);
       dispatch(getClassesSuccess(data.data));
     } catch (error) {
