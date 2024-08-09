@@ -6,6 +6,10 @@ import {
   submitAssessmentReview,
 } from "../../actions/assessmentAction";
 import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import CheckCircle from "@material-ui/icons/CheckCircle";
+import Modal from "@material-ui/core/Modal";
+import { useHistory } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(3),
@@ -26,6 +30,22 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: "8px",
         minHeight: "300px",
     },
+  modalContent: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    backgroundColor: "white",
+    padding: theme.spacing(2, 4, 3),
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  tickIcon: {
+    fontSize: "48px",
+    color: "green",
+  },
     navigationButtons: {
         marginTop: theme.spacing(2),
         display: "flex",
@@ -74,7 +94,10 @@ const QuestionSection = ({ match }) => {
     (state) => state.assessment
   );
     const [answers, setAnswers] = useState([]);
+  const [showLoading, setShowLoading] = useState(false);
+  const [showSubmitted, setShowSubmitted] = useState(true);
     const user = useSelector((state) => state.user);
+  const history = useHistory();
     useEffect(() => {
         dispatch(getAssessmentQuestions(id));
     }, [dispatch, id]);
@@ -107,7 +130,7 @@ const QuestionSection = ({ match }) => {
         setAnswers(newAnswers);
     };
 
-    const handleSubmit = () => {
+  const handleSubmit = async() => {
     const answeredQuestions = questions[0]?.Questions?.map(
       (question, index) => ({
         question: question.question,
@@ -124,9 +147,18 @@ const QuestionSection = ({ match }) => {
       questionandanswers: answeredQuestions,
       assessmentStatus: "submitted",
     };
+   setShowLoading(true);
+   const response = await dispatch(submitAssessmentReview(assesmentSubmit));
+   if(response.status === 200){
+    setShowLoading(false);
+    setShowSubmitted(true);
+   }
+  };
 
-    dispatch(submitAssessmentReview(assesmentSubmit));
-    };
+  const handleSuccessModalClose = () =>{
+    setShowSubmitted(false);
+    history.push("/")
+  }
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -222,14 +254,63 @@ const QuestionSection = ({ match }) => {
             </Box>
       
         </Box>
-    {/* <Modal
-    open={open}
-    onClose={handleClose}
+    <Modal
+        open={showLoading}
+        aria-labelledby="loading-modal-title"
+        aria-describedby="loading-modal-description"
+      >
+        <div className={classes.modalContent}>
+          <CircularProgress />
+          <Typography style={{ textAlign: "center" }} variant="body2">
+            Assessment submitting...
+          </Typography>
+        </div>
+      </Modal>
+
+      <Modal
+        open={showSubmitted}
+        onClose={handleSuccessModalClose}
     aria-labelledby="simple-modal-title"
     aria-describedby="simple-modal-description"
   >
-    {body}
-  </Modal> */}
+        <div className={classes.modalContent}>
+          <CheckCircle className={classes.tickIcon} />
+          <Typography
+            style={{ textAlign: "center" }}
+            variant="h6"
+            id="simple-modal-title"
+            gutterBottom
+          >
+            Success!
+          </Typography>
+          <Typography
+            style={{ textAlign: "center" }}
+            variant="body2"
+            id="simple-modal-description"
+          >
+            Assessment under review by your Trainer.
+          </Typography>
+          <Button
+            style={{
+              position: "relative",
+              display:"flex",
+              alignItems: "center",
+              justifyContent: "center",
+              // left: "120px",
+              top: "20px",
+              paddingInline: "50px",
+              backgroundColor: "green",
+              background:
+                "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
+            }}
+            variant="contained"
+            color="primary"
+            onClick={handleSuccessModalClose}
+          >
+            OK
+          </Button>
+        </div>
+      </Modal>
   </>  );
 };
 
