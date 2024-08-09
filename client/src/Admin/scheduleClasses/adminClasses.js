@@ -268,7 +268,7 @@ function AdminClasses() {
             variant="body2"
             id="simple-modal-description"
           >
-            Your assessment has been created successfully.
+            Your Class has been scheduled successfully.
           </Typography>
           <Button
             style={{
