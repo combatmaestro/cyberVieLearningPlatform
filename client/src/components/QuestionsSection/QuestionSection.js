@@ -95,7 +95,7 @@ const QuestionSection = ({ match }) => {
   );
     const [answers, setAnswers] = useState([]);
   const [showLoading, setShowLoading] = useState(false);
-  const [showSubmitted, setShowSubmitted] = useState(true);
+  const [showSubmitted, setShowSubmitted] = useState(false);
     const user = useSelector((state) => state.user);
   const history = useHistory();
     useEffect(() => {
