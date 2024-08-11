@@ -34,7 +34,7 @@ import AdminClasses from './Admin/scheduleClasses/adminClasses'
 import Assessment from './Admin/Assessment/assessment';
 import Subtopics from './Admin/SubTopic/subtopic';
 import QuestionSection from './components/QuestionsSection/QuestionSection'
-
+import TeacherReview from './components/QuestionsAdminReviewSection/teacherReview'
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state) => state.user)
@@ -64,6 +64,7 @@ function App() {
                 <ProtectedRoute exact path='/placements' component={Placement} />
                 <ProtectedRoute exact path='/playground' component={Playground} />
                 <ProtectedRoute exact path='/module/:id' component={Module} />
+                <ProtectedRoute exact path='/review/:id' component={TeacherReview} />
                 <ProtectedRoute
                   exact
                   path='/transaction'

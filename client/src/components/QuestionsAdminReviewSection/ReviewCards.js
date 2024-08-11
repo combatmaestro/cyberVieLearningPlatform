@@ -41,6 +41,13 @@ function ReviewList(props) {
     return sortedModules.title;
   }
   
+  const handleClick = (assg) =>{
+    history.push({
+      pathname: `/review/${assg._id}`, 
+      state: { assignment: assg },
+    });
+  }
+  
 
   return (
     <div className={classes.root}>
@@ -85,6 +92,7 @@ function ReviewList(props) {
                       module.type === "paid" ? ( */}
                         <Button
                           variant="outlined"
+                          onClick={()=>{handleClick(ass)}}
                           style={{
                             background:
                               " linear-gradient(298.54deg, #0A767B -7.7%, #00A7D6 97.12%)",
