@@ -194,7 +194,8 @@ function AdminClasses() {
 
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
-    window.location.reload();
+    
+    // window.location.reload();
   };
 
   if (loading) return <Loader />;
