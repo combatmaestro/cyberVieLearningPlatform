@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, Typography } from "@material-ui/core";
+import { Box, Button, Typography, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import Modal from "@material-ui/core/Modal";
 import { useHistory } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3),
@@ -45,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "center", // Ensures the input and buttons align properly
+  },
+  marksInput: {
+    width: "50%",
   },
   questionNav: {
     display: "flex",
@@ -86,29 +91,58 @@ const TeacherReview = () => {
   const { assignment } = location.state || {};
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
+  const [marks, setMarks] = useState([]); 
+  const [reviewedCount, setReviewedCount] = useState(0);
+  const [finalizedAssignment, setFinalizedAssignment] = useState(assignment);
   const [showLoading, setShowLoading] = useState(false);
   const [showSubmitted, setShowSubmitted] = useState(false);
   const history = useHistory();
 
-  // Initialize the answers state
+  // Initialize the answers and marks state
   useEffect(() => {
     if (assignment?.questionAndAnswers) {
       const initialAnswers = assignment.questionAndAnswers.map(
         (q) => q.answer || ""
       );
       setAnswers(initialAnswers);
+
+      const initialMarks = assignment.questionAndAnswers.map(
+        (q) => q.marksAllocated || "" // Assuming you have marksAllocated as a field
+      );
+      setMarks(initialMarks);
     }
   }, [assignment]);
 
+
+
+
   const handleNextQuestion = () => {
-    if (answers[currentIndex].trim() !== "") {
-      if (currentIndex < assignment.questionAndAnswers.length - 1) {
-        setCurrentIndex(currentIndex + 1);
-      } else {
-        // navigate('/completion'); // Redirect to the completion page
-      }
+    const currentMark = marks[currentIndex];
+  
+    if (!finalizedAssignment.questionAndAnswers[currentIndex].finalMark && currentMark) {
+      setReviewedCount((prevCount) => prevCount + 1);
+    }
+  
+    setFinalizedAssignment((prevAssignment) => {
+      const updatedQuestionAndAnswers = [...prevAssignment.questionAndAnswers];
+      updatedQuestionAndAnswers[currentIndex] = {
+        ...updatedQuestionAndAnswers[currentIndex],
+        finalMark: currentMark,
+      };
+      return {
+        ...prevAssignment,
+        questionAndAnswers: updatedQuestionAndAnswers,
+      };
+    });
+  
+    if (currentIndex < assignment.questionAndAnswers.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      handleSubmit();
     }
   };
+  
+  
 
   const handlePreviousQuestion = () => {
     if (currentIndex > 0) {
@@ -122,10 +156,15 @@ const TeacherReview = () => {
     setAnswers(newAnswers);
   };
 
+  const handleMarksChange = (event) => {
+    const newMarks = [...marks];
+    newMarks[currentIndex] = event.target.value;
+    setMarks(newMarks);
+  };
+
   const handleSubmit = async () => {
-    // Your submission logic here
     setShowLoading(true);
-    // Simulating a successful submission after 2 seconds
+    // Simulate a successful submission after 2 seconds
     setTimeout(() => {
       setShowLoading(false);
       setShowSubmitted(true);
@@ -163,6 +202,7 @@ const TeacherReview = () => {
               }}
               value={answers[currentIndex] || ""}
               onChange={handleTextareaChange}
+              disabled
             />
             <Typography variant="caption" gutterBottom>
               Write in 500 words
@@ -176,6 +216,15 @@ const TeacherReview = () => {
             >
               Previous
             </Button>
+            <TextField
+              className={classes.marksInput}
+              label="Marks out of 10"
+              variant="outlined"
+              type="number"
+              value={marks[currentIndex] || ""}
+              onChange={handleMarksChange}
+              inputProps={{ min: 0, max: 10 }}
+            />
             <Button
               onClick={handleNextQuestion}
               variant="contained"
@@ -210,9 +259,8 @@ const TeacherReview = () => {
             color="textSecondary"
             style={{ marginTop: "0px", marginBottom: "30px" }}
           >
-            • {answers.filter((answer) => answer.trim() !== "").length} Reviewed
-            • {answers.filter((answer) => answer.trim() === "").length} To
-            Review
+            • {reviewedCount} Reviewed
+            • {assignment.questionAndAnswers.length - reviewedCount} To Review
           </Typography>
           <Box className={classes.questionNav}>
             {assignment?.questionAndAnswers?.map((question, index) => (
