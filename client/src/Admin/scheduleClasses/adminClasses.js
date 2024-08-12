@@ -79,7 +79,7 @@ function AdminClasses() {
 
   useEffect(() => {
     dispatch(fetchClasses());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     dispatch(getAllBatches());
