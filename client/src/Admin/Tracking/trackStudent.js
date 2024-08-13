@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import FilledInput from '@material-ui/core/FilledInput';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import FilledInput from "@material-ui/core/FilledInput";
+import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import Input from "@material-ui/core/Input";
+import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import { MDBDataTable } from "mdbreact";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "@material-ui/core/Select";
@@ -19,7 +19,7 @@ import SuccessBar from "../SnackBar/SuccessBar";
 import ErrorBar from "../SnackBar/ErrorBar";
 import Loader from "../../components/Loader/Loader";
 import { addNewBatch, getAllBatches } from "../../actions/moduleAction";
-import { Card, CardContent} from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import ModulesDataRender from "../../components/Progress/ModulesDataRender";
 import { getModuleDetailsComplete } from "../../actions/moduleAction";
 const useStyles = makeStyles((theme) => ({
@@ -62,13 +62,25 @@ const TrackStudent = () => {
   const allUsers = useSelector((state) => state.allUsers);
   const { loading, allUsersData = [] } = allUsers;
   const userData = useSelector((state) => state.user);
-  const user = userData.data
+  const user = userData.data;
   // const { moduleDetails = [], error } = modules;
+
+  const [selectedTier, setSelectedTier] = useState("paid");
+
+  const filteredUsers = allUsersData.filter((user) =>
+    selectedTier === "all" ? true : user.tier === selectedTier
+  );
+
+  const handleTierChange = (event) => {
+    setSelectedTier(event.target.value);
+    setCurrentUser(""); // Reset the selected user when tier changes
+    setSelectedUser(null); // Reset the selected user when tier changes
+  };
   const handleChange = (event) => {
     setCurrentUser(event.target.value);
 
     const user = allUsersData.filter((user) => user._id === event.target.value);
-    setSelectedUser(user[0])
+    setSelectedUser(user[0]);
     dispatch(getModuleDetailsComplete(user[0]));
   };
   const editModuleHandler = (module) => {
@@ -162,7 +174,20 @@ const TrackStudent = () => {
                 justifyContent="space-between"
               >
                 <h1>Track Progress</h1>
-                
+                <Box display="flex" alignItems="center" style={{ gap: "10px" }}>
+                  <span>Filter by Tier:</span>
+                  <FormControl sx={{ minWidth: 120 }}>
+                    <Select
+                      value={selectedTier}
+                      onChange={handleTierChange}
+                      displayEmpty
+                    >
+                      <MenuItem value="all">All</MenuItem>
+                      <MenuItem value="paid">Premium</MenuItem>
+                      <MenuItem value="free">Free</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Box>
                 <Card
                   style={{
                     paddingLeft: "10px",
@@ -187,7 +212,7 @@ const TrackStudent = () => {
                           &nbsp; &nbsp; Select Student To Track
                         </div>
                       </MenuItem>
-                      {allUsersData.map((user) => (
+                      {filteredUsers.map((user) => (
                         <MenuItem key={user._id} value={user._id}>
                           <div className={classes.menuItemContent}>
                             <Avatar
@@ -211,7 +236,9 @@ const TrackStudent = () => {
                     <Grid container spacing={2}>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Name</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Name
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.name}
@@ -222,7 +249,9 @@ const TrackStudent = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Email</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Email
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.email}
@@ -233,7 +262,9 @@ const TrackStudent = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Mobile</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Mobile
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.mobile}
@@ -244,7 +275,9 @@ const TrackStudent = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Education</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Education
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.education}
@@ -255,7 +288,9 @@ const TrackStudent = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Working Domain</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Working Domain
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.workingDomain}
@@ -266,7 +301,9 @@ const TrackStudent = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Current Salary</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Current Salary
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.currentSalary}
@@ -277,7 +314,9 @@ const TrackStudent = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Expected Salary</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Expected Salary
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.expectedSalary}
@@ -288,7 +327,9 @@ const TrackStudent = () => {
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <FormControl variant="outlined" fullWidth>
-                          <InputLabel htmlFor="component-outlined">Preferred Location</InputLabel>
+                          <InputLabel htmlFor="component-outlined">
+                            Preferred Location
+                          </InputLabel>
                           <OutlinedInput
                             id="component-outlined"
                             value={selectedUser.preferredLocation}
@@ -302,7 +343,7 @@ const TrackStudent = () => {
                 </Card>
               )}
               <br />
-              <Card style={{ height: "71vh" ,marginBottom:"4%" }}>
+              <Card style={{ height: "71vh", marginBottom: "4%" }}>
                 <CardContent className={classes.overflowScroll}>
                   <ModulesDataRender />
                 </CardContent>
