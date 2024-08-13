@@ -293,7 +293,7 @@ module.exports.leaderboard = catchAsyncErrors(async (req, res, next) => {
 
 module.exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   const allUsers = await User.find({}).sort({ createdAt: -1 });
-  const filteredUsers = allUsers.map(filterUserProperties);
+  const filteredUsers = allUsers.map(specificfilterUserProperties);
 
   return res.status(200).json({
     success: true,
@@ -312,7 +312,7 @@ module.exports.editUser = catchAsyncErrors(async (req, res, next) => {
   });
 
   console.log(updatedUser);
-  const filteredUser = filterUserProperties(updatedUser);
+  const filteredUser = specificfilterUserProperties(updatedUser);
 
   return res.status(200).json({
     success: true,
