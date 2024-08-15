@@ -25,6 +25,7 @@ import { getAllBatchReducer } from "./reducers/batchReducer";
 import assessmentReducer from "./reducers/assessmentReducer";
 import { scheduleClassReducer , getClassesReducer  } from "./reducers/classess";
 import { assessmentReviewReducer } from "./reducers/assessmentReviewReducer";
+import { formDataReducer } from "./reducers/leadManagement";
 const initialState = {
   user: {},
   modules: {},
@@ -52,7 +53,8 @@ const reducer = combineReducers({
   assessmentReview: assessmentReviewReducer,
   subtopics:subtopicListReducer,
   getClasses: getClassesReducer,
-  allStats: getAllStatsReducer
+  allStats: getAllStatsReducer,
+  formDataState: formDataReducer,
 });
 
 
