@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
+import Tooltip from "@material-ui/core/Tooltip";
 import Typography from '@material-ui/core/Typography';
 import { put } from '@vercel/blob';
 
@@ -166,6 +167,9 @@ export default function Subtopics() {
     }
   };
 
+  const deleteSubtopics = () => {
+
+  }
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);
   };
@@ -190,6 +194,10 @@ export default function Subtopics() {
           field: 'type',
           sort: 'asc',
         },
+        {
+          label: "Delete",
+          field: "actions",
+        },
       ],
       rows: [],
     };
@@ -199,6 +207,18 @@ export default function Subtopics() {
         title: subtopic.title,
         topicName: subtopic.topicName,
         type: 'PDF', // Assuming type should be 'PDF' for all entries
+        actions: (
+          <>
+            <Tooltip title="Delete" placement="top" arrow>
+              <button
+                className="btn btn-primary py-1 px-2  ml-2"
+                onClick={() => deleteSubtopics(subtopic._id)}
+              >
+                <i className="fa fa-trash" style={{color:"white"}}></i>
+              </button>
+            </Tooltip>
+          </>
+        ),
       });
     });
 
