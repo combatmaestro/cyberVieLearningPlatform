@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MDBDataTable } from 'mdbreact';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllModules } from '../../actions/moduleAction';
-import { getAllSubtopics, addSubtopics } from '../../actions/topicAction';
+import { getAllSubtopics, addSubtopics,deleteSubtopic } from '../../actions/topicAction';
 import SubtopicDialogue from './subtopicDialogue';
 import CheckCircle from '@material-ui/icons/CheckCircle';
 import Loader from '../../components/Loader/Loader';
@@ -167,8 +167,11 @@ export default function Subtopics() {
     }
   };
 
-  const deleteSubtopics = () => {
-
+  const deleteSubtopics = async(id) => {
+    const res = await dispatch(deleteSubtopic(id));
+    if(res.status === 200){
+      alert('subtopic deleted successfully');
+    }
   }
   const handleSuccessModalClose = () => {
     setSuccessModalOpen(false);

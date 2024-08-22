@@ -23,7 +23,10 @@ import {
   SUBTOPIC_ADD_FAILURE,
   SUBTOPIC_LIST_REQUEST,
   SUBTOPIC_LIST_SUCCESS,
-  SUBTOPIC_LIST_FAILURE
+  SUBTOPIC_LIST_FAILURE,
+  SUBTOPIC_DELETE_REQUEST,
+  SUBTOPIC_DELETE_SUCCESS,
+  SUBTOPIC_DELETE_FAILURE,
 } from '../constants/topicConstants'
 
 if(localStorage.getItem("token")){
@@ -245,7 +248,36 @@ export const addSubtopics = (assessmentData) => async (dispatch) => {
     })
   }
 }
+export const deleteSubtopic = (id) => async (dispatch) => {
+  try {
+    dispatch({ type: SUBTOPIC_DELETE_REQUEST });
 
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.post(`${backendUrl}/topic/admin/subtopics/delete`, { id }, config);
+
+    dispatch({
+      type: SUBTOPIC_DELETE_SUCCESS,
+      payload: data,
+    });
+
+    return {
+      status: 200,
+      data: [],
+    };
+  } catch (error) {
+    dispatch({
+      type: SUBTOPIC_DELETE_FAILURE,
+      payload: error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message,
+    });
+  }
+};
 export const getAllSubtopics = () => async (dispatch) => {
   dispatch({
     type: SUBTOPIC_LIST_REQUEST,

@@ -22,7 +22,10 @@ import {
   SUBTOPIC_ADD_FAILURE,
   SUBTOPIC_LIST_REQUEST,
   SUBTOPIC_LIST_SUCCESS,
-  SUBTOPIC_LIST_FAILURE
+  SUBTOPIC_LIST_FAILURE,
+  SUBTOPIC_DELETE_REQUEST,
+  SUBTOPIC_DELETE_SUCCESS,
+  SUBTOPIC_DELETE_FAILURE,
 } from "../constants/topicConstants";
 
 export const getAdminTopicReducer = (state = { loading: true }, action) => {
@@ -149,3 +152,31 @@ export const subtopicListReducer = (state = { subtopics: [] }, action) => {
       return state
   }
 }
+
+export const subtopicDeleteReducer = (
+  state = { loading: false, success: false, error: null },
+  action
+) => {
+  switch (action.type) {
+    case SUBTOPIC_DELETE_REQUEST:
+      return {
+        ...state,
+        loading: true,   // Set loading to true while the deletion is in progress
+      };
+    case SUBTOPIC_DELETE_SUCCESS:
+      return {
+        ...state,
+        loading: false,  // Set loading to false after successful deletion
+        success: true,   // Mark the operation as successful
+      };
+    case SUBTOPIC_DELETE_FAILURE:
+      return {
+        ...state,
+        loading: false,  // Set loading to false if the deletion failed
+        success: false,  // Ensure success is set to false
+        error: action.payload,  // Store the error message in the state
+      };
+    default:
+      return state;  // Return the current state for any other action types
+  }
+};

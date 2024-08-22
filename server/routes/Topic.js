@@ -8,7 +8,8 @@ const {
   uploadImage,
   getTopics,
   addSubTopic,
-  getAllSubTopics
+  getAllSubTopics,
+  deleteSubtopic
 } = require("../controllers/TopicController");
 const {
   isAuthenticatedUser,
@@ -71,18 +72,17 @@ router.post(
   authorizeRoles("admin"),
   addSubTopic
 );
-
+router.post(
+  "/admin/subtopics/delete",
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
+  deleteSubtopic
+);
 router.get(
   "/getAll/subtopics",
   // isAuthenticatedUser,
   // authorizeRoles("admin"),
   getAllSubTopics
 );
-
-
-
-
-
-
 
 module.exports = router;

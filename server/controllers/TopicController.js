@@ -183,6 +183,20 @@ exports.addSubTopic = catchAsyncErrors(async (req, res, next) => {
   }
 });
 
+exports.deleteSubtopic = catchAsyncErrors(async (req, res) => {
+  const { id } = req.body;
+
+  const subtopic = await Subtopic.findById(id);
+
+  if (subtopic) {
+    await subtopic.remove();
+    res.json({ message: 'Subtopic removed' });
+  } else {
+    res.status(404);
+    throw new Error('Subtopic not found');
+  }
+});
+
 exports.getAllSubTopics = catchAsyncErrors(async (req, res, next) => {
   try {
     const subtopics = await SubTopic.find({}, 'title topicName');
