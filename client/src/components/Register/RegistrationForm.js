@@ -7,21 +7,18 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
   Select,
+  Divider,
   InputAdornment,
-  MenuItem
+  MenuItem,
 } from "@material-ui/core";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import Logo from "./logo.jpg";
 import { makeStyles } from "@material-ui/styles";
 import OtpVerification from "./OtpVerifacton";
-import Logo from './logo.jpg'
-import { auth } from "./firebaseConfig";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { saveFormData } from "../../actions/leadMangementActions";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,9 +42,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 8px 16px rgba(0, 0, 0, 0.1)",
     [theme.breakpoints.down(426)]: {
       padding: theme.spacing(4),
-    },
-    [theme.breakpoints.down(431)]: {
-      padding: theme.spacing(2),
     },
   },
   title: {
@@ -104,21 +98,22 @@ const useStyles = makeStyles((theme) => ({
     margin: "0 auto",
     marginBottom: theme.spacing(1),
   },
-  logo :{
-    height:"100px",
-    width:"200px",
-  }
+  logo: {
+    height: "100px",
+    width: "200px",
+  },
 }));
 
 const countryCodes = [
   { code: "+1", name: "United States" },
   { code: "+91", name: "India" },
   { code: "+44", name: "United Kingdom" },
-  // Add more country codes as needed
+  { code: "+61", name: "Australia" },
 ];
 
 const RegistrationForm = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -128,39 +123,59 @@ const RegistrationForm = () => {
   const [experience, setExperience] = useState("");
   const [location, setLocation] = useState("");
   const [checkIcon, setCheckIcon] = useState(false);
-  const [isSubmited, setIsSubmitted] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const [activeStep, setActiveStep] = useState(1);
-  const [data, setData] = useState({});
   const [countryCode, setCountryCode] = useState("+91");
+  const [errors, setErrors] = useState({});
+  const history = useHistory();
+
+  const validateName = (name) => /^[a-zA-Z\s]+$/.test(name);
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePhoneNumber = (phoneNumber) => /^\d{10}$/.test(phoneNumber);
+  const validateExperience = (experience) => /^\d+$/.test(experience);
+  const validateOrganization = (organization) =>
+    /^[a-zA-Z\s]+$/.test(organization);
+  const validateCity = (currCity) => /^[a-zA-Z\s]+$/.test(currCity);
+  const validteDesignation = (designation) => /^[a-zA-Z\s]+$/.test(designation);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData = {
-    //   name,
-    //   email,
-    //   phoneNumber,
-    //   currCity,
-    //   organization,
-    //   designation,
-    //   experience,
-    //   location,
-    //   checkIcon,
-    // };
-    // alert("form submitted");
-    // setIsSubmitted(true);
-    // setData(formData);
-    // console.log(formData.phoneNumber);
-    
-    // setActiveStep(2);
 
-    const fullNumber = `${countryCode}${phoneNumber}`;
-    try {
-      const recaptch = new RecaptchaVerifier(auth,"recaptcha",{})
-      const conformation = await signInWithPhoneNumber(auth, fullNumber, recaptch)
-      console.log(conformation);
-      
-    } catch (error) {
-      console.error(error);
+    const newErrors = {};
+    if (!validateName(name)) newErrors.name = "Please enter a valid name.";
+    if (!validateEmail(email)) newErrors.email = "Please enter a valid email.";
+    if (!validatePhoneNumber(phoneNumber))
+      newErrors.phoneNumber = "Please enter a valid phone number.";
+    if (!validateExperience(experience))
+      newErrors.experience = "Please enter valid years of experience.";
+    if (!validateOrganization(organization))
+      newErrors.organization = "Please enter a valid organization.";
+    if (!validateCity(currCity))
+      newErrors.currCity = "Please enter a valid cityName.";
+    if (!validteDesignation(designation))
+      newErrors.designation = "Please enter a valid designation.";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    const formData = {
+      name,
+      email,
+      phoneNumber,
+      currCity,
+      organization,
+      designation,
+      experience,
+      location,
+    };
+    const response = await dispatch(saveFormData(formData));
+    if (response?.status === 200) {
+      setIsSubmitted(true);
+    } else {
+      toast.error("Email Already exists with us.").then(() => {
+        history.push("/home");
+      });
     }
   };
 
@@ -169,24 +184,80 @@ const RegistrationForm = () => {
     switch (name) {
       case "fullName":
         setName(value);
+        if (!validateName(value)) {
+          setErrors((prev) => ({
+            ...prev,
+            name: "Please enter a valid name.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, name: null }));
+        }
         break;
       case "email":
         setEmail(value);
+        if (!validateEmail(value)) {
+          setErrors((prev) => ({
+            ...prev,
+            email: "Please enter a valid email.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, email: null }));
+        }
         break;
       case "phoneNumber":
         setPhoneNumber(value);
+        if (!validatePhoneNumber(value)) {
+          setErrors((prev) => ({
+            ...prev,
+            phoneNumber: "Please enter a valid phone number.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, phoneNumber: null }));
+        }
         break;
       case "currentCityOfResidence":
         setCurrCity(value);
+        if (!validateCity(value)) {
+          setErrors((prev) => ({
+            ...prev,
+            currCity: "Please enter a valid city name.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, currCity: null }));
+        }
         break;
       case "organization":
         setOrganization(value);
+        if (!validateOrganization(value)) {
+          setErrors((prev) => ({
+            ...prev,
+            organization: "Please enter a valid organization.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, organization: null }));
+        }
         break;
       case "designation":
         setDesignation(value);
+        if (!validteDesignation(value)) {
+          setErrors((prev) => ({
+            ...prev,
+            designation: "Please enter valid years of experience.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, designation: null }));
+        }
         break;
       case "experience":
         setExperience(value);
+        if (!validateExperience(value)) {
+          setErrors((prev) => ({
+            ...prev,
+            experience: "Please enter valid years of experience.",
+          }));
+        } else {
+          setErrors((prev) => ({ ...prev, experience: null }));
+        }
         break;
       case "location":
         setLocation(value);
@@ -204,11 +275,16 @@ const RegistrationForm = () => {
   };
 
   return (
-    <Container className={classes.root} style={{marginTop:"1%",marginBottom:"1%"}}>
+    <Container className={classes.root}>
       <Grid container spacing={0}>
         <Grid item xs={12} md={6} className={classes.infoPanel}>
-          <img src={Logo} alt="Logo" className={classes.logo}/>
-          <Typography variant="h4" className={classes.title} style={{marginTop:'80px'}} gutterBottom>
+          <img src={Logo} alt="Logo" className={classes.logo} />
+          <Typography
+            variant="h4"
+            className={classes.title}
+            style={{ marginTop: "80px" }}
+            gutterBottom
+          >
             CYBER SECURITY TRAINING PROGRAM 2024
           </Typography>
           <Typography variant="body1" paragraph>
@@ -216,37 +292,13 @@ const RegistrationForm = () => {
             professionals with the knowledge and skills they need to succeed in
             the field of cybersecurity.
           </Typography>
-          {/* <List>
-            <ListItem className={classes.listItem}>
-              <ListItemIcon className={classes.checkIcon}>
-                <CheckCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Prerequisite for Cybersecurity" />
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemIcon className={classes.checkIcon}>
-                <CheckCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Cybersecurity Foundations" />
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemIcon className={classes.checkIcon}>
-                <CheckCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Network Security Essentials" />
-            </ListItem>
-            <ListItem className={classes.listItem}>
-              <ListItemIcon className={classes.checkIcon}>
-                <CheckCircleIcon />
-              </ListItemIcon>
-              <ListItemText primary="Vulnerability Assessment and Management" />
-            </ListItem>
-          </List> */}
           <div className={classes.stepper}>
             <div className={classes.step}>
               <div
                 className={`${classes.stepNumber} ${
-                  activeStep >= 1 ? classes.stepNumberActive : classes.stepNumberInactive
+                  activeStep >= 1
+                    ? classes.stepNumberActive
+                    : classes.stepNumberInactive
                 }`}
               >
                 1
@@ -261,7 +313,9 @@ const RegistrationForm = () => {
             <div className={classes.step}>
               <div
                 className={`${classes.stepNumber} ${
-                  activeStep >= 2 ? classes.stepNumberActive : classes.stepNumberInactive
+                  activeStep >= 2
+                    ? classes.stepNumberActive
+                    : classes.stepNumberInactive
                 }`}
               >
                 2
@@ -276,7 +330,9 @@ const RegistrationForm = () => {
             <div className={classes.step}>
               <div
                 className={`${classes.stepNumber} ${
-                  activeStep >= 3 ? classes.stepNumberActive : classes.stepNumberInactive
+                  activeStep >= 3
+                    ? classes.stepNumberActive
+                    : classes.stepNumberInactive
                 }`}
               >
                 3
@@ -285,13 +341,14 @@ const RegistrationForm = () => {
             </div>
           </div>
         </Grid>
-        {isSubmited ? (
-          <OtpVerification activeStep={activeStep} />
+        {isSubmitted ? (
+          <OtpVerification fullNumber={`${countryCode}${phoneNumber}`} />
         ) : (
           <Grid item xs={12} md={6} className={classes.formPanel}>
             <Typography variant="h6" className={classes.title} gutterBottom>
-              ALL FIELDS ARE REQUIRED
+              Register With Us!
             </Typography>
+
             <form noValidate onSubmit={handleSubmit} autoComplete="off">
               <TextField
                 variant="outlined"
@@ -302,6 +359,8 @@ const RegistrationForm = () => {
                 name="fullName"
                 value={name}
                 onChange={changeHandler}
+                error={Boolean(errors.name)}
+                helperText={errors.name}
               />
               <TextField
                 variant="outlined"
@@ -312,11 +371,12 @@ const RegistrationForm = () => {
                 name="email"
                 value={email}
                 onChange={changeHandler}
+                error={Boolean(errors.email)}
+                helperText={errors.email}
               />
               <TextField
                 variant="outlined"
                 margin="normal"
-                type="text"
                 required
                 fullWidth
                 label="Phone Number"
@@ -341,16 +401,21 @@ const RegistrationForm = () => {
                     </InputAdornment>
                   ),
                 }}
+                error={Boolean(errors.phoneNumber)}
+                helperText={errors.phoneNumber}
               />
               <TextField
                 variant="outlined"
                 margin="normal"
                 required
+                type="text"
                 fullWidth
                 label="Current City of Residence"
                 name="currentCityOfResidence"
                 value={currCity}
                 onChange={changeHandler}
+                error={Boolean(errors.currCity)}
+                helperText={errors.currCity}
               />
               <TextField
                 variant="outlined"
@@ -360,6 +425,8 @@ const RegistrationForm = () => {
                 name="organization"
                 value={organization}
                 onChange={changeHandler}
+                error={Boolean(errors.organization)}
+                helperText={errors.organization}
               />
               <TextField
                 variant="outlined"
@@ -369,16 +436,20 @@ const RegistrationForm = () => {
                 name="designation"
                 value={designation}
                 onChange={changeHandler}
+                error={Boolean(errors.designation)}
+                helperText={errors.designation}
               />
               <TextField
                 variant="outlined"
                 margin="normal"
+                required
                 fullWidth
-                label="Experience"
+                label="Experience (in years)"
                 name="experience"
-                type="number"
                 value={experience}
                 onChange={changeHandler}
+                error={Boolean(errors.experience)}
+                helperText={errors.experience}
               />
               <TextField
                 variant="outlined"
@@ -390,25 +461,25 @@ const RegistrationForm = () => {
                 onChange={changeHandler}
               />
               <FormControlLabel
+                style={{ fontSize: "1px" }}
                 control={
                   <Checkbox
-                    value={checkIcon}
-                    name="receive"
-                    color="primary"
                     checked={checkIcon}
                     onChange={changeHandler}
+                    name="receive"
+                    color="primary"
                   />
                 }
-                label="I want to receive mails and messages from cybervie"
+                label="YES, I want to receive emails and sms from cybervie."
               />
-              <div id="recaptcha"></div>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
+                color="primary"
                 className={classes.registerButton}
               >
-                REGISTER
+                Register
               </Button>
             </form>
           </Grid>

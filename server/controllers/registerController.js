@@ -1,16 +1,23 @@
 const FormData = require('../models/register');
-
+const portalUsers = require('../models/User');
 exports.saveFormData = async (req, res) => {
   try {
-    const { name, email, mobile, currentSalary, expectedSalary } = req.body;
-
-    // Check if email or mobile already exists
-    const existingUser = await FormData.findOne({ $or: [{ email }, { mobile }] });
+    const { name, email, phoneNumber, organization, designation, experience, location, tier } = req.body;
+    const existingUser = await portalUsers.findOne({email});
     if (existingUser) {
-      return res.status(400).json({ message: 'Email or mobile already exists' });
+      return res.status(400).json({ message: 'Email already exists' });
     }
 
-    const newFormData = new FormData({ name, email, mobile, currentSalary, expectedSalary });
+    const newFormData = new FormData({
+      name,
+      email,
+      phoneNumber,
+      organization,
+      designation,
+      experience,
+      location,
+      tier
+    });
 
     await newFormData.save();
 
@@ -19,7 +26,6 @@ exports.saveFormData = async (req, res) => {
     return res.status(500).json({ message: 'Error saving form data', error: error.message });
   }
 };
-
 
 exports.getAllFormData = async (req, res) => {
     try {

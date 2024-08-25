@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const formDataSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -13,14 +12,26 @@ const formDataSchema = new mongoose.Schema({
     unique: true,
     lowercase: true,
   },
-  mobile: {
+  phoneNumber: {
     type: String,
     required: true,
     trim: true,
     unique: true,
   },
-  currentSalary: {
+  organization: {
+    type: String,
+    required: true,
+  },
+  designation: {
+    type: String,
+    required: true,
+  },
+  experience: {
     type: Number,
+    required: true,
+  },
+  location: {
+    type: String,
     required: true,
   },
   tier: {
@@ -28,14 +39,6 @@ const formDataSchema = new mongoose.Schema({
     enum: ['free', 'paid'],
     default: 'free',
   },
-  expectedSalary: {
-    type: Number,
-    required: true,
-  },
-  howFoundUs:{
-    type: String,
-    required: true,
-  }
 }, {
   timestamps: true,
 });

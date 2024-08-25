@@ -30,9 +30,9 @@ export const saveFormData = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SAVE_FORM_DATA_FAILURE,
-      payload: error.response?.data.message || error.message,
+      payload: error?.response?.data?.message || error.message,
     });
-    return { status: 400};
+    return { status: 400 , message: error.message };
   }
 };
 
