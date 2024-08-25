@@ -35,7 +35,7 @@ import Assessment from './Admin/Assessment/assessment';
 import Subtopics from './Admin/SubTopic/subtopic';
 import QuestionSection from './components/QuestionsSection/QuestionSection'
 import TeacherReview from './components/QuestionsAdminReviewSection/teacherReview'
-import Register from './components/Register/register'
+import RegistrationForm from './components/Register/RegistrationForm'
 import LeadManagement from './Admin/LeadManagement/leadManagement'
 function App() {
   const dispatch = useDispatch()
@@ -67,7 +67,7 @@ function App() {
                 <ProtectedRoute exact path='/playground' component={Playground} />
                 <ProtectedRoute exact path='/module/:id' component={Module} />
                 <ProtectedRoute exact path='/review/:id' component={TeacherReview} />
-                <Route exact path='/register' component={Register} />
+                <Route exact path='/register' component={RegistrationForm} />
                 <ProtectedRoute
                   exact
                   path='/transaction'

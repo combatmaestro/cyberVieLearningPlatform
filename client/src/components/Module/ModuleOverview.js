@@ -6,7 +6,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import Avatar from "@material-ui/core/Avatar";
 import ListAltIcon from "@material-ui/icons/ListAlt";
 import TimerIcon from "@material-ui/icons/Timer";
-import avtar from "./avtar.png";
+import avtar from "./Logo.png";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,24 +14,26 @@ const useStyles = makeStyles((theme) => ({
     background:
       "linear-gradient(88.06deg, #E9F3FF 0%, #EBF8FF 40.15%, #DBFBFE 81.03%, #D4FFFE 106.75%)",
     borderRadius: "100px",
-    height: "161px",
+    height: "141px",
     width: "96%",
     marginBottom: "50px",
     // boxShadow: '0px 1.84527px 15.6905px rgba(0, 0, 0, 0.22)',
     boxShadow: "0px 4px 4px 0px #DEDEDE40",
-
-
     padding: theme.spacing(3),
     display: "flex",
     alignItems: "center",
   },
   avatar: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
+    width: theme.spacing(11),
+    height: theme.spacing(11),
     background: "#ffffff",
     marginRight: theme.spacing(2),
     marginBottom:theme.spacing(1),
     zIndex: "999",
+    position: "relative",
+    left: "35px",
+    top: "25px",
+    alignItems: "center",
   },
   infoBox: {
     flexGrow: 1,
@@ -47,16 +49,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
+    justifyContent:'center',
+    alignItems:'center',
   },
   avatarBox: {
     background: "#ffffff",
-    width: "172px",
-    height: "161px",
+    width: "152px",
+    height: "141px",
     position: "relative",
     left: "-25px",
-    borderRadius: "100px 100px 0px 100px",
-
-
+    borderRadius: "100%",
   },
   icon: {
     fontSize: "3rem",
@@ -81,16 +83,9 @@ const ModuleOverview = ({stats}) => {
   return (
     <Box className={classes.root}>
       <Box className={classes.avatarBox}>
-        <Box
-          style={{
-            position: "relative",
-            left: "37px",
-            top: "15px",
-            alignItems: "center",
-          }}
-        >
-          <Avatar alt="User Avatar" src={avtar} className={classes.avatar} />
-          <Typography
+        <Box>
+          <img alt="User Avatar" src={avtar} className={classes.avatar} />
+          {/* <Typography
             variant="subtitle"
             style={{
               position: "relative",
@@ -102,7 +97,7 @@ const ModuleOverview = ({stats}) => {
             }}
           >
             Welcome to CSEP
-          </Typography>
+          </Typography> */}
         </Box>
       </Box>
       <Box className={classes.infoBox}>
