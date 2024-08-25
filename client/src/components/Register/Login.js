@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const OtpVerification = () => {
   const handleLogin = () => {
-    alert("login success");
+   history.push("/")
   };
 
   const classes = useStyles();
@@ -103,27 +103,27 @@ const OtpVerification = () => {
         paragraph
         style={{ marginBottom: "5rem", fontWeight: "550" }}
       >
-        Certified Security Engineer Professional.
+        Become a Certified Security Engineer Professional.
       </Typography>
-      <Typography variant="subtitle1" paragraph style={{ fontWeight: "550" }}>
+      {/* <Typography variant="subtitle1" paragraph style={{ fontWeight: "550" }}>
         Login with Google to continue
-      </Typography>
-      {/* <Button
+      </Typography> */}
+      <Button
         onClick={handleLogin}
         className={classes.btn}
         variant="contained"
         color="default"
-        startIcon={
-          <img
-            src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
-            alt="Google Logo"
-            width="20"
-          />
-        }
+        // startIcon={
+        //   <img
+        //     src="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+        //     alt="Google Logo"
+        //     width="20"
+        //   />
+        // }
       >
-        Continue with Google
-      </Button> */}
-      <GoogleLogin
+        Explore CSEP Platform
+      </Button>
+      {/* <GoogleLogin
         onSuccess={(credentialResponse) => {
           console.log(credentialResponse);
           handleSignIn(credentialResponse);
@@ -134,7 +134,7 @@ const OtpVerification = () => {
         onError={() => {
           console.log("Login Failed");
         }}
-      />
+      /> */}
     </Grid>
   );
 };
