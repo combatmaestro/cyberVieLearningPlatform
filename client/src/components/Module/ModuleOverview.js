@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     background:
       "linear-gradient(88.06deg, #E9F3FF 0%, #EBF8FF 40.15%, #DBFBFE 81.03%, #D4FFFE 106.75%)",
     borderRadius: "100px",
-    height: "141px",
+    height: "161px",
     width: "96%",
     marginBottom: "50px",
     // boxShadow: '0px 1.84527px 15.6905px rgba(0, 0, 0, 0.22)',
@@ -22,18 +22,20 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
     display: "flex",
     alignItems: "center",
+    [theme.breakpoints.down(426)]: {
+      padding: theme.spacing(0),
+      height: "120px",
+      background: "#D4FFFE",
+      width: "100%",
+    },
   },
   avatar: {
-    width: theme.spacing(11),
-    height: theme.spacing(11),
+    width: theme.spacing(12),
+    height: theme.spacing(12),
     background: "#ffffff",
     marginRight: theme.spacing(2),
-    marginBottom:theme.spacing(1),
+    marginBottom: theme.spacing(1),
     zIndex: "999",
-    position: "relative",
-    left: "35px",
-    top: "25px",
-    alignItems: "center",
   },
   infoBox: {
     flexGrow: 1,
@@ -44,35 +46,62 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(9),
     position: "relative",
     left: "25px",
+    [theme.breakpoints.down(426)]: {
+      paddingInline: theme.spacing(3),
+      left: 0,
+    },
   },
   iconBox: {
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
-    justifyContent:'center',
-    alignItems:'center',
   },
   avatarBox: {
     background: "#ffffff",
-    width: "152px",
-    height: "141px",
+    width: "172px",
+    height: "161px",
     position: "relative",
     left: "-25px",
-    borderRadius: "100%",
+    borderRadius: "100px 100px 0px 100px",
+    [theme.breakpoints.down(426)]: {
+      display: "none",
+    },
   },
   icon: {
     fontSize: "3rem",
     marginRight: theme.spacing(1),
+    [theme.breakpoints.down(426)]: {
+      fontSize: "1.8rem",
+      marginRight: 0,
+    },
   },
   text: {
     fontWeight: "600",
     color: "#005387",
     fontSize: "19.23px",
     lineHeight: "22.41px",
+    [theme.breakpoints.down(426)]: {
+      fontSize: "10.23px",
+    },
   },
   subText: {
-    color: '#005387C9',
+    color: "#005387C9",
+    [theme.breakpoints.down(426)]: {
+      fontSize: "0.7rem",
+    },
   },
+  avtarText: {
+    position: "relative",
+    left: "-9px",
+    color: "black",
+    fontSize: "17px",
+    fontWeight: "600",
+    textAlign: "center",
+    [theme.breakpoints.down(426)]: {
+      display:"none"
+    },
+  },
+  
 }));
 
 
@@ -125,7 +154,7 @@ const ModuleOverview = ({stats}) => {
         <Box className={classes.iconBox}>
           <TimerIcon className={classes.icon} color="primary" />
           <Box>
-            <Typography className={classes.text}>Assignment Status</Typography>
+            <Typography className={classes.text}> Status</Typography>
             <Typography className={classes.subText}>Pending</Typography>
           </Box>
         </Box>

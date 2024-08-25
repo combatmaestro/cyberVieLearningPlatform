@@ -21,6 +21,17 @@ const useStyles = makeStyles((theme) => ({
     padding: "40px 4%",
     backgroundColor: "#f7f7f7",
   },
+  headerTitle:{
+    fontSize: 41,
+    [theme.breakpoints.down(469)]: {
+      fontSize:"35px",
+      marginLeft: "8%"
+    },
+    [theme.breakpoints.down(376)]: {
+      fontSize:"32px",
+      marginLeft: "3%"
+    },
+  },
   appBar: {
     width: "100%",
   },
@@ -65,6 +76,12 @@ const useStyles = makeStyles((theme) => ({
       "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
     marginRight: "9%",
     color: "white",
+    [theme.breakpoints.down(469)]: {
+      fontSize:"0.7rem !important"
+    },
+    [theme.breakpoints.down(376)]: {
+      fontSize:"0.6rem !important"
+    },
   },
 }));
 

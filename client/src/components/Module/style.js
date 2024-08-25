@@ -16,8 +16,9 @@ export const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
       marginLeft:"3%",
       [theme.breakpoints.down(469)]: {
-        fontSize: 20,
+        fontSize: 19,
         lineHeight: '24px',
+        marginBottom:"20px"
       },
     },
   },
@@ -27,7 +28,7 @@ export const useStyles = makeStyles((theme) => ({
     boxSizing: 'border-box',
 
     [theme.breakpoints.down(469)]: {
-      padding: '21px 30px',
+      padding: '20px 15px',
     },
 
     '& .accordionStyles': {
@@ -37,16 +38,24 @@ export const useStyles = makeStyles((theme) => ({
   playgroundButton: {
     background: "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
     marginRight: "4%",
-    color: "white"
+    color: "white",
   },
   assessmentButton: {
     background: "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
     marginRight: "3%",
-    color: "white"
+    color: "white",
+    [theme.breakpoints.down(469)]: {
+      marginRight:0,
+      minWidth:"92%"
+    },
   },
   moduleHeaderContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between', // Optional: Adjusts space between items
+    justifyContent: 'space-between',
+    [theme.breakpoints.down(469)]: {
+      flexDirection: 'column',
+    },
   },
+  
 }))

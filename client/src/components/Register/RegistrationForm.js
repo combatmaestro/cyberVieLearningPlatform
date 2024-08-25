@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down(426)]: {
       padding: theme.spacing(4),
     },
+    [theme.breakpoints.down(431)]: {
+      padding: theme.spacing(2),
+    },
   },
   title: {
     fontWeight: "bold",
