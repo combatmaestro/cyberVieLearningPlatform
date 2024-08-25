@@ -3,15 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import Tooltip from "@material-ui/core/Tooltip";
 import { MDBDataTable } from "mdbreact";
 import { useDispatch, useSelector } from "react-redux";
 import SideDrawer from "../Drawer/SideDrawer";
-import SuccessBar from '../SnackBar/SuccessBar'
-import ErrorBar from '../SnackBar/ErrorBar'
 import Loader from '../../components/Loader/Loader'
-import { addNewBatch,getAllBatches ,editBatchModule} from '../../actions/moduleAction';
+import {getAllFormData} from '../../actions/leadMangementActions';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -35,82 +31,20 @@ const LeadManagement = () => {
   document.title = "Leads";
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const [open, setOpen] = useState(false)
-  // const [editBatch, setEditBatch] = useState(null)
-  // const [message, setMessage] = useState('')
-  // const [openSuccess, setOpenSuccess] = useState(false)
-  // const [openFailure, setOpenFailure] = useState(false)
   const modules = useSelector((state) => state.batches)
   const { loading, data: moduleData = [], error } = modules
-  const allUsers = useSelector((state) => state.allUsers);
-  const {allUsersData = [] } = allUsers;
+  const allFormDatas = useSelector((state) => state.formDataState);
+  const {allFormData = [] } = allFormDatas;
   useEffect(() => {
-    dispatch(getAllBatches())
-    console.log(moduleData)
+    dispatch(getAllFormData())
+    console.log(allFormData)
   }, [])
  
-  // const editModuleHandler = (module) => {
-  //   setEditBatch(module)
-  //   setOpen(true)
-  // }
-  // const handleCloseBar = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return
-  //   }
-  //   setOpenSuccess(false)
-  //   setOpenFailure(false)
-  // }
-  // const handleClickOpen = () => {
-  //   setEditBatch(null)
-  //   setOpen(true)
-  // }
-  // const handleClose = () => {
-  //   setOpen(false)
-  // }
-  // const submitHandler = async (e, title, description, startDate, endDate, courseFee , discountFee , checked) => {
-  //   e.preventDefault()
-  //   setOpen(false) //closing modal
-  //   // console.log(title, description, radioValue, checked)
-  //   const formData = new FormData()
-  //   if (editBatch) {
-  //     formData.set('title', title);
-  //     formData.set('description', description);
-  //     formData.set('startDate', startDate);
-  //     formData.set('endDate', endDate);
-  //     formData.set('archive', checked);
-  //     formData.set('fee', courseFee);
-  //     formData.set('discountedFee', discountFee);
-  //       const { success } = await dispatch(editBatchModule(editBatch._id,formData))
-  //       if (success) {
-  //         setMessage('Batch created Successfully')
-  //         setOpenSuccess(true)
-  //       } else {
-  //         setMessage('Error in Batch creation')
-  //         setOpenFailure(true)
-  //       }
 
-  //   }else{
-  
-  //     formData.set('title', title);
-  //     formData.set('description', description);
-  //     formData.set('startDate', startDate);
-  //     formData.set('endDate', endDate);
-  //     formData.set('fee', courseFee);
-  //     formData.set('archive', checked);
-  //     formData.set('discountedFee', discountFee);
-  //       const { success } = await dispatch(addNewBatch(formData))
-  //       if (success) {
-  //         setMessage('Batch created Successfully')
-  //         setOpenSuccess(true)
-  //       } else {
-  //         setMessage('Error in Batch creation')
-  //         setOpenFailure(true)
-  //       }
-  //   }
-  //   }
+
     
     const getUserNames = (batchId) => {
-      const users = allUsersData.filter(user => user.batch === batchId);
+      const users = allFormData.filter(user => user.batch === batchId);
       console.log(users)
       return users.map(user => user.name).join(', ');
     };
@@ -120,66 +54,42 @@ const LeadManagement = () => {
         const data = {
           columns: [
             {
-              label: 'ID',
-              field: '_id',
+              label: 'Email',
+              field: 'email',
               sort: 'asc',
             },
             {
-              label: 'Title',
-              field: 'title',
+              label: 'Name',
+              field: 'name',
               sort: 'asc',
             },
             {
-              label: 'Start Date',
-              field: 'startDate',
+              label: 'Phone Number',
+              field: 'phoneNumber',
               sort: 'asc',
             },
             {
-              label: 'End Date',
-              field: 'endDate',
+              label: 'Location',
+              field: 'location',
               sort: 'asc',
             },
             {
-              label: 'Fee',
-              field: 'fee',
+              label: 'experience',
+              field: 'experience',
               sort: 'asc',
             },
-            {
-              label: 'Discounted Fee',
-              field: 'discountedFee',
-              sort: 'asc',
-            },
-            { label: 'Students', field: 'userCount', sort: 'asc' },
-            {
-              label: 'Actions',
-              field: 'actions',
-            },
+            
           ],
           rows: [],
         };
     
-        moduleData.forEach((module) => {
+        allFormData.forEach((module) => {
           data.rows.push({
-            _id: module._id,
-            title: module.title,
-            description: module.description,
-            startDate: new Date(module.startDate).toLocaleDateString(),
-            endDate: new Date(module.endDate).toLocaleDateString(),
-            fee: module.fee,
-            discountedFee:module.discountedFee,
-            userCount: getUserNames(module._id),
-            // actions: (
-            //   <>
-            //     <Tooltip title='Edit' placement='top' arrow>
-            //       <button
-            //         className='btn btn-primary py-1 px-2 ml-2'
-            //         onClick={() => editModuleHandler(module)}
-            //       >
-            //         <i className='fa fa-edit'></i>
-            //       </button>
-            //     </Tooltip>
-            //   </>
-            // ),
+            email: module.email,
+            name: module.name,
+            phoneNumber: module.phoneNumber,
+            location: module.location,
+            experience: module.experience,
           });
         });
     
@@ -188,16 +98,7 @@ const LeadManagement = () => {
 
   return (
     <>
-    {/* <SuccessBar
-        handleClose={handleCloseBar}
-        openSuccess={openSuccess}
-        message={message}
-      />
-      <ErrorBar
-        openFailure={openFailure}
-        message={message}
-        handleClose={handleCloseBar}
-      /> */}
+    
       <Grid container className={classes.root}>
         <Grid item xs={12} md={2}>
           <SideDrawer />
@@ -210,8 +111,8 @@ const LeadManagement = () => {
                 alignItems="center"
                 justifyContent="space-between"
               >
-                <h1>All Batches</h1>
-                <Button
+                <h1>Leads</h1>
+                {/* <Button
                   className={classes.create}
                   size="small"
                   variant="contained"
@@ -219,7 +120,7 @@ const LeadManagement = () => {
                   // onClick={handleClickOpen}
                 >
                   Create
-                </Button>
+                </Button> */}
               </Box>
 
               <MDBDataTable data={mdbLeads()} bordered striped hover />
@@ -227,12 +128,6 @@ const LeadManagement = () => {
           </Grid>
         </Grid>
       </Grid>
-      {/* <BatchDialogue
-        open={open}
-        handleClose={handleClose}
-        module={editBatch}
-        submitHandler={submitHandler}
-      /> */}
     </>
   );
 };

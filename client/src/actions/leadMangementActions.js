@@ -20,7 +20,7 @@ export const saveFormData = (formData) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post('/leads/save-form-data', formData, config);
+    const { data } = await axios.post(`${backendUrl}/leads/save-form-data`, formData, config);
 
     dispatch({
       type: SAVE_FORM_DATA_SUCCESS,
@@ -41,7 +41,7 @@ export const getAllFormData = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ALL_FORM_DATA_REQUEST });
 
-    const { data } = await axios.get('/api/get-all-form-data');
+    const { data } = await axios.get(`${backendUrl}/leads/get-all-form-data`);
 
     dispatch({
       type: GET_ALL_FORM_DATA_SUCCESS,
