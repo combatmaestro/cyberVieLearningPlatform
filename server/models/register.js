@@ -15,8 +15,6 @@ const formDataSchema = new mongoose.Schema({
   phoneNumber: {
     type: String,
     required: true,
-    unique: true,  // Ensure phoneNumber is unique
-    trim: true,
   },
   organization: {
     type: String,

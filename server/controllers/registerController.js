@@ -8,18 +8,8 @@ exports.saveFormData = async (req, res) => {
       return res.status(400).json({ message: 'Email already exists' });
     }
 
-    const newFormData = new FormData({
-      name,
-      email,
-      phoneNumber,
-      organization,
-      designation,
-      experience,
-      location,
-      tier
-    });
-
-    await newFormData.save();
+    
+    const newFormData = await FormData.create(req.body);
 
     return res.status(200).json({ message: 'Form data saved successfully', data: newFormData });
   } catch (error) {
