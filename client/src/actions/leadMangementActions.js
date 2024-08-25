@@ -11,6 +11,7 @@ import {
 const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app";
 // Action to save form data
 export const saveFormData = (formData) => async (dispatch) => {
+  let data;
   try {
     dispatch({ type: SAVE_FORM_DATA_REQUEST });
 
@@ -20,7 +21,7 @@ export const saveFormData = (formData) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(`${backendUrl}/leads/save-form-data`, formData, config);
+    data = await axios.post(`${backendUrl}/leads/save-form-data`, formData, config);
 
     dispatch({
       type: SAVE_FORM_DATA_SUCCESS,
@@ -30,9 +31,9 @@ export const saveFormData = (formData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: SAVE_FORM_DATA_FAILURE,
-      payload: error?.response?.data?.message || error.message,
+      payload: data?.message || error.message,
     });
-    return { status: 400 , message: error.message };
+    return { status: 400 , message: data?.message };
   }
 };
 
