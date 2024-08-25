@@ -173,9 +173,7 @@ const RegistrationForm = () => {
     if (response?.status === 200) {
       setIsSubmitted(true);
     } else {
-      toast.error("Email Already exists with us.").then(() => {
-        history.push("/home");
-      });
+      toast.error("Email Already exists with us.")
     }
   };
 
