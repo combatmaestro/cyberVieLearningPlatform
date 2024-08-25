@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Box, Button, Typography, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CheckCircle from "@material-ui/icons/CheckCircle";
 import Modal from "@material-ui/core/Modal";
 import { useHistory } from "react-router-dom";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -91,7 +91,7 @@ const TeacherReview = () => {
   const { assignment } = location.state || {};
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
-  const [marks, setMarks] = useState([]); 
+  const [marks, setMarks] = useState([]);
   const [reviewedCount, setReviewedCount] = useState(0);
   const [finalizedAssignment, setFinalizedAssignment] = useState(assignment);
   const [showLoading, setShowLoading] = useState(false);
@@ -113,16 +113,16 @@ const TeacherReview = () => {
     }
   }, [assignment]);
 
-
-
-
   const handleNextQuestion = () => {
     const currentMark = marks[currentIndex];
-  
-    if (!finalizedAssignment.questionAndAnswers[currentIndex].finalMark && currentMark) {
+
+    if (
+      !finalizedAssignment.questionAndAnswers[currentIndex].finalMark &&
+      currentMark
+    ) {
       setReviewedCount((prevCount) => prevCount + 1);
     }
-  
+
     setFinalizedAssignment((prevAssignment) => {
       const updatedQuestionAndAnswers = [...prevAssignment.questionAndAnswers];
       updatedQuestionAndAnswers[currentIndex] = {
@@ -134,15 +134,13 @@ const TeacherReview = () => {
         questionAndAnswers: updatedQuestionAndAnswers,
       };
     });
-  
+
     if (currentIndex < assignment.questionAndAnswers.length - 1) {
       setCurrentIndex(currentIndex + 1);
     } else {
       handleSubmit();
     }
   };
-  
-  
 
   const handlePreviousQuestion = () => {
     if (currentIndex > 0) {
@@ -191,7 +189,7 @@ const TeacherReview = () => {
             {currentQuestion?.question}
           </Typography>
           <Box className={classes.questionBox}>
-            <textarea
+            {/* <textarea
               placeholder="Write your answer here:"
               style={{
                 width: "100%",
@@ -199,11 +197,28 @@ const TeacherReview = () => {
                 padding: "8px",
                 borderRadius: "8px",
                 border: "0.5px solid #ccc",
+                overflowY: "auto",
               }}
               value={answers[currentIndex] || ""}
               onChange={handleTextareaChange}
               disabled
-            />
+            /> */}
+            <div
+              style={{
+                width: "100%",
+                height: "450px",
+                padding: "8px",
+                borderRadius: "8px",
+                border: "0.5px solid #ccc",
+                overflowY: "auto",
+                backgroundColor: "#f9f9f9", // Disabled textarea background color
+                color: "#aaa", // Disabled textarea text color
+                whiteSpace: "pre-wrap", // Preserve white space and line breaks
+                cursor: "not-allowed", // Show the disabled cursor
+              }}
+            >
+              {answers[currentIndex] || "Write your answer here:"}
+            </div>
             <Typography variant="caption" gutterBottom>
               Write in 500 words
             </Typography>
@@ -259,8 +274,8 @@ const TeacherReview = () => {
             color="textSecondary"
             style={{ marginTop: "0px", marginBottom: "30px" }}
           >
-            • {reviewedCount} Reviewed
-            • {assignment.questionAndAnswers.length - reviewedCount} To Review
+            • {reviewedCount} Reviewed •{" "}
+            {assignment.questionAndAnswers.length - reviewedCount} To Review
           </Typography>
           <Box className={classes.questionNav}>
             {assignment?.questionAndAnswers?.map((question, index) => (
