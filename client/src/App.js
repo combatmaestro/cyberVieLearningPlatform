@@ -37,6 +37,7 @@ import QuestionSection from './components/QuestionsSection/QuestionSection'
 import TeacherReview from './components/QuestionsAdminReviewSection/teacherReview'
 import RegistrationForm from './components/Register/RegistrationForm'
 import LeadManagement from './Admin/LeadManagement/leadManagement'
+import { Toaster } from "react-hot-toast";
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state) => state.user)
@@ -103,6 +104,12 @@ function App() {
                   path='/admin/modules'
                   component={AdminModules}
                   roles={['admin', 'teacher']}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/admin/leads'
+                  component={LeadManagement}
+                  roles={['admin']}
                 />
                 <ProtectedRoute
                   exact
@@ -185,6 +192,7 @@ function App() {
                 <Route component={NoMatchPage} />
               </Switch>
             </div>
+            <Toaster/>
           </Router>
         </>
       )}

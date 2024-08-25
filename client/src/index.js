@@ -8,9 +8,9 @@ import { Bars, LoaderProvider } from "@agney/react-loading";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
 import "mdbreact/dist/css/mdb.css";
-import { CssBaseline, ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+import { Toaster } from "react-hot-toast";
 const theme = createMuiTheme({
 });
 ReactDOM.render(
@@ -20,6 +20,7 @@ ReactDOM.render(
     <LoaderProvider indicator={<Bars width="80" height="80" />}>
        <App />  
     </LoaderProvider>
+    {/* <Toaster/> */}
     </ThemeProvider>
   </Provider>
   </GoogleOAuthProvider>,
