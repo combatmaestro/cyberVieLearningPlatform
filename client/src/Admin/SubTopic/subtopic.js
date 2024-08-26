@@ -214,7 +214,7 @@ export default function Subtopics() {
           <>
             <Tooltip title="Delete" placement="top" arrow>
               <button
-                className="btn btn-primary py-1 px-2  ml-2"
+                className="btn btn-danger py-1 px-2  ml-2"
                 onClick={() => deleteSubtopics(subtopic._id)}
               >
                 <i className="fa fa-trash" style={{color:"white"}}></i>

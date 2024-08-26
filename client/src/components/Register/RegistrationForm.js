@@ -175,6 +175,9 @@ const RegistrationForm = () => {
     } else {
       // response?.message
       toast.error("Email Already Exists , Please Login To Csep Cybervie Platform");
+      setTimeout(() => {
+        history.push("/"); 
+      }, 3000);
     }
   };
 
