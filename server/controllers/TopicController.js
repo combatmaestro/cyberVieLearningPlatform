@@ -186,7 +186,7 @@ exports.addSubTopic = catchAsyncErrors(async (req, res, next) => {
 exports.deleteSubtopic = catchAsyncErrors(async (req, res) => {
   const { id } = req.body;
 
-  const subtopic = await Subtopic.findById(id);
+  const subtopic = await SubTopic.findById(id);
 
   if (subtopic) {
     await subtopic.remove();
