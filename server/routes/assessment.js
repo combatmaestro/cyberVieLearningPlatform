@@ -16,7 +16,7 @@ router.post(
   router.post(
     "/user/submitAnswers",
     isAuthenticatedUser,
-    authorizeRoles("user"),
+    authorizeRoles("user","admin"),
     assessmentController.assessmentReview
   );
   router.get('/getAll', assessmentController.getAllAssessments);
