@@ -173,7 +173,6 @@ const RegistrationForm = () => {
     if (response?.status === 200) {
       setIsSubmitted(true);
     } else {
-      // response?.message
       toast.error("Email Already Exists , Please Login To Csep Cybervie Platform");
       setTimeout(() => {
         history.push("/"); 

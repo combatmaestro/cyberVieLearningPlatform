@@ -54,6 +54,11 @@ const LeadManagement = () => {
         const data = {
           columns: [
             {
+              label: 'Created At',
+              field: 'createdAt',
+              sort: 'asc',
+            },
+            {
               label: 'Email',
               field: 'email',
               sort: 'asc',
@@ -85,6 +90,7 @@ const LeadManagement = () => {
     
         allFormData.forEach((module) => {
           data.rows.push({
+            createdAt:module.createdAt,
             email: module.email,
             name: module.name,
             phoneNumber: module.phoneNumber,

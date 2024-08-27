@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/styles';
 import { auth } from './firebaseConfig';
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { toast } from 'react-hot-toast'; // Import toast
-
+import LandingPage from '../LandingPage/LandingPage';
 
 const useStyles = makeStyles((theme) => ({
   formPanel: {
@@ -166,7 +166,7 @@ const OtpVerification = ({ fullNumber }) => {
         )}
       </Grid>
     ) : (
-      <Login />
+      <LandingPage />
     )
   );
 };
