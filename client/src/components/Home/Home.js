@@ -70,14 +70,25 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    [theme.breakpoints.down(469)]: {
+      justifyContent:"center",
+      gap:"34px"
+    },
+  },
+  header:{
+    fontSize:"41px",
+    [theme.breakpoints.down(426)]: {
+      marginLeft:"30px",
+      fontSize:"32px"
+    },
   },
   playgroundButton: {
     background:
       "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
-    marginRight: "9%",
+    marginRight: "6%",
     color: "white",
     [theme.breakpoints.down(469)]: {
-      fontSize:"0.7rem !important"
+      fontSize:"0.7rem !important",
     },
     [theme.breakpoints.down(376)]: {
       fontSize:"0.6rem !important"
@@ -155,7 +166,7 @@ function Home() {
       {!teacher && (
         <>
           <Box className={classes.headerContainer}>
-            <h2 style={{ fontSize: 41 }}>Modules</h2>
+            <h2 className={classes.header}>Modules</h2>
             <Button
               type="submit"
               variant="contained"

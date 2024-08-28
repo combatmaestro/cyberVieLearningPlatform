@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     background:
       "linear-gradient(88.06deg, #E9F3FF 0%, #EBF8FF 40.15%, #DBFBFE 81.03%, #D4FFFE 106.75%)",
     borderRadius: "100px",
-    height: "161px",
+    height: "141px",
     width: "96%",
     marginBottom: "50px",
     // boxShadow: '0px 1.84527px 15.6905px rgba(0, 0, 0, 0.22)',
@@ -30,11 +30,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   avatar: {
-    width: theme.spacing(12),
-    height: theme.spacing(12),
+    width: theme.spacing(11),
+    height: theme.spacing(11),
     background: "#ffffff",
     marginRight: theme.spacing(2),
     marginBottom: theme.spacing(1),
+    position:"relative",
+    top:"27px",
+    left:"35px",
     zIndex: "999",
   },
   infoBox: {
@@ -58,11 +61,11 @@ const useStyles = makeStyles((theme) => ({
   },
   avatarBox: {
     background: "#ffffff",
-    width: "172px",
-    height: "161px",
+    width: "162px",
+    height: "146px",
     position: "relative",
     left: "-25px",
-    borderRadius: "100px 100px 0px 100px",
+    borderRadius: "100%",
     [theme.breakpoints.down(426)]: {
       display: "none",
     },
