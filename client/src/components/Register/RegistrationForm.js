@@ -11,14 +11,20 @@ import {
   Divider,
   InputAdornment,
   MenuItem,
+  Modal,
+  Box
 } from "@material-ui/core";
-import Logo from "./logo.jpg";
+import Logo from "./logo.png";
 import { makeStyles } from "@material-ui/styles";
-import OtpVerification from "./OtpVerifacton";
+import DoneIcon from '@material-ui/icons/Done';
 import { saveFormData } from "../../actions/leadMangementActions";
+import LandingPage from "../LandingPage/LandingPage";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { auth } from "./firebaseConfig";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,7 +71,8 @@ const useStyles = makeStyles((theme) => ({
   stepper: {
     marginTop: theme.spacing(12),
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "center",
+    gap: theme.spacing(6),
     [theme.breakpoints.down(426)]: {
       marginTop: "20px",
       gap: "4px",
@@ -99,10 +106,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   logo: {
-    height: "100px",
-    width: "200px",
+    height: "80px",
+    width: "225px",
   },
 }));
+
 
 const countryCodes = [
   { code: "+1", name: "United States" },
@@ -110,6 +118,7 @@ const countryCodes = [
   { code: "+44", name: "United Kingdom" },
   { code: "+61", name: "Australia" },
 ];
+
 
 const RegistrationForm = () => {
   const classes = useStyles();
@@ -127,7 +136,14 @@ const RegistrationForm = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [countryCode, setCountryCode] = useState("+91");
   const [errors, setErrors] = useState({});
+  const [verificationResult, setVerificationResult] = useState(null);
+  const [otpSent, setOtpSent] = useState(false);
+  const [verified, setVerified] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const [otp, setOtp] = useState('');
+  const [captchaVisible, setCaptchaVisible] = useState(true);
   const history = useHistory();
+
 
   const validateName = (name) => /^[a-zA-Z\s]+$/.test(name);
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -138,8 +154,10 @@ const RegistrationForm = () => {
   const validateCity = (currCity) => /^[a-zA-Z\s]+$/.test(currCity);
   const validteDesignation = (designation) => /^[a-zA-Z\s]+$/.test(designation);
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
 
     const newErrors = {};
     if (!validateName(name)) newErrors.name = "Please enter a valid name.";
@@ -154,6 +172,7 @@ const RegistrationForm = () => {
       newErrors.currCity = "Please enter a valid cityName.";
     if (!validteDesignation(designation))
       newErrors.designation = "Please enter a valid designation.";
+
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
@@ -173,12 +192,52 @@ const RegistrationForm = () => {
     if (response?.status === 200) {
       setIsSubmitted(true);
     } else {
-      toast.error("Email Already Exists , Please Login To Csep Cybervie Platform");
+      toast.error(
+        "Email Already Exists , Please Login To Csep Cybervie Platform"
+      );
       setTimeout(() => {
-        history.push("/"); 
+        history.push("/");
       }, 3000);
     }
   };
+
+
+  const handlePhoneVerify = async () => {
+    // alert("Phone verification")
+    const fullNumber = `${countryCode}${phoneNumber}`;
+
+
+    try {
+      const recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha", {});
+      const confirmationResult = await signInWithPhoneNumber(
+        auth,
+        fullNumber,
+        recaptchaVerifier
+      );
+      setVerificationResult(confirmationResult);
+      toast.success("OTP sent successfully");
+      setOtpSent(true);
+      setCaptchaVisible(false);
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      toast.error("Error sending OTP");
+    }
+  };
+
+
+  const handleVerifyOtp = async () => {
+    try {
+      await verificationResult.confirm(otp);
+      toast.success("Otp verified")
+      setVerified(true);
+      setOtpVerified(true);
+      setCaptchaVisible(false);
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      toast.error('Error verifying OTP');
+    }
+  };
+
 
   const changeHandler = (e) => {
     const { name, value } = e.target;
@@ -271,9 +330,11 @@ const RegistrationForm = () => {
     }
   };
 
+
   const handleCountryCodeChange = (e) => {
     setCountryCode(e.target.value);
   };
+
 
   return (
     <Container className={classes.root}>
@@ -314,41 +375,25 @@ const RegistrationForm = () => {
             <div className={classes.step}>
               <div
                 className={`${classes.stepNumber} ${
-                  activeStep >= 2
+                  activeStep >= 3
                     ? classes.stepNumberActive
                     : classes.stepNumberInactive
                 }`}
               >
                 2
               </div>
-              <Typography variant="caption">OTP Verification</Typography>
-            </div>
-            <Divider
-              orientation="horizontal"
-              flexItem
-              style={{ backgroundColor: "#FFFFFF" }}
-            />
-            <div className={classes.step}>
-              <div
-                className={`${classes.stepNumber} ${
-                  activeStep >= 3
-                    ? classes.stepNumberActive
-                    : classes.stepNumberInactive
-                }`}
-              >
-                3
-              </div>
               <Typography variant="caption">Log in</Typography>
             </div>
           </div>
         </Grid>
-        {isSubmitted ? (
-          <OtpVerification fullNumber={`${countryCode}${phoneNumber}`} />
+        {isSubmitted && verified ? (
+          <LandingPage />
         ) : (
           <Grid item xs={12} md={6} className={classes.formPanel}>
             <Typography variant="h6" className={classes.title} gutterBottom>
               Register With Us!
             </Typography>
+
 
             <form noValidate onSubmit={handleSubmit} autoComplete="off">
               <TextField
@@ -401,10 +446,51 @@ const RegistrationForm = () => {
                       </Select>
                     </InputAdornment>
                   ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {otpVerified ? (
+                        <DoneIcon style={{ color: 'green' }} />
+                      ) : (
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          onClick={handlePhoneVerify}
+                        >
+                          Send
+                        </Button>
+                      )}
+                    </InputAdornment>
+                  ),
                 }}
                 error={Boolean(errors.phoneNumber)}
                 helperText={errors.phoneNumber}
               />
+              {captchaVisible && (<div id="recaptcha"></div>)}
+              {otpSent && !otpVerified && (
+                <TextField
+                label="OTP"
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={handleVerifyOtp}
+                      >
+                        Verify
+                      </Button>
+                    </InputAdornment>
+                  ),
+
+
+                }}
+              />
+              )}
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -490,4 +576,8 @@ const RegistrationForm = () => {
   );
 };
 
+
 export default RegistrationForm;
+
+
+
