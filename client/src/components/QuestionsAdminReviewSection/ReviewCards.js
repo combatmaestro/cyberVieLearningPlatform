@@ -1,5 +1,5 @@
 import { Button } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect , useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { getAllModules } from "../../actions/moduleAction";
@@ -7,6 +7,8 @@ import ModuleListLoader from "../ModulesList/ModuleListLoader";
 import LockIcon from "@material-ui/icons/Lock";
 import { useStyles } from "../ModulesList/style";
 // import moduleImg from "./Cybersecurity_Training.png";
+
+import { getAllAssessmentsToReview } from "../../actions/assessmentAction";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 function ReviewList(props) {
@@ -15,14 +17,30 @@ function ReviewList(props) {
   const dispatch = useDispatch();
   const modules = useSelector((state) => state.modules);
   const userData = useSelector((state) => state.user);
+  const [assessmentData, setAssessmentData] = useState([]);
   const user = userData.data;
   const { loading, data = [], error } = modules;
+  
+  const {assessments} = useSelector(state => state.assessmentReview);
   const history = useHistory();
 
   useEffect(() => {
     dispatch(getAllModules(user));
     console.log(data);
   }, [dispatch, user]);
+
+  useEffect(() => {
+    if (userData.data.role.includes("teacher")) {
+      dispatch(getAllAssessmentsToReview(userData.data._id));
+    }
+  }, [dispatch, userData.data._id, userData.data.role]);
+
+  useEffect(() => {
+    if (assessments && assessments.length > 0) {
+      console.log("Assessments:", assessments);
+      setAssessmentData(assessments);
+    }
+  }, [assessments]);
 
   const clickHandler = (id) => history.push(`/module/${id}`);
 
@@ -40,7 +58,7 @@ function ReviewList(props) {
 
     return sortedModules.title;
   }
-  
+
   const handleClick = (assg) =>{
     history.push({
       pathname: `/review/${assg._id}`, 
@@ -50,9 +68,12 @@ function ReviewList(props) {
   
 
   return (
+    <>
+    <h3 className={classes.headerContainer}>Assessment Review</h3>
     <div className={classes.root}>
-      {props?.assessmentsData?.length > 0
-        ? props?.assessmentsData?.map((ass,i) => {
+     
+      {assessments?.length > 0
+        ? assessments?.map((ass,i) => {
             return (
               <React.Fragment key={i}>
                   <div
@@ -120,6 +141,7 @@ function ReviewList(props) {
           })
         : ""}
     </div>
+    </>
   );
 }
 

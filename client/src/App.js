@@ -37,6 +37,7 @@ import QuestionSection from './components/QuestionsSection/QuestionSection'
 import TeacherReview from './components/QuestionsAdminReviewSection/teacherReview'
 import RegistrationForm from './components/Register/RegistrationForm'
 import LeadManagement from './Admin/LeadManagement/leadManagement'
+import ReviewList from './components/QuestionsAdminReviewSection/ReviewCards'
 import { Toaster } from "react-hot-toast";
 function App() {
   const dispatch = useDispatch()
@@ -163,6 +164,11 @@ function App() {
                   exact
                   path='/leaderboard'
                   component={Leaderboard}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/reviewAssessment'
+                  component={ReviewList}
                 />
                 <ProtectedRoute
                   exact

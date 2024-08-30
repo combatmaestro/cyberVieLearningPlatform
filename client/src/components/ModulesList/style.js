@@ -1,7 +1,14 @@
 import { makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles((theme) => ({
+  headerContainer:{
+    marginTop: "2%",
+    textAlign: "justify",
+    paddingLeft: 40,
+    fontSize: 24
+  },
   root: {
+    padding:"40px",
     marginTop: 16,
     display: 'grid',
     gridTemplateColumns: 'auto auto auto',

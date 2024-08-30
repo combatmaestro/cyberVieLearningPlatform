@@ -156,15 +156,15 @@ function Home() {
   return (
     <div className={classes.root}>
       <ModuleOverview stats = {statisticsData} />
-      {teacher && (
-        <>
+    
+        {/* <>
           <Box className={classes.headerContainer}>
             <h2 style={{ fontSize: 41 }}>Review Assignments</h2>
           </Box>
           <ReviewList assessmentsData={assessmentData}/>
         </>
-      )}
-      {!teacher && (
+       */}
+      
         <>
           <Box className={classes.headerContainer}>
             <h2 className={classes.header}>Modules</h2>
@@ -203,7 +203,7 @@ function Home() {
             )}
           <ModulesList />
         </>
-      )}
+     
     </div>
   );
 }
