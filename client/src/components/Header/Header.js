@@ -242,6 +242,11 @@ export default function Header() {
                         Upcoming Live Classes
                       </Typography>
                     </Link>
+                    <Link to="/reviewAssessment">
+                      <Typography className={classes.headerTitle} variant="h6">
+                        Review Assessment
+                      </Typography>
+                    </Link>
                     {/* <a
                       href="https://www.cybervie.com/cyber-security-training-program/"
                       target="_blank"
