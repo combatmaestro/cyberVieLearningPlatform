@@ -242,11 +242,12 @@ export default function Header() {
                         Upcoming Live Classes
                       </Typography>
                     </Link>
+                    {data.role === "teacher" && (
                     <Link to="/reviewAssessment">
                       <Typography className={classes.headerTitle} variant="h6">
                         Review Assessment
                       </Typography>
-                    </Link>
+                    </Link>)}
                     {/* <a
                       href="https://www.cybervie.com/cyber-security-training-program/"
                       target="_blank"
