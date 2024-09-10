@@ -170,7 +170,7 @@ const QuestionSection = ({ match }) => {
         <Box className={classes.root}>
             <Box className={classes.content}>
                 <Typography variant="h4" gutterBottom>
-                    Question {currentQuestion?.sno}
+          Assessment {currentQuestion?.sno}
                 </Typography>
         <Typography variant="body1" style={{ marginBottom: "30px" }}>
                     {currentQuestion?.question}

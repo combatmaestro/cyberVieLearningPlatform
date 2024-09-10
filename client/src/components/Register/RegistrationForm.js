@@ -14,7 +14,7 @@ import {
   Modal,
   Box
 } from "@material-ui/core";
-import Logo from "./logo.png";
+import Logo from "./logo.svg";
 import { makeStyles } from "@material-ui/styles";
 import DoneIcon from '@material-ui/icons/Done';
 import { saveFormData } from "../../actions/leadMangementActions";
@@ -24,6 +24,8 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { auth } from "./firebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -74,8 +76,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     gap: theme.spacing(6),
     [theme.breakpoints.down(426)]: {
-      marginTop: "20px",
-      gap: "4px",
+      marginTop: "30px",
+      gap: "30px",
     },
   },
   step: {
@@ -112,12 +114,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+
+
 const countryCodes = [
   { code: "+1", name: "United States" },
   { code: "+91", name: "India" },
   { code: "+44", name: "United Kingdom" },
   { code: "+61", name: "Australia" },
 ];
+
+
 
 
 const RegistrationForm = () => {
@@ -145,6 +151,8 @@ const RegistrationForm = () => {
   const history = useHistory();
 
 
+
+
   const validateName = (name) => /^[a-zA-Z\s]+$/.test(name);
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const validatePhoneNumber = (phoneNumber) => /^\d{10}$/.test(phoneNumber);
@@ -155,8 +163,12 @@ const RegistrationForm = () => {
   const validteDesignation = (designation) => /^[a-zA-Z\s]+$/.test(designation);
 
 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+
 
 
     const newErrors = {};
@@ -174,6 +186,8 @@ const RegistrationForm = () => {
       newErrors.designation = "Please enter a valid designation.";
 
 
+
+
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -188,9 +202,16 @@ const RegistrationForm = () => {
       experience,
       location,
     };
+
+
+    if(otpVerified === false){
+      toast.error("Please verify number before register")
+    }
+    else{
     const response = await dispatch(saveFormData(formData));
     if (response?.status === 200) {
       setIsSubmitted(true);
+      history.push("/")
     } else {
       toast.error(
         "Email Already Exists , Please Login To Csep Cybervie Platform"
@@ -199,12 +220,17 @@ const RegistrationForm = () => {
         history.push("/");
       }, 3000);
     }
+  }
   };
+
+
 
 
   const handlePhoneVerify = async () => {
     // alert("Phone verification")
     const fullNumber = `${countryCode}${phoneNumber}`;
+
+
 
 
     try {
@@ -225,10 +251,12 @@ const RegistrationForm = () => {
   };
 
 
+
+
   const handleVerifyOtp = async () => {
     try {
       await verificationResult.confirm(otp);
-      toast.success("Otp verified")
+      toast.success("Otp verified successfully");
       setVerified(true);
       setOtpVerified(true);
       setCaptchaVisible(false);
@@ -237,6 +265,8 @@ const RegistrationForm = () => {
       toast.error('Error verifying OTP');
     }
   };
+
+
 
 
   const changeHandler = (e) => {
@@ -331,9 +361,13 @@ const RegistrationForm = () => {
   };
 
 
+
+
   const handleCountryCodeChange = (e) => {
     setCountryCode(e.target.value);
   };
+
+
 
 
   return (
@@ -386,13 +420,15 @@ const RegistrationForm = () => {
             </div>
           </div>
         </Grid>
-        {isSubmitted && verified ? (
+        {isSubmitted && verified && otpVerified ? (
           <LandingPage />
         ) : (
           <Grid item xs={12} md={6} className={classes.formPanel}>
             <Typography variant="h6" className={classes.title} gutterBottom>
               Register With Us!
             </Typography>
+
+
 
 
             <form noValidate onSubmit={handleSubmit} autoComplete="off">
@@ -488,6 +524,8 @@ const RegistrationForm = () => {
                   ),
 
 
+
+
                 }}
               />
               )}
@@ -577,7 +615,15 @@ const RegistrationForm = () => {
 };
 
 
+
+
 export default RegistrationForm;
+
+
+
+
+
+
 
 
 
