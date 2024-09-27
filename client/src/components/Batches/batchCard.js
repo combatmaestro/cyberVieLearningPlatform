@@ -288,7 +288,7 @@ const BatchList = () => {
                           padding: "5px",
                         }}
                       >
-                        Discount of 20% applied
+                       Discount of {Math.round(((module.fee - module.discountedFee)/module.fee) * 100 )}% applied
                       </span>
                     </Typography>
                     <div className={classes.buttonContainer}>

@@ -201,6 +201,16 @@ export default function Header() {
             <ListItemText>My Progress</ListItemText>
           </ListItem>
         </Link>
+        <Link to={{ pathname: "https://pages.razorpay.com/pl_HedvukJSVRTta4/view" }}
+          target="_blank"
+          rel="noopener noreferrer">
+          <ListItem button>
+            <ListItemIcon>
+              <AttachMoneyIcon />
+            </ListItemIcon>
+            <ListItemText>Fee Link</ListItemText>
+          </ListItem>
+        </Link>
         <ListItem button>
           <ListItemIcon>
             <WorkIcon />

@@ -3,7 +3,7 @@ const portalUsers = require('../models/User');
 const sendEmail = require("../utils/sendEmail");
 exports.saveFormData = async (req, res) => {
   try {
-    const { name, email, phoneNumber, organization, designation, experience, location, tier } = req.body;
+    const { name, email, phoneNumber, organization, designation, experience } = req.body;
     const existingUser = await portalUsers.findOne({email});
     if (existingUser) {
       return res.status(400).json({ message: 'Email already exists' });

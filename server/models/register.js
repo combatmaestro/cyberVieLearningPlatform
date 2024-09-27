@@ -14,7 +14,7 @@ const formDataSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: true,
+    required: false,
   },
   organization: {
     type: String,
@@ -28,19 +28,22 @@ const formDataSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  location: {
-    type: String,
-    required: true,
-  },
   tier: {
     type: String,
     enum: ['free', 'paid'],
     default: 'free',
   },
+  location:{
+    type: String,
+    required:true
+  }
 }, {
   timestamps: true,
 });
 
+
 const FormData = mongoose.model('FormData', formDataSchema);
 
+
 module.exports = FormData;
+

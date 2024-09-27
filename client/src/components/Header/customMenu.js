@@ -136,6 +136,14 @@ export default function CustomMenu(props) {
         <Link to="/progress">
           <MenuItem onClick={handleClose}>My Progress</MenuItem>
         </Link>
+        <Link
+          to={{ pathname: "https://pages.razorpay.com/pl_HedvukJSVRTta4/view" }}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <MenuItem onClick={handleClose}>Fee Link</MenuItem>
+        </Link>
+
       </StyledMenu>
     </div>
   );
