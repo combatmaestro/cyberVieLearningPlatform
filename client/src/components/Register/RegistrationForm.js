@@ -32,7 +32,7 @@ import {
   Box,
   colors,
 } from "@material-ui/core";
-import LeadForm from "LeadForm"
+import LeadForm from "./LeadForm"
 
 
 const useStyles = makeStyles((theme) => ({
