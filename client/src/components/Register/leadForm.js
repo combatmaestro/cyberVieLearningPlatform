@@ -13,7 +13,6 @@ import {
   Checkbox,
 } from "@material-ui/core";
 
-
 const useStyles = makeStyles((theme) => ({
   formSection: {
     flex: 1,
