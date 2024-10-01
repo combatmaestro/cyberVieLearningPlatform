@@ -22,12 +22,14 @@ import Divider from "@material-ui/core/Divider";
 import MenuIcon from "@material-ui/icons/Menu";
 import WorkIcon from "@material-ui/icons/Work";
 import TableChartIcon from "@material-ui/icons/TableChart";
-
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import { useDispatch } from "react-redux";
 import { userSignout } from "../../actions/userActions";
-
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import Badge from "@material-ui/core/Badge";
 import clsx from "clsx";
-
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 //component
 import CustomMenu from "./customMenu";
 
