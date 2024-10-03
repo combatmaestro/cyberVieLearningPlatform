@@ -12,7 +12,6 @@ import { getAllAssessmentsToReview } from "../../actions/assessmentAction";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 function ReviewList(props) {
-    console.log(props)
   const classes = useStyles();
   const dispatch = useDispatch();
   const modules = useSelector((state) => state.modules);
@@ -26,7 +25,6 @@ function ReviewList(props) {
 
   useEffect(() => {
     dispatch(getAllModules(user));
-    console.log(data);
   }, [dispatch, user]);
 
   useEffect(() => {
@@ -37,7 +35,6 @@ function ReviewList(props) {
 
   useEffect(() => {
     if (assessments && assessments.length > 0) {
-      console.log("Assessments:", assessments);
       setAssessmentData(assessments);
     }
   }, [assessments]);

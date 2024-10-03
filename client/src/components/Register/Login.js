@@ -80,7 +80,6 @@ const OtpVerification = () => {
         })
         .then((res) => res.data);
 
-      console.log(userInfo);
     },
   });
   const handleSignIn = (info) => {
@@ -131,9 +130,6 @@ const OtpVerification = () => {
         theme="filled_black"
         text="signin_with"
         shape="circle"
-        onError={() => {
-          console.log("Login Failed");
-        }}
       /> */}
     </Grid>
   );

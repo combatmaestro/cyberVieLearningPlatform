@@ -49,7 +49,6 @@ function AdminEditClassDialog(props) {
 
   const handleBatchChange = (event) => {
     setSelectedBatch(event.target.value);
-    console.log(event.target.value)
   };
   return (
     <>

@@ -53,7 +53,6 @@ function AdminClassesDialog(props) {
 
   const handleTimeChange = (event) => {
     setTime(event.target.value);
-    console.log(event.target.value);
   };
 
   const timeOptions = [
@@ -77,12 +76,10 @@ function AdminClassesDialog(props) {
 
   const handleBatchChange = (event) => {
     setSelectedBatch(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleTeacherChange = (event) => {
     setSelectedTeacher(event.target.value);
-    console.log(event.target.value);
   };
 
   const handleSubmit = (event) => {

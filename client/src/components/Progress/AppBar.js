@@ -24,7 +24,7 @@ export default function ButtonAppBar() {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const { data, isAuthenticated } = user;
-  console.log(data)
+
 
   return (
     <div className={classes.root} style={{padding:"10px"}}>

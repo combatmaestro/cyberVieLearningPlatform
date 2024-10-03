@@ -140,7 +140,6 @@ export default function Subtopics() {
   //   }
   // };
   const submitHandler = async (subTopicData) => {
-    console.log(subTopicData);
     const modifiedSubtopicsData = [];
     for (const subtopic of subTopicData.subtopics) {
       const data = await post(subtopic.file);
@@ -156,7 +155,6 @@ export default function Subtopics() {
       subtopics: modifiedSubtopicsData,
     };
     const response = await dispatch(addSubtopics(newObj));
-    console.log(response);
     if (response && response.status === 200) {
       dispatch(getAllSubtopics());
       setOpen(false);

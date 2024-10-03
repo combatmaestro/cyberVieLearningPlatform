@@ -70,7 +70,6 @@ export const addNewCtf = (id, info) => async (dispatch) => {
       success: true,
     }
   } catch (error) {
-    console.log('mess', error.response)
     dispatch({
       type: ADD_CTF_FAILURE,
       payload: error.response.data.message,

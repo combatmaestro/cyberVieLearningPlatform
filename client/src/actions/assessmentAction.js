@@ -45,11 +45,9 @@ export const addAssessment = (data) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data.data);
     dispatch(addAssessmentSuccess(response.data.data));
     return { status: 200, data: response.data.data };
   } catch (error) {
-    console.log(error);
     dispatch(addAssessmentFailure(error.message));
     return { status: error.response?.status || 500, error: error.message };
   }

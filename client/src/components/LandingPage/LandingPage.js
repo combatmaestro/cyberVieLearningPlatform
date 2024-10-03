@@ -36,15 +36,11 @@ function LandingPage() {
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
       const userInfo = await axios
         .get("https://www.googleapis.com/oauth2/v3/userinfo", {
           headers: { Authorization: `Bearer ${codeResponse.access_token}` },
         })
         .then((res) => res.data);
-
-      console.log(userInfo);
-     
     },
   });
   const handleSignIn = (info) => {
@@ -84,14 +80,12 @@ function LandingPage() {
                   </button> */}
                   <GoogleLogin
                     onSuccess={(credentialResponse) => {
-                      console.log(credentialResponse);
                       handleSignIn(credentialResponse)
                     }}
                     theme="filled_black"
                     text="signin_with"
                     shape="circle"
                     onError={() => {
-                      console.log("Login Failed");
                     }}
                   />
                 </>

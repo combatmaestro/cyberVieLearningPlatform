@@ -136,7 +136,6 @@ function AdminClasses() {
         time
       )
     );
-    console.log(response)
     if(response && response.status === 200){
       dispatch(fetchClasses())
       setScheduleOpen(false);

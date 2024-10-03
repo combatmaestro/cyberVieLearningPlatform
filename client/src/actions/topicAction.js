@@ -55,7 +55,6 @@ export const getAdminTopic = (id) => async (dispatch) => {
       method: 'GET',
       url: `${backendUrl}/module/admin/details?id=${id}`,
     })
-    // console.log("daa", data);
     dispatch({
       type: ADMIN_TOPIC_SUCCESS,
       payload: {

@@ -104,7 +104,6 @@ function AdminOrder() {
       rows: [],
     };
 
-    console.log("hh", orderData);
 
     orderData.forEach((order) => {
       data.rows.push({

@@ -38,6 +38,7 @@ import TeacherReview from './components/QuestionsAdminReviewSection/teacherRevie
 import RegistrationForm from './components/Register/RegistrationForm'
 import LeadManagement from './Admin/LeadManagement/leadManagement'
 import ReviewList from './components/QuestionsAdminReviewSection/ReviewCards'
+import Footer from './components/Footer/Footer'
 import { Toaster } from "react-hot-toast";
 function App() {
   const dispatch = useDispatch()
@@ -198,6 +199,7 @@ function App() {
                 <Route component={NoMatchPage} />
               </Switch>
             </div>
+            <Footer />
             <Toaster/>
           </Router>
         </>

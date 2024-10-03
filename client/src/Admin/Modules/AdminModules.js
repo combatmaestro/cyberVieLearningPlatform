@@ -78,7 +78,6 @@ function AdminModules() {
   const submitHandler = async (e, title, description, radioValue, checked) => {
     e.preventDefault()
     setOpen(false) //closing modal
-    console.log(title, description, radioValue, checked)
     if (editModule) {
       const formData = new FormData()
       formData.set('title', title)

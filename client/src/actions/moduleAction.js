@@ -129,7 +129,7 @@ export const getModuleDetailsFailure = (error) => ({
 
 
 export const getModuleDetailsComplete = (user) => async (dispatch) => {
-  console.log('getModuleDetailsComplete')
+  
   dispatch(getModuleDetailsRequest());
 
   try {

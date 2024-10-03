@@ -70,7 +70,6 @@ export const userGoogleLogin = (info) => async (dispatch) => {
         token: info.credential,
       },
     })
-    console.log(data.token)
     localStorage.setItem("token",data.token);
     dispatch(userGoogleLoginSuccess(data))
   } catch (error) {
@@ -180,9 +179,9 @@ export const getLeaderBoard = (page,search) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     }
-
+    // ${backendUrl}
     const { data } = await axios.post(`${backendUrl}/user/leaderboard`, { page,search }, config)
-    // console.log(data)
+
     dispatch({
       type: LEADERBOARD_SUCCESS,
       payload: data.data,
@@ -211,13 +210,11 @@ export const adminGetAllUsers = () => async (dispatch) => {
       method: 'get',
       url: `${backendUrl}/user/admin/allUsers`,
     })
-    // console.log('get all users', res)
     dispatch({
       type: ALL_USERS_SUCCESS,
       payload: res.data.data,
     })
   } catch (error) {
-    console.log(error)
     dispatch({
       type: ALL_USERS_FAILURE,
       payload: error,
@@ -235,13 +232,11 @@ export const adminGetAllTeachers = () => async (dispatch) => {
       method: 'get',
       url: `${backendUrl}/user/admin/getTeachers`,
     })
-    // console.log('get all users', res)
     dispatch({
       type: ALL_TEACHERS_SUCCESS,
       payload: res.data.data,
     })
   } catch (error) {
-    console.log(error)
     dispatch({
       type: ALL_TEACHERS_FAILURE,
       payload: error,
@@ -273,7 +268,6 @@ export const editCertainUser = (id, data) => async (dispatch) => {
       success: true,
     }
   } catch (error) {
-    console.log(error)
     dispatch({
       type: EDIT_USER_FAILURE,
       payload: error,

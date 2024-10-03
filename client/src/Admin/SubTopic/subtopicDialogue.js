@@ -92,11 +92,7 @@ function SubtopicDialogue(props) {
     }
   }, [dispatch, selectedModule])
 
-  useEffect(() => {
-    if (topics) {
-      console.log('Topics fetched:', topics)
-    }
-  }, [topics])
+ 
 
   const handleTopicChange = (event) => {
     setSelectedTopic(event.target.value)

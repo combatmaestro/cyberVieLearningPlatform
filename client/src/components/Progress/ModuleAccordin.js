@@ -64,8 +64,6 @@ export default function ModuleAccordin({ module }) {
   const userData = useSelector((state) => state.user);
   const user = userData.data;
 
-  console.log(user)
-
 useEffect(() => {
     calculateOverallProgress()
 

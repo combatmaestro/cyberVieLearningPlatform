@@ -37,7 +37,6 @@ const LeadManagement = () => {
   const {allFormData = [] } = allFormDatas;
   useEffect(() => {
     dispatch(getAllFormData())
-    console.log(allFormData)
   }, [])
  
 
@@ -45,7 +44,7 @@ const LeadManagement = () => {
     
     const getUserNames = (batchId) => {
       const users = allFormData.filter(user => user.batch === batchId);
-      console.log(users)
+
       return users.map(user => user.name).join(', ');
     };
   

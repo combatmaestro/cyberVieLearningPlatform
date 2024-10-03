@@ -35,7 +35,6 @@ export const getAllOrders = (id) => async (dispatch) => {
       payload: data.data,
     });
   } catch (error) {
-    console.log("hell", error);
     dispatch({
       type: ADMIN_GET_ORDER_FAILURE,
       payload: error.response.data.message,

@@ -17,9 +17,7 @@ const ModulesDataRender = () => {
       }, [dispatch]);
 
 
-      useEffect(() => {
-        console.log(moduleDetails)
-       },[modules])
+      
        if (loading) return <Loader />
 
   return (

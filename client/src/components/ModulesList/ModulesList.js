@@ -20,7 +20,6 @@ function ModulesList() {
 
   useEffect(() => {
     dispatch(getAllModules(user));
-    console.log(data);
   }, [dispatch, user]);
 
   const clickHandler = (id) => history.push(`/module/${id}`);

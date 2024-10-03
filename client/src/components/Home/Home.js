@@ -111,8 +111,7 @@ function Home() {
   const [statisticsData,setstatisticsData] = useState({})
   const { loading, assessments, error } = useSelector(state => state.assessmentReview);
   const {stats} = useSelector((state) => state.allStats)
-  // const {stats} = statistics
-  console.log(stats);
+  
  
   useEffect(()=>{
     dispatch(getAllStats())
@@ -136,7 +135,6 @@ function Home() {
 
   useEffect(() => {
     if (assessments && assessments.length > 0) {
-      console.log("Assessments:", assessments);
       setAssessmentData(assessments);
     }
   }, [assessments]);
@@ -156,14 +154,6 @@ function Home() {
   return (
     <div className={classes.root}>
       <ModuleOverview stats = {statisticsData} />
-    
-        {/* <>
-          <Box className={classes.headerContainer}>
-            <h2 style={{ fontSize: 41 }}>Review Assignments</h2>
-          </Box>
-          <ReviewList assessmentsData={assessmentData}/>
-        </>
-       */}
       
         <>
           <Box className={classes.headerContainer}>

@@ -95,7 +95,6 @@ export const stopLab = (email) => async (dispatch) => {
     const { data } = await axios.get(`${backendUrl}/lab/stopLab?email=${email}`);
     dispatch(stopLabSuccess(data));
   } catch (error) {
-    console.log(error);
     dispatch(stopLabFailure(error.response.data.message));
   }
 };

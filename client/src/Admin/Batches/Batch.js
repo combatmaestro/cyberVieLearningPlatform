@@ -46,7 +46,6 @@ const Batch = () => {
   const {allUsersData = [] } = allUsers;
   useEffect(() => {
     dispatch(getAllBatches())
-    console.log(moduleData)
   }, [])
  
   const editModuleHandler = (module) => {
@@ -111,7 +110,7 @@ const Batch = () => {
     
     const getUserNames = (batchId) => {
       const users = allUsersData.filter(user => user.batch === batchId);
-      console.log(users)
+      
       return users.map(user => user.name).join(', ');
     };
   

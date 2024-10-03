@@ -91,7 +91,6 @@ function AdminContent({ history }) {
 
       const { data } = await axios.post('/topic/admin/upload', formData, config)
 
-      console.log(data)
       const appendString = `<div class="se-component se-image-container __se__float-none" contenteditable="false">
                             <figure style="margin: 0px;">
                             <img src="${data.url}" alt="" data-rotate="" data-proportion="true" data-rotatex="" data-rotatey="" data-size="," data-align="none" data-percentage="auto,auto" data-index="0" data-file-name="image_j357z1.jpg" data-file-size="0" data-origin="," style="">
@@ -101,7 +100,6 @@ function AdminContent({ history }) {
 
       setOpenBackdrop(false)
     } catch (err) {
-      console.log('error', err.response.data.message)
       setOpenBackdrop(false)
     }
   }
@@ -128,7 +126,6 @@ function AdminContent({ history }) {
 
   return (
     <>
-      {console.log('hello')}
       <SuccessBar
         handleClose={handleClose}
         openSuccess={openSuccess}
