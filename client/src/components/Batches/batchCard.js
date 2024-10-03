@@ -202,6 +202,17 @@ const BatchList = () => {
     }
   };
 
+  const calculateDiscountPercentage = (fee, discountedFee) => {
+    const fees = Number(fee.replace(/[^0-9.]/g, ''));
+    const discountedFees = Number(discountedFee.replace(/[^0-9.]/g, ''));
+  
+    if (fees && discountedFees) {
+      return Math.round(((fees - discountedFees) / fees) * 100);
+    }
+    return 0;
+  };
+
+
   const handleCloseBar = () => {
     setOpenFailure(false);
   };
@@ -288,7 +299,7 @@ const BatchList = () => {
                           padding: "5px",
                         }}
                       >
-                       Discount of {Math.round(((module.fee - module.discountedFee)/module.fee) * 100 )}% applied
+                      Discount of {calculateDiscountPercentage(module.fee , module.discountedFee)}% applied
                       </span>
                     </Typography>
                     <div className={classes.buttonContainer}>

@@ -40,6 +40,18 @@ const LeadManagement = () => {
   }, [])
  
 
+  const formatDateTime = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    });
+  }
+
 
     
     const getUserNames = (batchId) => {
@@ -89,7 +101,7 @@ const LeadManagement = () => {
     
         allFormData.forEach((module) => {
           data.rows.push({
-            createdAt:module.createdAt,
+            createdAt:formatDateTime(module.createdAt),
             email: module.email,
             name: module.name,
             phoneNumber: module.phoneNumber,

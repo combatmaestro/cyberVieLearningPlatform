@@ -111,7 +111,7 @@ function ModulesList() {
                               " linear-gradient(298.54deg, #0A767B -7.7%, #00A7D6 97.12%)",
                           }}
                         >
-                          View Course
+                          View Modules
                         </Button>
                       )}
                     </div>
