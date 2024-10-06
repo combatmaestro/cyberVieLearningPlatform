@@ -64,6 +64,8 @@ const Sidebar = () => {
           Dashboard
         </Box>
         <Divider className={classes.divider} />
+        {data.role != 'counsellor' && (
+          <>
         <List className={classes.list}>
           <Link to="/admin/modules">
             <Box>
@@ -100,6 +102,8 @@ const Sidebar = () => {
                 </Box>
               </Link>
             </List>
+            </>
+            )}
         {data.role === "admin" && (
           <>
             <List className={classes.list}>
@@ -187,6 +191,46 @@ const Sidebar = () => {
               </Link>
             </List>
           </>
+        )}
+        {data.role === 'counsellor' && (
+           <>
+            <List className={classes.list}>
+          <Link to="/admin/modules">
+            <Box>
+              <ListItem button>
+                <ListItemIcon>
+                  <ViewModuleIcon />
+                </ListItemIcon>
+                <ListItemText>Modules</ListItemText>
+              </ListItem>
+            </Box>
+          </Link>
+        </List>
+           <List className={classes.list}>
+              <Link to="/admin/leads">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Leads</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
+            <List className={classes.list}>
+              <Link to="/admin/StudentProgress">
+                <Box>
+                  <ListItem button>
+                    <ListItemIcon>
+                      <ReceiptIcon />
+                    </ListItemIcon>
+                    <ListItemText>Tracking</ListItemText>
+                  </ListItem>
+                </Box>
+              </Link>
+            </List>
+            </>
         )}
       </div>
     </>

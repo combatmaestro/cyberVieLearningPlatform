@@ -79,7 +79,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize:"41px",
     [theme.breakpoints.down(426)]: {
       marginLeft:"30px",
-      fontSize:"32px"
+      fontSize:"32px",
+      padding:10
     },
   },
   

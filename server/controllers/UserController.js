@@ -314,6 +314,17 @@ module.exports.editUser = catchAsyncErrors(async (req, res, next) => {
   console.log(updatedUser);
   const filteredUser = specificfilterUserProperties(updatedUser);
 
+  // Check if the user exists in the leads table based on their email
+  const userExistsInLeads = await leadsUsers.findOne({
+    email: updatedUser.email,
+  });
+
+  // If the user exists in leadsUsers, update their tier in the leads table
+  if (userExistsInLeads) {
+    userExistsInLeads.tier = updatedUser.tier;
+    await userExistsInLeads.save();
+  }
+
   return res.status(200).json({
     success: true,
     data: filteredUser,

@@ -163,6 +163,11 @@ function UserDialog(props) {
                   label="Admin"
                 />
                 <FormControlLabel
+                  value="counsellor"
+                  control={<Radio color="primary" />}
+                  label="Counsellor"
+                />
+                <FormControlLabel
                   value="teacher"
                   control={<Radio color="primary" />}
                   label="Teacher"

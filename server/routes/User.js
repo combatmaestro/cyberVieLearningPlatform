@@ -14,7 +14,7 @@ router.post('/leaderboard', isAuthenticatedUser, UserController.leaderboard)
 router.get(
   '/admin/allUsers',
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  authorizeRoles('admin','counsellor'),
   UserController.getAllUsers
 )
 router.get(

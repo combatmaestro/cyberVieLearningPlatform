@@ -22,6 +22,7 @@ import { addNewBatch, getAllBatches } from "../../actions/moduleAction";
 import { Card, CardContent } from "@material-ui/core";
 import ModulesDataRender from "../../components/Progress/ModulesDataRender";
 import { getModuleDetailsComplete } from "../../actions/moduleAction";
+import { adminGetAllUsers } from "../../actions/userActions";
 const useStyles = makeStyles((theme) => ({
   root: {},
   create: {
@@ -67,10 +68,24 @@ const TrackStudent = () => {
 
   const [selectedTier, setSelectedTier] = useState("paid");
 
-  const filteredUsers = allUsersData.filter((user) =>
+  const filteredUsers = Array.isArray(allUsersData)
+  ? allUsersData.filter((user) =>
     selectedTier === "all" ? true : user.tier === selectedTier
-  );
+    )
+  : [];
 
+  // useEffect(() => {
+  //   const users =  Array.isArray(allUsersData)
+  //   ? allUsersData.filter((user) =>
+  //       selectedTier === "all" ? true : user.tier === selectedTier
+  //     )
+  //   : []
+  //   setFilteredUsers(users);
+  // },[allUsersData])
+
+  useEffect(() => {
+    dispatch(adminGetAllUsers());
+  }, []);
   const handleTierChange = (event) => {
     setSelectedTier(event.target.value);
     setCurrentUser(""); // Reset the selected user when tier changes

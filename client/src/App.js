@@ -105,13 +105,13 @@ function App() {
                   exact
                   path='/admin/modules'
                   component={AdminModules}
-                  roles={['admin', 'teacher']}
+                  roles={['admin', 'teacher' , 'counsellor']}
                 />
                 <ProtectedRoute
                   exact
                   path='/admin/leads'
                   component={LeadManagement}
-                  roles={['admin']}
+                  roles={['admin', 'counsellor']}
                 />
                 <ProtectedRoute
                   exact
@@ -159,7 +159,7 @@ function App() {
                   exact
                   path='/admin/StudentProgress'
                   component={TrackStudent}
-                  roles={['admin']}
+                  roles={['admin', 'counsellor']}
                 />
                 <ProtectedRoute
                   exact
