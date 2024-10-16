@@ -33,8 +33,10 @@ import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 //component
 import CustomMenu from "./customMenu";
 
+
 //other stuff
 import { useSelector } from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,18 +45,22 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 80,
     },
 
+
     "& .MuiAppBar-colorPrimary": {
       backgroundColor: "#EBF3FF",
     },
+
 
     "& button:focus": {
       outline: "0px auto -webkit-focus-ring-color",
     },
   },
 
+
   icon: {
     width: 67,
   },
+
 
   menuButton: {
     marginRight: theme.spacing(2),
@@ -70,6 +76,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 30,
     cursor: "pointer",
   },
+
 
   list: {
     width: 250,
@@ -89,6 +96,7 @@ const useStyles = makeStyles((theme) => ({
       paddingLeft: 0,
     },
 
+
     "& .MuiListItemIcon-root": {
       minWidth: 40,
     },
@@ -98,11 +106,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+
   sidebarInfo: {
     gridColumnGap: 12,
     marginBottom: 8,
   },
 }));
+
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -113,20 +123,25 @@ export default function Header() {
   const [mobileAnchor, setMobileAnchor] = useState(false);
   // const open = Boolean(anchorEl);
 
+
   const user = useSelector((state) => state.user);
   const { data, isAuthenticated } = user;
+
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
+
   const signOutHandler = () => {
     dispatch(userSignout());
   };
+
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -137,8 +152,10 @@ export default function Header() {
       return;
     }
 
+
     setMobileAnchor(open);
   };
+
 
   const Content = (data) => (
     <div
@@ -180,7 +197,7 @@ export default function Header() {
             </ListItemIcon>
             <ListItemText>My Transaction</ListItemText>
           </ListItem>
-        </Link>
+        </Link> */}
         <Link to="/LeaderBoard">
           <ListItem button>
             <ListItemIcon>
@@ -189,12 +206,12 @@ export default function Header() {
             <ListItemText>LeaderBoard</ListItemText>
           </ListItem>
         </Link>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemIcon>
             <CardMembershipIcon />
           </ListItemIcon>
           <ListItemText>My Certificates</ListItemText>
-        </ListItem>
+        </ListItem> */}
         <Link to="/progress">
           <ListItem button>
             <ListItemIcon>
@@ -213,12 +230,12 @@ export default function Header() {
             <ListItemText>Fee Link</ListItemText>
           </ListItem>
         </Link>
-        <ListItem button>
+        {/* <ListItem button>
           <ListItemIcon>
             <WorkIcon />
           </ListItemIcon>
           <ListItemText>Placement</ListItemText>
-        </ListItem>
+        </ListItem> */}
         <ListItem button onClick={signOutHandler}>
           <ListItemIcon>
             <ExitToAppIcon />
@@ -228,6 +245,7 @@ export default function Header() {
       </List>
     </div>
   );
+
 
   return (
     <div className={classes.root}>
@@ -324,3 +342,7 @@ export default function Header() {
     </div>
   );
 }
+
+
+
+
