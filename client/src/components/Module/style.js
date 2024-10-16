@@ -14,13 +14,24 @@ export const useStyles = makeStyles((theme) => ({
       fontFamily: 'Montserrat',
       fontWeight: 'bold',
       textAlign: 'center',
-      marginLeft:"3%",
+      marginLeft:"6%",
       [theme.breakpoints.down(469)]: {
         fontSize: 19,
         lineHeight: '24px',
         marginBottom:"20px"
       },
     },
+  },
+  backArrow:{
+    cursor: "pointer",
+    position: "absolute",
+    left: 48,
+    fontSize:"24px",
+    top:"112px",
+    [theme.breakpoints.down(769)]: {
+      visibility: "hidden",
+      // backgroundColor: "red",
+    }
   },
   accordionContainer: {
     width: '100%',

@@ -8,6 +8,7 @@ import { useStyles } from "./style";
 import CongratulationsDialog from "../CongratulationsDialog/Dialog";
 import { Button, Box, Typography, Modal } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+import ArrowBack from '@material-ui/icons/ArrowBack';
 
 function Module(props) {
   document.title = "Module";
@@ -58,6 +59,7 @@ function Module(props) {
   return (
     <div className={classes.root}>
       <div className={classes.moduleHeaderContainer}>
+        <ArrowBack className={classes.backArrow} onClick={() => history.goBack()}/>
         <h2 className="moduleHeader">{moduleData.title}</h2>
         <Button
           type="submit"

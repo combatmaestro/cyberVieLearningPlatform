@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core'
+import { Backdrop, makeStyles } from '@material-ui/core'
 
 export const useStyles = makeStyles((theme) => ({
   ctf: {
@@ -44,6 +44,19 @@ export const useStyles = makeStyles((theme) => ({
       color: 'white',
       textTransform: 'capitalize',
       borderRadius: 18.5,
+
+      [theme.breakpoints.down(469)]: {
+        width: 100,
+      },
+    },
+    '& .ctfNextButton': {
+      height: 37,
+      width: '100%',
+      maxWidth: 180,
+      color: 'white',
+      textTransform: 'capitalize',
+      borderRadius: 18.5,
+      Background: '#28a745',
 
       [theme.breakpoints.down(469)]: {
         width: 100,

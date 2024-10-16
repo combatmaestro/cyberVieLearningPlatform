@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
     },
     endBtn: {
         position: "relative",
-        top: "-22px",
     },
     sidebarHeader: {
         display: "flex",
@@ -200,6 +199,7 @@ const QuestionSection = ({ match }) => {
                     >
                         Previous
                     </Button>
+            {currentIndex !== questions[0]?.Questions?.length - 1 ? (
                     <Button
                         onClick={handleNextQuestion}
                         variant="contained"
@@ -207,19 +207,10 @@ const QuestionSection = ({ match }) => {
                             background:
                                 "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",
                         }}
-            disabled={answers[currentIndex]?.trim() === ""}
                     >
-            {currentIndex === questions?.Questions?.length - 1
-              ? "Submit"
-              : "Save & Proceed"}
+              Save & Proceed
                     </Button>
-                </Box>
-            </Box>
-            <Box className={classes.sidebar}>
-                <Box className={classes.sidebarHeader}>
-          <Typography style={{ marginBottom: "50px" }} variant="h6">
-                        Module Assessment
-                    </Typography>
+            ) : (
           <Button
             className={classes.endBtn}
             variant="outlined"
@@ -228,14 +219,24 @@ const QuestionSection = ({ match }) => {
                     >
                         Save & End Test
                     </Button>
+            )}
+            
+          </Box>
+        </Box>
+        <Box className={classes.sidebar}>
+          <Box className={classes.sidebarHeader}>
+            <Typography style={{ marginBottom: "50px" }} variant="h6">
+              Module Assessment
+            </Typography>
                 </Box>
                 <Typography
                     variant="body2"
                     color="textSecondary"
           style={{ marginTop: "0px", marginBottom: "30px" }}
                 >
-          • {answers.filter((answer) => answer.trim() !== "").length} Answered •{" "}
-          {answers.filter((answer) => answer.trim() === "").length} Unanswered
+            • {answers.filter((answer) => answer.trim() !== "").length} Answered
+            • {answers.filter((answer) => answer.trim() === "").length}{" "}
+            Unanswered
                 </Typography>
                 <Box className={classes.questionNav}>
                     {questions[0]?.Questions?.map((question, index) => (

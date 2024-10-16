@@ -84,6 +84,18 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
 
+  isOpen:{
+    fontWeight:"bolder", 
+    fontSize:"22px",
+    color: 'white',
+    fontFamily: 'Montserrat',
+    lineHeight: '18px',
+    [theme.breakpoints.down(469)]: {
+      fontSize: 13,
+      lineHeight: '15px',
+    },
+  },
+
   content: {
     '& iframe': {
       minHeight: 400,

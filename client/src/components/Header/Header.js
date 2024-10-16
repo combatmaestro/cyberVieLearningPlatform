@@ -170,10 +170,10 @@ export default function Header() {
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
-            <ListItemText>Upcoming lIve Classes</ListItemText>
+            <ListItemText>Upcoming live Classes</ListItemText>
           </ListItem>
         </Link>
-        <Link to="/transaction">
+        {/* <Link to="/transaction">
           <ListItem button>
             <ListItemIcon>
               <ReceiptIcon />

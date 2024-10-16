@@ -57,9 +57,10 @@ export default function ControlledAccordion({
           id="panel1bh-header"
         >
           <Typography className={classes.heading}>{index}.</Typography>
-          <Typography className={classes.secondaryHeading}>
+          <Typography className={expanded === index ? classes.isOpen : classes.secondaryHeading}>
             {topic.topicName}
           </Typography>
+          
           {topic.ctf.length > 0 ? (
             <div className={classes.circularProgress}>
               <CircularProgressbar
@@ -78,13 +79,18 @@ export default function ControlledAccordion({
         <AccordionDetails>
           <div style={{ width: '100%' }}>
             <div ref={contentEl} className={classes.content}></div>
-            
-           
                {topic.subTopics && topic.subTopics.length > 0 && (
               <div className={classes.subTopicsContainer}>
                 {topic.subTopics.map((subtopic, idx) => (
                   <div key={idx} className={classes.subtopic}>
-                    <Typography style={{textAlign: 'center',fontSize:"2rem"}}variant="subtitle1">{subtopic.title}</Typography>
+                    {!expanded && (
+                      <Typography
+                        style={{ textAlign: 'center', fontSize: '2rem' }}
+                        variant="subtitle1"
+                      >
+                        {subtopic.title}
+                      </Typography>
+                    )}
                     <CustomPDFViewer file={subtopic.file} title={subtopic.title} />
                     
                   </div>

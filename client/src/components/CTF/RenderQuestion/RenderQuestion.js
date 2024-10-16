@@ -6,7 +6,7 @@ import { useStyles } from "./style";
 import SimpleBackdrop from "../../BackDrop/LoaderBackdrop";
 import SuccessBar from "../../../Admin/SnackBar/SuccessBar";
 
-function RenderQuestion({ ctf, addProgress }) {
+function RenderQuestion({ ctf, addProgress, onNext }) {
   const classes = useStyles();
   const module = useSelector((state) => state.module);
   const { responses, moduleData } = module;
@@ -15,7 +15,8 @@ function RenderQuestion({ ctf, addProgress }) {
   const [answer, setAnswer] = useState("");
   const [answerErrorText, setAnswerErrorText] = useState("");
   const [openSuccess, setOpenSuccess] = useState(false);
-  const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
+  const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app";
+
   useEffect(() => {
     if (responses.indexOf(ctf._id) > -1) {
       setCompleted(true);
@@ -45,6 +46,10 @@ function RenderQuestion({ ctf, addProgress }) {
         setShowBackdrop(false);
         addProgress();
         setOpenSuccess(true);
+          onNext();
+        })
+        .catch((error) => {
+          console.error("Error submitting answer:", error);
       });
     } else {
       setAnswerErrorText("Wrong Answer");
@@ -79,19 +84,21 @@ function RenderQuestion({ ctf, addProgress }) {
           className="ctfSubmitButton"
           onClick={submitHandler}
           style={{
-            backgroundColor: completed ? "rgba(102, 201, 93, 0.7)" : "#28a745",
+            backgroundColor: "#28a745",
           }}
+          hidden={completed}
         >
-          {completed ? "completed" : "submit"}
+          submit
         </Button>
+        {completed && <Button variant="contained" className="ctfNextButton" onClick={onNext}
+        style={{
+          backgroundColor: "#005387",
+        }}
+        >Next</Button>}
       </div>
 
       <SimpleBackdrop open={showBackdrop} />
-      <SuccessBar
-        handleClose={handleCloseBar}
-        openSuccess={openSuccess}
-        message="Correct Answer!"
-      />
+      <SuccessBar handleClose={handleCloseBar} openSuccess={openSuccess} message="Correct Answer!" />
     </div>
   );
 }
