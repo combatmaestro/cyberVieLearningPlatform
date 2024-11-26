@@ -7,7 +7,6 @@ const Certificate = () => {
     fetch('/certificate.html')
       .then((response) => response.text())
       .then((html) => {
-        // Update specific fields dynamically
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
         const date = new Date(user?.certificateDate);
