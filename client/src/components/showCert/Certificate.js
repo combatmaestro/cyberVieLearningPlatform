@@ -9,11 +9,11 @@ const Certificate = () => {
       .then((html) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
-        const date = new Date(user.certificateDate);
+        const date = new Date(user.data.certificateDate);
         const formattedDate = date.toISOString().split('T')[0];
         // Example: Update fields using their IDs
-        doc.getElementById('studentName').textContent = user.name;
-        doc.getElementById('referenceId').textContent = user.certificateRefId;
+        doc.getElementById('studentName').textContent = user.data.name;
+        doc.getElementById('referenceId').textContent = user.data.certificateRefId;
         doc.getElementById('dateOfIssue').textContent = formattedDate;
 
         // Serialize the updated HTML back to a string
