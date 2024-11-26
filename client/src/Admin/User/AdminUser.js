@@ -126,9 +126,16 @@ function AdminUser() {
     const handleCertificateClick = async (userId) => {
       try {
         const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app";
+        const token = localStorage.getItem("token"); // Retrieve the token from local storage
+    
         const response = await fetch(`${backendUrl}/user/admin/generateCertificate/${userId}`, {
           method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Add the token to the headers
+          },
         });
+        
         const result = await response.json();
     
         if (response.ok) {
@@ -143,6 +150,7 @@ function AdminUser() {
     };
     
 
+  
     allUsersData.forEach((user) => {
       data.rows.push({
         userid: user._id,
