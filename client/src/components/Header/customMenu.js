@@ -91,10 +91,10 @@ export default function CustomMenu(props) {
   const classes = useStyles();
 
 
-  useEffect(() => {
-    //to refresh user
-    dispatch(userRefresh())
-  }, [dispatch])
+  // useEffect(() => {
+  //   //to refresh user
+  //   dispatch(userRefresh())
+  // }, [dispatch])
 
 
   return (
