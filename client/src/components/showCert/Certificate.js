@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+
 const Certificate = () => {
   const [htmlContent, setHtmlContent] = useState('');
   const user = useSelector((state) => state.user);
+
   useEffect(() => {
     fetch('/certificate.html')
       .then((response) => response.text())
@@ -36,16 +38,20 @@ const Certificate = () => {
         setHtmlContent(updatedHtml);
       })
       .catch((err) => console.error('Error loading HTML:', err));
-  }, []);
+  }, [user]);
 
   return (
-    <div className="certificate-container" style={{
+    <div
+      className="certificate-container"
+      style={{
       marginLeft: '20%',
       width: '60%',
       padding: '1%',
       border: '2px solid gray',
-      marginTop: '1%'
-    }}  dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        marginTop: '1%',
+      }}
+      dangerouslySetInnerHTML={{ __html: htmlContent }}
+    />
   );
 };
 
