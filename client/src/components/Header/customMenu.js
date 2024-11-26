@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Fade, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from 'react-redux'
-// import { userRefresh } from "../../actions/userActions";
+import { userRefresh } from "../../actions/userActions";
 import { Link } from "react-router-dom";
 
 const StyledMenu = withStyles({
@@ -91,10 +91,10 @@ export default function CustomMenu(props) {
   const classes = useStyles();
 
 
-  // useEffect(() => {
-  //   //to refresh user
-  //   dispatch(userRefresh())
-  // }, [dispatch])
+  useEffect(() => {
+    //to refresh user
+    dispatch(userRefresh())
+  }, [])
 
 
   return (
@@ -143,7 +143,7 @@ export default function CustomMenu(props) {
         <Link to="/leaderboard">
           <MenuItem onClick={handleClose}>LeaderBoard</MenuItem>
         </Link>
-       {user?.certificateGenerated && ( <Link to="/Certificate">
+       {user.data?.certificateGenerated && ( <Link to="/Certificate">
           <MenuItem onClick={handleClose}>Certificate</MenuItem>
         </Link> )}
         <Link to="/progress">
