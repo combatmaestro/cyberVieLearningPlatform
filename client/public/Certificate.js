@@ -26,7 +26,13 @@ const Certificate = () => {
   }, []);
 
   return (
-    <div className="certificate-container" dangerouslySetInnerHTML={{ __html: htmlContent }} />
+    <div className="certificate-container" style={{
+      marginLeft: '20%',
+      width: '60%',
+      padding: '1%',
+      border: '2px solid gray',
+      marginTop: '1%'
+    }}  dangerouslySetInnerHTML={{ __html: htmlContent }} />
   );
 };
 
