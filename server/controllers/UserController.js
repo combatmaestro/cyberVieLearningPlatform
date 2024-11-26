@@ -417,6 +417,9 @@ function specificfilterUserProperties(user) {
     experience:user.experience,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
+    certificateGenerated: user?.certificateGenerated,
+    certificateDate : user?.certificateDate,
+    certificateRefId : user?.certificateRefId
   };
 
   if (user.labCreated !== undefined) {
