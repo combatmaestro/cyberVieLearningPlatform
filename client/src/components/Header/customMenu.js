@@ -6,7 +6,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { withStyles } from "@material-ui/core/styles";
 import { Fade, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const StyledMenu = withStyles({
@@ -85,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomMenu(props) {
   const { anchorEl, handleClose, data, signOutHandler } = props;
+  const user = useSelector((state) => state.user);
   const classes = useStyles();
 
   return (
