@@ -12,13 +12,14 @@ const Certificate = () => {
         const date = new Date(user.data.certificateDate);
         const formattedDate = date.toISOString().split('T')[0];
         // Example: Update fields using their IDs
+        if(doc){
         doc.getElementById('studentName').textContent = user.data.name;
         doc.getElementById('referenceId').textContent = user.data.certificateRefId;
         doc.getElementById('dateOfIssue').textContent = formattedDate;
 
         // Serialize the updated HTML back to a string
+        }
         const updatedHtml = doc.documentElement.innerHTML;
-
         setHtmlContent(updatedHtml);
       })
       .catch((err) => console.error('Error loading HTML:', err));
