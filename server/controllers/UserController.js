@@ -12,6 +12,7 @@ const client = new OAuth2Client(CLIENT_ID);
 const sendEmail = require("../utils/sendEmail");
 const welcomeTemplate = require("../utils/mailTemplate");
 const leadsUsers = require("../models/register");
+const { v4: uuidv4 } = require('uuid');
 module.exports.authenticate = async (req, res, next) => {
   try {
     let body = req.body;
@@ -351,6 +352,7 @@ module.exports.generateCertificate = catchAsyncErrors(async (req, res, next) =>{
     }
 
     // Update the user fields
+    user.certificateRefId = uuidv4();
     user.certificateGenerated = true;
     user.certificateDate = new Date();
 
