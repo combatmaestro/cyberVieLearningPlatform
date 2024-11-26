@@ -33,7 +33,7 @@ router.post(
 router.post(
   '/admin/generateCertificate/:id',
   isAuthenticatedUser,
-  authorizeRoles('admin'),
+  // authorizeRoles('admin'),
   UserController.generateCertificate
 );
 
