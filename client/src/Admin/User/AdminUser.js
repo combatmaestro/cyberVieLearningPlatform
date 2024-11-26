@@ -112,12 +112,36 @@ function AdminUser() {
           sort: "asc",
         },
         {
+          label: "Certificate",
+          field: "certificate",
+        },
+        {
           label: "Actions",
           field: "actions",
         },
       ],
       rows: [],
     };
+  
+    const handleCertificateClick = async (userId) => {
+      try {
+        const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app";
+        const response = await fetch(`${backendUrl}/user/admin/generateCertificate/${userId}`, {
+          method: "POST",
+        });
+        const result = await response.json();
+    
+        if (response.ok) {
+          alert(`Certificate generated for user ${userId}`);
+        } else {
+          alert(`Failed to generate certificate: ${result.message}`);
+        }
+      } catch (error) {
+        console.error("Error generating certificate:", error);
+        alert("An error occurred while generating the certificate.");
+      }
+    };
+    
 
     allUsersData.forEach((user) => {
       data.rows.push({
@@ -132,17 +156,23 @@ function AdminUser() {
           ) : (
             <p style={{ color: "green" }}>Free</p>
           ),
+        certificate: (
+          <button
+            className="btn btn-success py-1 px-2"
+            onClick={() => handleCertificateClick(user._id)}
+          >
+            Generate Certificate
+          </button>
+        ),
         actions: (
-          <>
             <Tooltip title="Edit" placement="top" arrow>
               <button
-                className="btn btn-primary py-1 px-2  ml-2"
+              className="btn btn-primary py-1 px-2 ml-2"
                 onClick={() => editUserHandler(user)}
               >
                 <i className="fa fa-edit"></i>
               </button>
             </Tooltip>
-          </>
         ),
       });
     });

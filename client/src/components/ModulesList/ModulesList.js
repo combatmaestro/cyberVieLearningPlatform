@@ -33,13 +33,13 @@ function ModulesList() {
   };
 
   // Sort modules based on the extracted number from description
-  const sortedModules = data
+  const sortedModules = data ? data
     .slice()
     .sort(
       (a, b) =>
         getNumberFromDescription(a.description) -
         getNumberFromDescription(b.description)
-    );
+    ) : "";
 
   return (
     <div className={classes.root}>

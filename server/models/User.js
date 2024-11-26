@@ -94,6 +94,18 @@ const userSchema = new mongoose.Schema(
       type: String,
       // maxlength: [40, 'Preferred Location must be less than or equal to 40 characters'],
     },
+    certificateGenerated: {
+      type: Boolean,
+      default: false, // Initially set to false
+    },
+    certificateDate: {
+      type: Date,
+      required: false, // This will store the date the certificate was generated
+    },
+    certificateRefId:{
+      type: String,
+     required: false,
+    }
   },
   {
     timestamps: true,

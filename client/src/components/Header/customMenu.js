@@ -133,6 +133,9 @@ export default function CustomMenu(props) {
         <Link to="/leaderboard">
           <MenuItem onClick={handleClose}>LeaderBoard</MenuItem>
         </Link>
+       {data.certificateGenerated && ( <Link to="/Certificate">
+          <MenuItem onClick={handleClose}>Certificate</MenuItem>
+        </Link> )}
         <Link to="/progress">
           <MenuItem onClick={handleClose}>My Progress</MenuItem>
         </Link>
