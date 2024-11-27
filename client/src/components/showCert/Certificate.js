@@ -14,7 +14,7 @@ const Certificate = () => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
-        if (doc) {
+        if (doc.readyState === 'complete') {
           // Ensure user data is defined
           if (user && user.data) {
             const date = new Date(user.data.certificateDate);
