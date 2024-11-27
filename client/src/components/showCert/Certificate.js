@@ -25,21 +25,21 @@ const Certificate = () => {
             const dateOfIssueElement = doc.getElementById('dateOfIssue');
 
             if (studentNameElement) {
-              studentNameElement.textContent = user.data.name || 'Student Name';
+              studentNameElement.innerText = user.data.name || 'Student Name';
               console.log('Updated studentName:', studentNameElement.textContent);
             } else {
               console.error('Element with ID "studentName" not found.');
             }
 
             if (referenceIdElement) {
-              referenceIdElement.textContent = user.data.certificateRefId || 'Reference ID';
+              referenceIdElement.innerText = user.data.certificateRefId || 'Reference ID';
               console.log('Updated referenceId:', referenceIdElement.textContent);
             } else {
               console.error('Element with ID "referenceId" not found.');
             }
 
             if (dateOfIssueElement) {
-              dateOfIssueElement.textContent = formattedDate || 'Date of Issue';
+              dateOfIssueElement.innerText = formattedDate || 'Date of Issue';
               console.log('Updated dateOfIssue:', dateOfIssueElement.textContent);
             } else {
               console.error('Element with ID "dateOfIssue" not found.');
