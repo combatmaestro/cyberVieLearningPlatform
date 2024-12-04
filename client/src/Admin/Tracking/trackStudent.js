@@ -60,6 +60,7 @@ const TrackStudent = () => {
   const [openFailure, setOpenFailure] = useState(false);
   const [selectedUser, setSelectedUser] = useState("");
   const [currentUser, setCurrentUser] = useState("");
+  // const [filteredUsers, setFilteredUsers] = useState([]);
   const allUsers = useSelector((state) => state.allUsers);
   const { loading, allUsersData = [] } = allUsers;
   const userData = useSelector((state) => state.user);
@@ -70,7 +71,7 @@ const TrackStudent = () => {
 
   const filteredUsers = Array.isArray(allUsersData)
   ? allUsersData.filter((user) =>
-    selectedTier === "all" ? true : user.tier === selectedTier
+      selectedTier === "all" ? true : user.tier === selectedTier
     )
   : [];
 

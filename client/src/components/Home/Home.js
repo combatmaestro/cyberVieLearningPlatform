@@ -72,7 +72,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     [theme.breakpoints.down(469)]: {
       justifyContent:"center",
-      gap:"34px"
+      gap:"34px",
+      
     },
   },
   header:{
@@ -83,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
       padding:10
     },
   },
-  
+
   playgroundButton: {
     background:
       "linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)",

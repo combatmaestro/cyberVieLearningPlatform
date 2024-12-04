@@ -100,7 +100,7 @@ function Module(props) {
           justifyContent: 'center',
         }}
       >
-        <Box
+     <Box
           p={3}
           maxWidth={400}
           className={classes.guidelines}

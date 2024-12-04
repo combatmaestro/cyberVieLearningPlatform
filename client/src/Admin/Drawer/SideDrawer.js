@@ -106,7 +106,7 @@ const Sidebar = () => {
             )}
         {data.role === "admin" && (
           <>
-            <List className={classes.list}>
+           <List className={classes.list}>
               <Link to="/admin/leads">
                 <Box>
                   <ListItem button>

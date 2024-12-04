@@ -150,6 +150,7 @@ const LeadForm = ({ phoneNumber }) => {
       designation,
       experience,
     };
+    console.log(formData);
     // toast.success("Form submitted successfully!");
     const response = await dispatch(saveFormData(formData));
     if (response?.status === 200) {

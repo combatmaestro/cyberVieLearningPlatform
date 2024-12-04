@@ -21,19 +21,19 @@ module.exports.getDetails = catchAsyncErrors(async (req, res, next) => {
   try {
     console.log("getDetails function is called", req.query.id);
 
-  const module = await Module.findById(req.query.id).populate({
-    path: 'topic',
-    match: { hidden: false },
+    const module = await Module.findById(req.query.id).populate({
+      path: 'topic',
+      match: { hidden: false },
       populate: [
         {
-      path: 'ctf',
-      match: { hidden: false },
-      options: {
-        sort: {
-          sno: 1,
+          path: 'ctf',
+          match: { hidden: false },
+          options: {
+            sort: {
+              sno: 1,
+            },
+          },
         },
-      },
-    },
         {
           path: 'subTopics', // Populate subTopics
           match: { hidden: false },
@@ -41,26 +41,26 @@ module.exports.getDetails = catchAsyncErrors(async (req, res, next) => {
       ],
     });
 
-  if (!module) {
+    if (!module) {
       return next(new ErrorHandler('Module not found', 404));
-  }
+    }
 
     if (req.user.role === 'user' && req.user.tier === 'free' && module.type === 'paid') {
       return next(new ErrorHandler('Module Access Not Found', 404));
-  }
+    }
 
-  if (req.user.role === 'user' && module.hidden) {
+    if (req.user.role === 'user' && module.hidden) {
       return next(new ErrorHandler('Module Not Found', 404));
-  }
+    }
 
     const allResponses = await User.findById(req.user._id).select('responses');
     const responsesId = allResponses.responses.get(req.query.id);
     const responses = await Responses.findById(responsesId);
 
-  return res.status(200).json({
-    success: true,
-    module: module,
-    responses: responses ? responses.responses : [],
+    return res.status(200).json({
+      success: true,
+      module: module,
+      responses: responses ? responses.responses : [],
     });
   } catch (error) {
     console.error('Error in getDetails:', error); // Log the error for debugging
@@ -148,11 +148,11 @@ module.exports.getModuleDetails = catchAsyncErrors(async (req, res, next) => {
         },
       },
     });
-  
+
     if (!module) {
       return next(new ErrorHandler("Module not found", 404));
     }
-  
+
     let totalQuestions = 0;
     module.topic.forEach((topic) => {
       totalQuestions += topic.ctf.length;
@@ -162,7 +162,7 @@ module.exports.getModuleDetails = catchAsyncErrors(async (req, res, next) => {
       module.title,
       totalQuestions
     );
-  
+
     const allResponses = await User.findById(req.body.user._id).select(
       "responses"
     );
@@ -176,7 +176,7 @@ module.exports.getModuleDetails = catchAsyncErrors(async (req, res, next) => {
     };
     allModulesData.push(responseBody);
   }
-  
+
   return res.status(200).json({
     success: true,
     allModulesData,

@@ -14,7 +14,7 @@ import { Toaster } from "react-hot-toast";
 const theme = createMuiTheme({
 });
 ReactDOM.render(
-  <GoogleOAuthProvider clientId="449086785583-9vop51gavcavffauj4v5jfmosfm2j988.apps.googleusercontent.com">
+  <GoogleOAuthProvider clientId="257899612719-9jsfnkbb5i5kgp6r34754vdlmjcdi6jb.apps.googleusercontent.com">
   <Provider store={store}>
   <ThemeProvider theme={theme}>
     <LoaderProvider indicator={<Bars width="80" height="80" />}>

@@ -13,7 +13,8 @@ cloudinary.config({
   api_key: "786871724487335",
   api_secret: "OXhmhXnQ6cEZi50VQzw1Iwwd6yM",
 });
-const port = process.env.PORT || 4000;
+// const port = process.env.PORT || 4000;
+const port = 4000;
 const server = app.listen(port, () => {
   console.log(
     `Server started on PORT ${port} in ${process.env.NODE_ENV}`

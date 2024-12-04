@@ -129,7 +129,7 @@ export default function CustomMenu(props) {
             </Box>
           </Box>
         </MenuItem>
-        {(data.role === "admin" || data.role === "teacher") && (
+        {(data.role === "admin" || data.role === "teacher" || data.role === "counsellor") && (
           <Link to="/admin/modules">
             <MenuItem onClick={handleClose}>DashBoard</MenuItem>
           </Link>

@@ -35,7 +35,7 @@ function RenderQuestion({ ctf, addProgress, onNext }) {
       setShowBackdrop(true);
       axios({
         method: "POST",
-        url: `${backendUrl}/ctf/submit`,
+        url: `/ctf/submit`,
         data: {
           moduleId: moduleData._id,
           questionId: ctf._id,

@@ -12,7 +12,7 @@ router.post(
     authorizeRoles("admin"),
     scheduleClassController.scheduleClass
   );
- 
+
   router.get(
     "/admin/getAll",
     isAuthenticatedUser,

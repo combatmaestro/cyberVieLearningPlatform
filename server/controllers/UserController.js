@@ -5,9 +5,10 @@ const sendToken = require("../utils/sendToken");
 const { OAuth2Client } = require("google-auth-library");
 const nodemailer = require("nodemailer");
 const { findByIdAndUpdate } = require("../models/User");
+// const CLIENT_ID =
+//   "449086785583-9vop51gavcavffauj4v5jfmosfm2j988.apps.googleusercontent.com";
 const CLIENT_ID =
-  "449086785583-9vop51gavcavffauj4v5jfmosfm2j988.apps.googleusercontent.com";
-// const CLIENT_ID ="257899612719-9jsfnkbb5i5kgp6r34754vdlmjcdi6jb.apps.googleusercontent.com"
+  "257899612719-9jsfnkbb5i5kgp6r34754vdlmjcdi6jb.apps.googleusercontent.com";
 const client = new OAuth2Client(CLIENT_ID);
 const sendEmail = require("../utils/sendEmail");
 const welcomeTemplate = require("../utils/mailTemplate");
@@ -57,13 +58,12 @@ module.exports.authenticate = async (req, res, next) => {
   }
 };
 
-
 module.exports.getDetails = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.user._id);
   var filteredUsers = {};
   if (!user) {
     return next(new ErrorHandler("User not found", 404));
-  }else{
+  } else {
     filteredUsers = specificfilterUserProperties(user);
   }
 
@@ -86,7 +86,7 @@ module.exports.signout = catchAsyncErrors(async (req, res, next) => {
 });
 
 // module.exports.update = catchAsyncErrors(async (req, res, next) => {
-  
+
 //   const newUserData = {
 //     name: req.body.name,
 //     mobile: req.body.mobile,
@@ -116,7 +116,7 @@ module.exports.signout = catchAsyncErrors(async (req, res, next) => {
 //         subject: "User Updated Profile Data",
 //         html: `Name : ${req.body.name} , mobile : ${req.body.mobile} , education : ${req.body.education} , Working Domain : ${req.body.workingDomain} , Current Salary : ${req.body.currentSalary} , experience : ${req.body.experience}`,
 //       };
-      
+
 //       transporter.sendMail(mailOptions, function (error, info) {
 //         if (error) {
 //           console.log("error is-> " + error);
@@ -137,24 +137,23 @@ module.exports.signout = catchAsyncErrors(async (req, res, next) => {
 //           <img src="https://res.cloudinary.com/cybervie/image/upload/v1627302453/welcome%20mail/WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" alt="" data-rotate="" data-proportion="true" data-size="," data-align="center" data-percentage="auto,auto" data-file-name="WhatsApp_Image_2021-07-26_at_17.52.06_tgpprx.jpg" data-file-size="0" origin-size="1280,320" data-origin="," style="width:100%;" data-index="1">
 //         </figure>
 //       </div>
-      
+
 //       <h2><span style="box-sizing: border-box; -webkit-user-drag: none; overflow: visible; font-family: inherit; font-size: 14px; color: inherit; display: inline; vertical-align: baseline; margin: 0px; padding: 0px;"><br>
 //       </span></h2>
-      
+
 //       <h2><span style="box-sizing: border-box; -webkit-user-drag: none; overflow: visible; font-family: inherit; font-size: 14px; color: inherit; display: inline; vertical-align: baseline; margin: 0px; padding: 0px;">Dear ${req.user.mail}</span></h2>
-      
+
 //       <p><br>
 //       </p>Thank you for your interest in Cybervie's Certified Security Engineer Professional (CSEP) program. We are excited to help you transition smoothly into a rewarding career in cybersecurity.
-      
-      
+
 //       <p>Based on your current experience and salary, our IT Career Counselor will be contacting you shortly. We believe that our advanced training program will be instrumental in your professional growth and success in the cybersecurity field.</p>
-      
+
 //       <!--<h2 style="text-align: justify; line-height: 1.15;"><span style="font-size: 14px;">​<br>-->
 //       </span></h2>
-      
+
 //       <p>To discuss your eligibility and provide further details, our Career Counselor will be reaching out to you within the next 24 hours. We encourage you to take this opportunity to ask any questions you may have about the program and your potential career path.</p>
 //       <p>Welcome to Cybervie, and we look forward to guiding you on your journey to becoming a Certified Security Engineer Professional.</p>
-      
+
 //       <p><strong>Cybervie Career Counseling Team</strong></p>
 //       <p>Thank You.</p>`,
 //       };
@@ -254,21 +253,22 @@ module.exports.update = catchAsyncErrors(async (req, res, next) => {
   });
   var filteredUsers = {};
   if (user) {
-    filteredUsers = specificfilterUserProperties(user)
-    
+    filteredUsers = specificfilterUserProperties(user);
   }
   return res.status(200).json({
     success: true,
-    data: filteredUsers
+    data: filteredUsers,
   });
 });
 
 module.exports.leaderboard = catchAsyncErrors(async (req, res, next) => {
-  const { page = 1, search = '' } = req.body; // Add search query
+  const { page = 1, search = "" } = req.body; // Add search query
   const skip = 10 * (page - 1);
 
   // Create a search condition
-  const searchCondition = search ? { name: { $regex: search, $options: 'i' } } : {};
+  const searchCondition = search
+    ? { name: { $regex: search, $options: "i" } }
+    : {};
 
   const total = await User.countDocuments(searchCondition); // Count total documents based on search condition
   const userList = await User.find(searchCondition)
@@ -291,7 +291,6 @@ module.exports.leaderboard = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-
 module.exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
   const allUsers = await User.find({}).sort({ createdAt: -1 });
   const filteredUsers = allUsers.map(specificfilterUserProperties);
@@ -305,7 +304,7 @@ module.exports.getAllUsers = catchAsyncErrors(async (req, res, next) => {
 module.exports.editUser = catchAsyncErrors(async (req, res, next) => {
   const { id } = req.query;
   console.log(req.body);
-  
+
   const updatedUser = await User.findByIdAndUpdate(id, req.body, {
     new: true,
     runValidators: true,
@@ -332,8 +331,10 @@ module.exports.editUser = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-module.exports.getTeachers = catchAsyncErrors(async (req, res, next) =>{
-  const allTeachers = await User.find({ role: 'teacher' }).sort({ createdAt: -1 });
+module.exports.getTeachers = catchAsyncErrors(async (req, res, next) => {
+  const allTeachers = await User.find({ role: "teacher" }).sort({
+    createdAt: -1,
+  });
   return res.status(200).json({
     success: true,
     data: allTeachers,
@@ -384,7 +385,7 @@ function filterUserProperties(user) {
     _id: user._id,
     email: user.email,
     name: user.name,
-    batch:user.batch,
+    batch: user.batch,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
   };
@@ -396,7 +397,6 @@ function filterUserProperties(user) {
   return objectToSend;
 }
 
-
 function specificfilterUserProperties(user) {
   const objectToSend = {
     avatar: user.avatar,
@@ -407,14 +407,14 @@ function specificfilterUserProperties(user) {
     _id: user._id,
     email: user.email,
     name: user.name,
-    batch:user.batch,
-    education:user.education,
-    currentSalary:user.currentSalary,
-    expectedSalary:user.expectedSalary,
-    preferredLocation:user.preferredLocation,
+    batch: user.batch,
+    education: user.education,
+    currentSalary: user.currentSalary,
+    expectedSalary: user.expectedSalary,
+    preferredLocation: user.preferredLocation,
     mobile: user.mobile,
-    workingDomain:user.workingDomain,
-    experience:user.experience,
+    workingDomain: user.workingDomain,
+    experience: user.experience,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
     certificateGenerated: user?.certificateGenerated,

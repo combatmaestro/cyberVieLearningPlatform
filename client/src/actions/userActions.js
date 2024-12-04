@@ -65,7 +65,7 @@ export const userGoogleLogin = (info) => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'POST',
-      url: `${backendUrl}/user/authenticate`,
+      url: `/user/authenticate`,
       data: {
         token: info.credential,
       },
@@ -109,7 +109,7 @@ export const userRefresh = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `${backendUrl}/user/getDetails`,
+      url: `/user/getDetails`,
     })
 
     dispatch(userRefreshSuccess(data))
@@ -128,7 +128,7 @@ export const userSignout = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `${backendUrl}/user/signout`,
+      url: `/user/signout`,
     })
     localStorage.removeItem("token");
     dispatch({
@@ -155,7 +155,7 @@ export const updateUser = (info) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     }
-    const { data } = await axios.put(`${backendUrl}/user/update`, info, config)
+    const { data } = await axios.put(`/user/update`, info, config)
     dispatch({
       type: USER_UPDATE_SUCCESS,
       payload: data.data,
@@ -181,7 +181,7 @@ export const getLeaderBoard = (page,search) => async (dispatch) => {
     }
     // ${backendUrl}
     const { data } = await axios.post(`${backendUrl}/user/leaderboard`, { page,search }, config)
-
+ 
     dispatch({
       type: LEADERBOARD_SUCCESS,
       payload: data.data,
@@ -208,7 +208,7 @@ export const adminGetAllUsers = () => async (dispatch) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `${backendUrl}/user/admin/allUsers`,
+      url: `/user/admin/allUsers`,
     })
     dispatch({
       type: ALL_USERS_SUCCESS,
@@ -252,7 +252,7 @@ export const editCertainUser = (id, data) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `${backendUrl}/user/admin/editUser?id=${id}`,
+      url: `/user/admin/editUser?id=${id}`,
       data,
       headers: {
         'Content-Type': 'multipart/form-data',

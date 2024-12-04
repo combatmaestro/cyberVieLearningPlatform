@@ -34,14 +34,13 @@ export const getAdminCtf = (id) => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `${backendUrl}/topic/admin/getctfs?id=${id}`,
+      url: `/topic/admin/getctfs?id=${id}`,
     })
     dispatch({
       type: ADMIN_CTF_SUCCESS,
       payload: data.data.ctf,
     })
   } catch (error) {
-    console.log(error)
     dispatch({
       type: ADMIN_CTF_FAILURE,
       payload: error.response.data.message,
@@ -61,7 +60,7 @@ export const addNewCtf = (id, info) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post(`${backendUrl}/ctf/admin/seed?id=${id}`, info, config)
+    const { data } = await axios.post(`/ctf/admin/seed?id=${id}`, info, config)
     dispatch({
       type: ADD_CTF_SUCCESS,
       payload: data.data,
@@ -92,7 +91,7 @@ export const editCurrentCtf = (id, info) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.put(`${backendUrl}/ctf/admin/update?id=${id}`, info, config)
+    const { data } = await axios.put(`/ctf/admin/update?id=${id}`, info, config)
     dispatch({
       type: EDIT_CTF_SUCCESS,
       payload: data.data,

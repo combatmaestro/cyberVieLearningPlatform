@@ -109,7 +109,8 @@ function Transaction() {
           axios({
             method: 'DELETE',
             url: `/payment/deleteOrder?oid=${oid}`,
-          }).catch((err) => console.log(err))
+          }).catch((err) => {
+            console.log(err);})
         },
       },
     }
@@ -137,7 +138,6 @@ function Transaction() {
       })
       await displayRazorpay(res.data.data.razorpayOrderID)
     } catch (error) {
-      console.log(error.response.data.message)
       alert('Sorry payment cannot be processed right now')
       setLoading(false)
       return
@@ -164,7 +164,7 @@ function Transaction() {
                 </span>
               </div>
               <input
-                type='text'
+                // type='text'
                 className='form-control'
                 id='amount'
                 placeholder='Enter the Amount'

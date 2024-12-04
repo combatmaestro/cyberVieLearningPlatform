@@ -73,7 +73,6 @@ const OtpVerification = () => {
 
   const googleLogin = useGoogleLogin({
     onSuccess: async (codeResponse) => {
-      console.log(codeResponse);
       const userInfo = await axios
         .get("https://www.googleapis.com/oauth2/v3/userinfo", {
           headers: { Authorization: `Bearer ${codeResponse.access_token}` },
@@ -124,7 +123,7 @@ const OtpVerification = () => {
       </Button>
       {/* <GoogleLogin
         onSuccess={(credentialResponse) => {
-          console.log(credentialResponse);
+         
           handleSignIn(credentialResponse);
         }}
         theme="filled_black"

@@ -394,36 +394,36 @@ module.exports.startSubscription = async (req, res) => {
               return handleErrorResponse(responseData.messageCode);
             }
           }else{
-          if (responseData.userAccess === undefined) {
-            console.log("userAccess is undefined, checking subscription again...");
-            response = await checkSubscription();
-            continue; // Retry the loop
-          }
-
-          const objData = {};
-          const stats = responseData.stats;
-
-          if (responseData.userAccess && typeof responseData.userAccess === 'string') {
-            const dataArray = JSON.parse(responseData.userAccess);
-            dataArray.forEach((item) => {
-              if (item.description === "Web desktop.") {
-                objData.url = item.value;
-              }
-            });
-
-            objData.stats = stats;
-
-            return res.status(200).json({
-              success: true,
-              labData: objData,
-            });
-          } else {
-            console.error('responseData.userAccess is not a valid JSON string or is undefined');
-            return res.status(500).json({
-              success: false,
-              message: 'Invalid user access data received from the server.'
-            });
-          }
+            if (responseData.userAccess === undefined) {
+              console.log("userAccess is undefined, checking subscription again...");
+              response = await checkSubscription();
+              continue; // Retry the loop
+            }
+  
+            const objData = {};
+            const stats = responseData.stats;
+  
+            if (responseData.userAccess && typeof responseData.userAccess === 'string') {
+              const dataArray = JSON.parse(responseData.userAccess);
+              dataArray.forEach((item) => {
+                if (item.description === "Web desktop.") {
+                  objData.url = item.value;
+                }
+              });
+  
+              objData.stats = stats;
+  
+              return res.status(200).json({
+                success: true,
+                labData: objData,
+              });
+            } else {
+              console.error('responseData.userAccess is not a valid JSON string or is undefined');
+              return res.status(500).json({
+                success: false,
+                message: 'Invalid user access data received from the server.'
+              });
+            }
           }
           
         } else {

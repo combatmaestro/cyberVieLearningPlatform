@@ -94,7 +94,6 @@ export const addNewTopic = (id, info) => async (dispatch) => {
       success: true,
     }
   } catch (error) {
-    console.log('mess', error.response)
     dispatch({
       type: ADD_TOPIC_FAILURE,
       payload: error.response.data.message,
@@ -147,13 +146,12 @@ export const getContentTopic = (id) => async (dispatch) => {
 
   try {
     const { data } = await axios.get(`${backendUrl}/topic/admin/getcontent?id=${id}`)
-    // console.log(data.data);
+
     dispatch({
       type: ADMIN_GET_CONTENT_SUCCESS,
       payload: data.data,
     })
   } catch (error) {
-    console.log('mess', error.response)
     dispatch({
       type: ADMIN_GET_CONTENT_FAILURE,
       payload: error.response.data.message,

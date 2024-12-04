@@ -149,7 +149,7 @@ function AdminUser() {
       }
     };
     
-
+    
   
     allUsersData.forEach((user) => {
       data.rows.push({
@@ -173,20 +173,21 @@ function AdminUser() {
           </button>
         ),
         actions: (
-            <Tooltip title="Edit" placement="top" arrow>
-              <button
+          <Tooltip title="Edit" placement="top" arrow>
+            <button
               className="btn btn-primary py-1 px-2 ml-2"
-                onClick={() => editUserHandler(user)}
-              >
-                <i className="fa fa-edit"></i>
-              </button>
-            </Tooltip>
+              onClick={() => editUserHandler(user)}
+            >
+              <i className="fa fa-edit"></i>
+            </button>
+          </Tooltip>
         ),
       });
     });
-
+  
     return data;
   };
+  
 
   if (loading) return <Loader />;
 

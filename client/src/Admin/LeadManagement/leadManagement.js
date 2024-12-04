@@ -53,7 +53,7 @@ const LeadManagement = () => {
   useEffect(() => {
     dispatch(getAllFormData());
   }, [dispatch]);
- 
+
   // Function to calculate Converted and Total Leads
   const totalLeads = allFormData.length;
   const convertedLeads = allFormData.filter((lead) => lead.tier === "paid");
@@ -69,13 +69,13 @@ const LeadManagement = () => {
       minute: 'numeric',
       second: 'numeric',
     });
-    };
-  
+  };
+
   if (loading) return <Loader />;
 
-    const mdbLeads = () => {
-        const data = {
-          columns: [
+  const mdbLeads = () => {
+    const data = {
+      columns: [
         { label: 'Created At', field: 'createdAt', sort: 'asc' },
         { label: 'Email', field: 'email', sort: 'asc' },
         { label: 'Name', field: 'name', sort: 'asc' },
@@ -83,32 +83,31 @@ const LeadManagement = () => {
         { label: 'Phone Number', field: 'phoneNumber', sort: 'asc' },
         { label: 'Location', field: 'location', sort: 'asc' },
         { label: 'Experience', field: 'experience', sort: 'asc' },
-          ],
-          rows: [],
-        };
-    
-        allFormData.forEach((module) => {
-          data.rows.push({
-            createdAt:formatDateTime(module.createdAt),
-            email: module.email,
-            name: module.name,
+      ],
+      rows: [],
+    };
+
+    allFormData.forEach((module) => {
+      data.rows.push({
+        createdAt: formatDateTime(module.createdAt),
+        email: module.email,
+        name: module.name,
         tier: (
           <span style={{ color: module.tier === 'free' ? 'red' : 'green', fontWeight: "bold" }}>
             {module.tier}
           </span>
         ),
-            phoneNumber: module.phoneNumber,
-            location: module.location,
-            experience: module.experience,
-          });
-        });
-    
-        return data;
-      };
+        phoneNumber: module.phoneNumber,
+        location: module.location,
+        experience: module.experience,
+      });
+    });
+
+    return data;
+  };
 
   return (
     <>
-    
       <Grid container className={classes.root}>
         <Grid item xs={12} md={2}>
           <SideDrawer />

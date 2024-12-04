@@ -190,7 +190,7 @@ const BatchList = () => {
         },
       };
       await axios.post(
-        `${backendUrl}/batch/admin/studentEnroll`,
+        `/batch/admin/studentEnroll`,
         requestData,
         config
       );
