@@ -179,11 +179,11 @@ export default function Header() {
     >
       <Box className={classes.sidebarInfo} display="flex">
         <Box style={{ width: 50 }}>
-          <img src={data.avatar.url} alt="" />
+          <img src={data?.avatar.url} alt="" />
         </Box>
         <Box display="flex" flexDirection="column">
-          <Box>{data.name}</Box>
-          <Box className="userEmail">{data.email}</Box>
+          <Box>{data?.name}</Box>
+          <Box className="userEmail">{data?.email}</Box>
         </Box>
       </Box>
       <Divider />
@@ -326,7 +326,7 @@ export default function Header() {
                         className={classes.icon}
                       >
                         <img
-                          src={data.avatar.url}
+                          src={data?.avatar?.url}
                           style={{
                             width: "100%",
                             height: "100%",
