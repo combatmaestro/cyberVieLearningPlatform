@@ -109,7 +109,7 @@ export const userRefresh = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `/user/getDetails`,
+      url: `${backendUrl}/user/getDetails`,
     })
 
     dispatch(userRefreshSuccess(data))
