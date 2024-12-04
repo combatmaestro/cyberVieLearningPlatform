@@ -130,7 +130,7 @@ function Home() {
   useEffect(() => {
     if (userData.data.role.includes("teacher")) {
       setTeacher(true);
-      dispatch(getAllAssessmentsToReview(userData.data._id));
+      dispatch(getAllAssessmentsToReview(userData?.data?._id));
     }
   }, [dispatch, userData?.data?._id, userData?.data?.role]);
 
@@ -169,9 +169,9 @@ function Home() {
               Open Playground <TrendingUpIcon />
             </Button>
           </Box>
-          {user.mobile === "" &&
-            user.education === "" &&
-            user.currentSalary === "" && (
+          {user?.mobile === "" &&
+            user?.education === "" &&
+            user?.currentSalary === "" && (
               <AppBar
                 position="static"
                 className={classes.appBar}
@@ -187,7 +187,7 @@ function Home() {
                       style={{ color: "#e8eef4" }}
                       className={classes.homeBlink}
                     >
-                      Welcome {user.name}, proceed to complete your profile ➡️!!
+                      Welcome {user?.name}, proceed to complete your profile ➡️!!
                     </Link>
                   </Typography>
                 </Toolbar>
