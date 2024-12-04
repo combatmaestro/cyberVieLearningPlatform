@@ -40,17 +40,18 @@ function RenderQuestion({ ctf, addProgress, onNext }) {
           moduleId: moduleData._id,
           questionId: ctf._id,
         },
-      }).then(() => {
-        setAnswerErrorText("");
-        setCompleted(true);
-        setShowBackdrop(false);
-        addProgress();
-        setOpenSuccess(true);
+      })
+        .then(() => {
+          setAnswerErrorText("");
+          setCompleted(true);
+          setShowBackdrop(false);
+          addProgress();
+          setOpenSuccess(true);
           onNext();
         })
         .catch((error) => {
           console.error("Error submitting answer:", error);
-      });
+        });
     } else {
       setAnswerErrorText("Wrong Answer");
     }
@@ -77,8 +78,17 @@ function RenderQuestion({ ctf, addProgress, onNext }) {
           disabled={completed}
           onChange={(e) => setAnswer(e.target.value)}
         />
-
-        <Button
+        {completed ? (<Button
+          variant="contained"
+          disabled={completed}
+          className="ctfSubmitButton"
+          onClick={submitHandler}
+          style={{
+            backgroundColor: "rgb(105 198 126)",
+          }}
+        >
+          Completed
+        </Button>):(<Button
           variant="contained"
           disabled={completed}
           className="ctfSubmitButton"
@@ -86,19 +96,19 @@ function RenderQuestion({ ctf, addProgress, onNext }) {
           style={{
             backgroundColor: "#28a745",
           }}
-          hidden={completed}
         >
-          submit
-        </Button>
-        {completed && <Button variant="contained" className="ctfNextButton" onClick={onNext}
-        style={{
-          backgroundColor: "#005387",
-        }}
-        >Next</Button>}
+          Submit
+        </Button>)
+        }
+        
       </div>
 
       <SimpleBackdrop open={showBackdrop} />
-      <SuccessBar handleClose={handleCloseBar} openSuccess={openSuccess} message="Correct Answer!" />
+      <SuccessBar
+        handleClose={handleCloseBar}
+        openSuccess={openSuccess}
+        message="Correct Answer!"
+      />
     </div>
   );
 }
