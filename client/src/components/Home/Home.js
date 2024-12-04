@@ -132,7 +132,7 @@ function Home() {
       setTeacher(true);
       dispatch(getAllAssessmentsToReview(userData.data._id));
     }
-  }, [dispatch, userData.data._id, userData.data.role]);
+  }, [dispatch, userData?.data?._id, userData?.data?.role]);
 
 
   useEffect(() => {
