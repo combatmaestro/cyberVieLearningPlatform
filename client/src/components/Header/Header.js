@@ -295,7 +295,7 @@ export default function Header() {
                           Upcoming Live Classes
                         </Typography>
                       </Link>
-                      {data.role === "teacher" && (
+                      {data?.role === "teacher" && (
                       <Link to="/reviewAssessment">
                         <Typography className={classes.headerTitle} variant="h6">
                           Review Assessment
