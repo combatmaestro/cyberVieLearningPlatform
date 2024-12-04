@@ -36,6 +36,7 @@ import CustomMenu from "./customMenu";
 
 //other stuff
 import { useSelector } from "react-redux";
+import { set } from "react-ga";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -121,7 +122,19 @@ export default function Header() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileAnchor, setMobileAnchor] = useState(false);
+  const[isHome,setIsHome] = useState([]);
+  // const[register,setRegister] = useState([]); 
   // const open = Boolean(anchorEl);
+
+  React.useEffect(() => {
+    if (window.location !== "/"){
+      setIsHome(window.location.pathname.split("/"))
+    }
+    else {
+      setIsHome([]);
+    }
+  },[window.location.pathname])
+  
 
 
   const user = useSelector((state) => state.user);
@@ -139,6 +152,7 @@ export default function Header() {
 
 
   const signOutHandler = () => {
+    setIsHome([])
     dispatch(userSignout());
   };
 
@@ -258,94 +272,97 @@ export default function Header() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            <div style={{ width: 130 }}>
-              <Link to="/home">
-                <img
-                  style={{ width: "100%", height: "100%" }}
-                  alt="logo"
-                  src="/images/logoCybervie.png"
-                />
-              </Link>
-            </div>
-          </Typography>
-          {isAuthenticated && (
-            <>
-              {!isMobile ? (
-                <>
-                  <Box display="flex" alignItems="center">
-                  <Link to="/batch">
-                      <Typography className={classes.headerTitle} variant="h6">
-                        Upcoming Live Classes
+      {isHome.length > 1  && (
+            <Toolbar>
+            <Typography variant="h6" className={classes.title}>
+              <div style={{ width: 130 }}>
+                <Link to="/home">
+                  <img
+                    style={{ width: "100%", height: "100%" }}
+                    alt="logo"
+                    src="/images/logoCybervie.png"
+                  />
+                </Link>
+              </div>
+            </Typography>
+            {isAuthenticated && (
+              <>
+                {!isMobile ? (
+                  <>
+                    <Box display="flex" alignItems="center">
+                    <Link to="/batch">
+                        <Typography className={classes.headerTitle} variant="h6">
+                          Upcoming Live Classes
+                        </Typography>
+                      </Link>
+                      {data.role === "teacher" && (
+                      <Link to="/reviewAssessment">
+                        <Typography className={classes.headerTitle} variant="h6">
+                          Review Assessment
+                        </Typography>
+                      </Link>)}
+                      {/* <a
+                        href="https://www.cybervie.com/cyber-security-training-program/"
+                        target="_blank"
+                      >
+                        <Typography className={classes.headerTitle} variant="h6">
+                          Courses
+                        </Typography>
+                      </a> */}
+                      {/* <Typography className={classes.headerTitle} variant="h6">
+                        Certificates
                       </Typography>
-                    </Link>
-                    {data.role === "teacher" && (
-                    <Link to="/reviewAssessment">
-                      <Typography className={classes.headerTitle} variant="h6">
-                        Review Assessment
-                      </Typography>
-                    </Link>)}
-                    {/* <a
-                      href="https://www.cybervie.com/cyber-security-training-program/"
-                      target="_blank"
-                    >
-                      <Typography className={classes.headerTitle} variant="h6">
-                        Courses
-                      </Typography>
-                    </a> */}
-                    {/* <Typography className={classes.headerTitle} variant="h6">
-                      Certificates
-                    </Typography>
-                    <Link to="/placements">
-                      <Typography className={classes.headerTitle} variant="h6">
-                        Placement
-                      </Typography>
-                    </Link> */}
-                    <IconButton
-                      aria-label="account of current user"
-                      aria-controls="menu-appbar"
-                      aria-haspopup="true"
-                      onClick={handleMenu}
-                      color="inherit"
-                      className={classes.icon}
-                    >
-                      <img
-                        src={data.avatar.url}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          borderRadius: "50%",
-                        }}
-                        alt=""
+                      <Link to="/placements">
+                        <Typography className={classes.headerTitle} variant="h6">
+                          Placement
+                        </Typography>
+                      </Link> */}
+                      <IconButton
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                        className={classes.icon}
+                      >
+                        <img
+                          src={data.avatar.url}
+                          style={{
+                            width: "100%",
+                            height: "100%",
+                            borderRadius: "50%",
+                          }}
+                          alt=""
+                        />
+                      </IconButton>
+                      <CustomMenu
+                        handleClose={handleClose}
+                        anchorEl={anchorEl}
+                        data={data}
+                        signOutHandler={signOutHandler}
                       />
-                    </IconButton>
-                    <CustomMenu
-                      handleClose={handleClose}
-                      anchorEl={anchorEl}
-                      data={data}
-                      signOutHandler={signOutHandler}
-                    />
-                  </Box>
-                </>
-              ) : (
-                <>
-                  <Button onClick={toggleDrawer(true)}>
-                    <MenuIcon />
-                  </Button>
-                  <SwipeableDrawer
-                    anchor="right"
-                    open={mobileAnchor}
-                    onClose={toggleDrawer(false)}
-                    onOpen={toggleDrawer(true)}
-                  >
-                    {Content(data)}
-                  </SwipeableDrawer>
-                </>
-              )}
-            </>
-          )}
-        </Toolbar>
+                    </Box>
+                  </>
+                ) : (
+                  <>
+                    <Button onClick={toggleDrawer(true)}>
+                      <MenuIcon />
+                    </Button>
+                    <SwipeableDrawer
+                      anchor="right"
+                      open={mobileAnchor}
+                      onClose={toggleDrawer(false)}
+                      onOpen={toggleDrawer(true)}
+                    >
+                      {Content(data)}
+                    </SwipeableDrawer>
+                  </>
+                )}
+              </>
+            )}
+          </Toolbar>
+        )}
+        
       </AppBar>
     </div>
   );

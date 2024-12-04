@@ -1,21 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import RenderQuestion from './RenderQuestion/RenderQuestion';
 import { useStyles } from './style';
 
 function CTF({ ctf, addProgress }) {
   const classes = useStyles();
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [completedQuestions, setCompletedQuestions] = useState(new Set());
-
-  useEffect(() => {
-    if (completedQuestions.size === ctf.length) {
-      console.log('All questions completed!');
-    }
-  }, [completedQuestions, ctf.length]);
 
   const handleQuestionCompletion = (index) => {
     setCompletedQuestions(new Set(completedQuestions.add(index)));
-    setCurrentQuestionIndex(index + 1);
   };
 
   return (
@@ -23,14 +15,14 @@ function CTF({ ctf, addProgress }) {
       <div className='ctfHeader'>
         <div>Answer the questions below</div>
       </div>
-      {currentQuestionIndex < ctf.length && (
+      {ctf.map((question, index) => (
         <RenderQuestion
-          ctf={ctf[currentQuestionIndex]}
-          key={currentQuestionIndex}
+          ctf={question}
+          key={index}
           addProgress={addProgress}
-          onNext={() => handleQuestionCompletion(currentQuestionIndex)}
+          onNext={() => handleQuestionCompletion(index)}
         />
-      )}
+      ))}
     </div>
   );
 }

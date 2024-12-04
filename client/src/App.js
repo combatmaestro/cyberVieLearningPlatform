@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userRefresh } from './actions/userActions'
 
@@ -44,6 +44,7 @@ import Certificate from './components/showCert/Certificate';
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state) => state.user)
+  
 
   useEffect(() => {
     // To Report Page View
@@ -53,6 +54,13 @@ function App() {
     //to refresh user
     dispatch(userRefresh())
   }, [dispatch])
+
+  // const shouldRenderHeaderAndFooter = window.location.pathname !== "/";
+  let location = useLocation();
+  useEffect(() => {
+    // Access location here
+    console.log(location);
+  }, [location]);
   return (
     <>
       {loading ? (
@@ -61,7 +69,7 @@ function App() {
         <>
           <Router>
             <div>
-              <Header />
+            {location.pathname !== "/" && <Header />}
               <Switch>
                 <Route exact path='/' component={LandingPage} />
                 <ProtectedRoute exact path='/profile' component={ProfilePage} />
