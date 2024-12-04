@@ -38,6 +38,7 @@
     "redux-thunk": "^2.3.0",
     "suneditor": "^2.41.2",
     "suneditor-react": "^3.1.2",
+    "uuid": "^11.0.3",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -64,5 +65,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "http://localhost:4000",
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0"
+  }
 }

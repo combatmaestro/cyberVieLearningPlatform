@@ -30,4 +30,11 @@ router.post(
   UserController.editUser
 )
 
+router.post(
+  '/admin/generateCertificate/:id',
+  isAuthenticatedUser,
+  // authorizeRoles('admin'),
+  UserController.generateCertificate
+);
+
 module.exports = router

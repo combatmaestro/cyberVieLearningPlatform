@@ -40,6 +40,7 @@ import LeadManagement from './Admin/LeadManagement/leadManagement'
 import ReviewList from './components/QuestionsAdminReviewSection/ReviewCards'
 import Footer from './components/Footer/Footer'
 import { Toaster } from "react-hot-toast";
+import Certificate from './components/showCert/Certificate';
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state) => state.user)
@@ -174,6 +175,12 @@ function App() {
                   path='/leaderboard'
                   component={Leaderboard}
                 />
+                <ProtectedRoute
+                  exact
+                  path='/Certificate'
+                  component={Certificate}
+                />
+                
                 <ProtectedRoute
                   exact
                   path='/reviewAssessment'

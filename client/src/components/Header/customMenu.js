@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useEffect} from "react";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Box from "@material-ui/core/Box";
@@ -6,7 +6,8 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { withStyles } from "@material-ui/core/styles";
 import { Fade, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import { useDispatch, useSelector } from 'react-redux'
+import { userRefresh } from "../../actions/userActions";
 import { Link } from "react-router-dom";
 
 const StyledMenu = withStyles({
@@ -84,8 +85,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomMenu(props) {
+  const dispatch = useDispatch()
   const { anchorEl, handleClose, data, signOutHandler } = props;
+  const user = useSelector((state) => state.user);
   const classes = useStyles();
+
+
+  // useEffect(() => {
+  //   //to refresh user
+  //   dispatch(userRefresh())
+  // }, [])
+
 
   return (
     <div>
@@ -133,6 +143,9 @@ export default function CustomMenu(props) {
         <Link to="/leaderboard">
           <MenuItem onClick={handleClose}>LeaderBoard</MenuItem>
         </Link>
+       {user.data?.certificateGenerated && ( <Link to="/Certificate">
+          <MenuItem onClick={handleClose}>Certificate</MenuItem>
+        </Link> )}
         <Link to="/progress">
           <MenuItem onClick={handleClose}>My Progress</MenuItem>
         </Link>

@@ -220,6 +220,14 @@ export default function Header() {
             <ListItemText>LeaderBoard</ListItemText>
           </ListItem>
         </Link>
+        <Link to="/Certificate">
+          <ListItem button>
+            <ListItemIcon>
+              <TableChartIcon />
+            </ListItemIcon>
+            <ListItemText>Certificate</ListItemText>
+          </ListItem>
+        </Link>
         {/* <ListItem button>
           <ListItemIcon>
             <CardMembershipIcon />

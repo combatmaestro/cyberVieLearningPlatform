@@ -11,7 +11,8 @@ const CLIENT_ID =
 const client = new OAuth2Client(CLIENT_ID);
 const sendEmail = require("../utils/sendEmail");
 const welcomeTemplate = require("../utils/mailTemplate");
-
+const leadsUsers = require("../models/register");
+const { v4: uuidv4 } = require('uuid');
 module.exports.authenticate = async (req, res, next) => {
   try {
     let body = req.body;
@@ -22,7 +23,7 @@ module.exports.authenticate = async (req, res, next) => {
     });
 
     const { name, email, picture } = ticket.getPayload();
-    let user = await User.findOne({ email: email });
+    let user = await User.findOne({ email: email.toLowerCase() });
     var filteredUsers = {};
     if (user) {
       const token = user.getJwtToken();
@@ -30,7 +31,7 @@ module.exports.authenticate = async (req, res, next) => {
       await sendToken(filteredUser, token, 200, res);
     } else {
       user = await User.create({
-        email,
+        "email" : email.toLowerCase(),
         name,
       });
       user.avatar.url = picture;
@@ -337,7 +338,41 @@ module.exports.getTeachers = catchAsyncErrors(async (req, res, next) =>{
     success: true,
     data: allTeachers,
   });
-})
+});
+
+module.exports.generateCertificate = catchAsyncErrors(async (req, res, next) =>{
+  try {
+    const { id } = req.params;
+
+    // Find the user by ID
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Update the user fields
+    user.certificateRefId = uuidv4();
+    user.certificateGenerated = true;
+    user.certificateDate = new Date();
+
+    // Save the updated user
+    await user.save();
+
+    // Respond with success
+    res.status(200).json({
+      success: true,
+      message: 'Certificate generated successfully',
+      user,
+    });
+  } catch (error) {
+    console.error('Error generating certificate:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+    });
+  }
+});
 
 function filterUserProperties(user) {
   const objectToSend = {
@@ -382,6 +417,9 @@ function specificfilterUserProperties(user) {
     experience:user.experience,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
+    certificateGenerated: user?.certificateGenerated,
+    certificateDate : user?.certificateDate,
+    certificateRefId : user?.certificateRefId
   };
 
   if (user.labCreated !== undefined) {
