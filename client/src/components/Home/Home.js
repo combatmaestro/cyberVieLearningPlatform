@@ -128,7 +128,7 @@ function Home() {
 
 
   useEffect(() => {
-    if (userData?.data.role.includes("teacher")) {
+    if (userData?.data?.role.includes("teacher")) {
       setTeacher(true);
       dispatch(getAllAssessmentsToReview(userData?.data?._id));
     }
