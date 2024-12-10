@@ -99,6 +99,8 @@ const downloadCertificate = () => {
       <button
         onClick={downloadCertificate}
         style={{
+          position:"absolute",
+          right: "120px",
           padding: "10px 20px",
           margin: "10px 0",
           backgroundColor: "#007BFF",
@@ -106,6 +108,7 @@ const downloadCertificate = () => {
           border: "none",
           borderRadius: "5px",
           cursor: "pointer",
+          background:"linear-gradient(298.54deg, rgb(10, 118, 123) -7.7%, rgb(0, 167, 214) 97.12%)"
         }}
       >
         Download Certificate
