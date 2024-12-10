@@ -12,6 +12,9 @@ import SuccessBar from "../SnackBar/SuccessBar";
 import ErrorBar from "../SnackBar/ErrorBar";
 import { adminGetAllUsers, editCertainUser } from "../../actions/userActions";
 import AdminUserDialog from "./AdminUserDialog";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -44,7 +47,50 @@ function AdminUser() {
   const [message, setMessage] = useState("");
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openFailure, setOpenFailure] = useState(false);
+  const [certificateHtml, setCertificateHtml] = useState("");
+  const [isCertificateOpen, setIsCertificateOpen] = useState(false);
+  
 
+  const handlePreviewClick = async (userId) => {
+    try {
+      const response = await fetch("/certificate.html");
+        // const html = await response.text();
+        const user = allUsersData.find((user) => user._id === userId);
+      if (response.ok) {
+        const html = await response.text();
+  
+        // Inject dynamic user data if needed
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        // const formattedDate = date.toISOString().split("T")[0];
+  
+        const studentNameElement = doc.getElementById("studentName");
+        const referenceIdElement = doc.getElementById("referenceId");
+        // const dateOfIssueElement = doc.getElementById("dateOfIssue");
+  
+        if (studentNameElement) {
+          studentNameElement.innerText = user.name || "Student Name";
+        }
+
+        if (referenceIdElement) {
+          referenceIdElement.innerText = user.certificateRefId || "Reference ID";
+        }
+
+        // if (dateOfIssueElement) {
+        //   dateOfIssueElement.innerText = formattedDate || "Date of Issue";
+        // }  
+        setCertificateHtml(doc.documentElement.outerHTML);
+        setIsCertificateOpen(true);
+      } else {
+        alert("Failed to fetch certificate HTML.");
+      }
+    } catch (error) {
+      console.error("Error fetching certificate HTML:", error);
+      alert("An error occurred while fetching the certificate.");
+    }
+  };
+
+  
   const handleClose = () => {
     setOpen(false);
   };
@@ -163,16 +209,32 @@ function AdminUser() {
             <p style={{ color: "blue" }}>Paid</p>
           ) : (
             <p style={{ color: "green" }}>Free</p>
-          ),
-        certificate: (
-          <button
-            className="btn btn-success py-1 px-2"
-            onClick={() => handleCertificateClick(user._id)}
-          >
-            Generate Certificate
-          </button>
-        ),
-        actions: (
+          ),certificate: (
+            <>
+              {user?.certificateGenerated ? (
+                <>
+                  <button className="btn btn-success py-1 px-2">
+                    Certificate Generated
+                  </button>
+                  {/* Add the preview icon */}
+                  <button
+                    className="btn btn-info py-1 px-2 ml-2"
+                    onClick={() => handlePreviewClick(user._id)}
+                  >
+                    <i className="fa fa-eye"></i> Preview
+                  </button>
+                </>
+              ) : (
+                <button
+                  className="btn btn-success py-1 px-2"
+                  onClick={() => handleCertificateClick(user._id)}
+                >
+                  Generate Certificate
+                </button>
+              )}
+            </>
+          ),          
+            actions: (
           <Tooltip title="Edit" placement="top" arrow>
             <button
               className="btn btn-primary py-1 px-2 ml-2"
@@ -230,6 +292,27 @@ function AdminUser() {
         user={editUser}
         submitHandler={submitHandler}
       />
+
+<Dialog
+  open={isCertificateOpen}
+  onClose={() => setIsCertificateOpen(false)}
+  maxWidth="md"
+  fullWidth
+>
+  <DialogTitle>Certificate Preview</DialogTitle>
+  <DialogContent>
+    <div
+      dangerouslySetInnerHTML={{ __html: certificateHtml }}
+      style={{
+        margin: "auto",
+        border: "2px solid gray",
+        padding: "20px",
+        textAlign: "center",
+      }}
+    />
+  </DialogContent>
+</Dialog>
+
     </>
   );
 }
