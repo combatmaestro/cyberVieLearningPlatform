@@ -208,7 +208,7 @@ export const adminGetAllUsers = () => async (dispatch) => {
   try {
     const res = await axios({
       method: 'get',
-      url: `/user/admin/allUsers`,
+      url: `${backendUrl}/user/admin/allUsers`,
     })
     dispatch({
       type: ALL_USERS_SUCCESS,
