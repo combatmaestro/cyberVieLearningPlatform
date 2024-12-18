@@ -128,7 +128,7 @@ export const userSignout = () => async (dispatch) => {
   try {
     const { data } = await axios({
       method: 'GET',
-      url: `/user/signout`,
+      url: `${backendUrl}/user/signout`,
     })
     localStorage.removeItem("token");
     dispatch({
@@ -155,7 +155,7 @@ export const updateUser = (info) => async (dispatch) => {
         'Content-Type': 'application/json',
       },
     }
-    const { data } = await axios.put(`/user/update`, info, config)
+    const { data } = await axios.put(`${backendUrl}/user/update`, info, config)
     dispatch({
       type: USER_UPDATE_SUCCESS,
       payload: data.data,
@@ -252,7 +252,7 @@ export const editCertainUser = (id, data) => async (dispatch) => {
   try {
     const res = await axios({
       method: 'post',
-      url: `/user/admin/editUser?id=${id}`,
+      url: `${backendUrl}/user/admin/editUser?id=${id}`,
       data,
       headers: {
         'Content-Type': 'multipart/form-data',
