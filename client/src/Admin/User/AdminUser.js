@@ -197,7 +197,7 @@ function AdminUser() {
     
     
   
-    allUsersData.forEach((user) => {
+    allUsersData?.forEach((user) => {
       data.rows.push({
         userid: user._id,
         name: <span>{user.name}</span>,
