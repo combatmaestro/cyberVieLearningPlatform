@@ -74,7 +74,7 @@ export const getAssessmentQuestions = (moduleId) => async (dispatch) => {
   try {
     const response = await axios({
       method: "get",
-      url: `/assessment/module/${moduleId}`,
+      url: `${backendUrl}/assessment/module/${moduleId}`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -100,7 +100,7 @@ export const submitAssessmentReview =
 
       const { data } = await axios.post(
         // ${backendUrl}
-        `/assessment/user/submitAnswers`,
+        `${backendUrl}/assessment/user/submitAnswers`,
         assessmentReview,
         config
       );
@@ -127,7 +127,7 @@ export const getAllAssessmentsToReview = (teacherId) => async (dispatch) => {
     dispatch({ type: GET_ASSESSMENTS_TO_REVIEW_REQUEST });
 
     const { data } = await axios.get(
-      `/assessment/teacher/review/${teacherId}`
+      `${backendUrl}/assessment/teacher/review/${teacherId}`
     );
 
     dispatch({
@@ -151,7 +151,7 @@ export const getAllAssessments = () => async (dispatch) => {
   dispatch({ type: GET_ALL_ASSESSMENTS_REQUEST });
 
   try {
-    const response = await axios.get(`/assessment/getAll`); // Replace with your actual API endpoint
+    const response = await axios.get(`${backendUrl}/assessment/getAll`); // Replace with your actual API endpoint
     dispatch({
       type: GET_ALL_ASSESSMENTS_SUCCESS,
       payload: response.data.data, // Adjust based on the actual structure of your response
