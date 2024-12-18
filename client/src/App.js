@@ -69,7 +69,7 @@ function App() {
         <>
           <Router>
             <div>
-            {location.pathname !== "/" && <Header />}
+           <Header />
               <Switch>
                 <Route exact path='/' component={LandingPage} />
                 <ProtectedRoute exact path='/profile' component={ProfilePage} />
