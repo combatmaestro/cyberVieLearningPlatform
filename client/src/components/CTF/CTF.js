@@ -12,7 +12,7 @@ function CTF({ ctf, addProgress }) {
 
   return (
     <div className={classes.root}>
-      <div className='ctfHeader'>
+      {/* <div className='ctfHeader'>
         <div>Answer the questions below</div>
       </div>
       {ctf.map((question, index) => (
@@ -22,7 +22,7 @@ function CTF({ ctf, addProgress }) {
           addProgress={addProgress}
           onNext={() => handleQuestionCompletion(index)}
         />
-      ))}
+      ))} */}
     </div>
   );
 }

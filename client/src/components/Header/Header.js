@@ -196,14 +196,14 @@ export default function Header() {
             <ListItemText>My Profile</ListItemText>
           </ListItem>
         </Link>
-        <Link to="/batch" >
+        {/* <Link to="/batch" >
           <ListItem button>
             <ListItemIcon>
               <MenuBookIcon />
             </ListItemIcon>
             <ListItemText>Upcoming live Classes</ListItemText>
           </ListItem>
-        </Link>
+        </Link> */}
         {/* <Link to="/transaction">
           <ListItem button>
             <ListItemIcon>

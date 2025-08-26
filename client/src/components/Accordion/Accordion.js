@@ -99,7 +99,7 @@ export default function ControlledAccordion({
             )}
              
 
-            <CTF ctf={topic.ctf} addProgress={addInTheProgress} />
+            {/* <CTF ctf={topic.ctf} addProgress={addInTheProgress} /> */}
           </div>
         </AccordionDetails>
       </Accordion>
