@@ -290,11 +290,11 @@ export default function Header() {
                 {!isMobile ? (
                   <>
                     <Box display="flex" alignItems="center">
-                    <Link to="/batch">
+                    {/* <Link to="/batch">
                         <Typography className={classes.headerTitle} variant="h6">
                           Upcoming Live Classes
                         </Typography>
-                      </Link>
+                      </Link> */}
                       {data?.role === "teacher" && (
                       <Link to="/reviewAssessment">
                         <Typography className={classes.headerTitle} variant="h6">
