@@ -212,14 +212,14 @@ export default function Header() {
             <ListItemText>My Transaction</ListItemText>
           </ListItem>
         </Link> */}
-        {/* <Link to="/LeaderBoard">
+        <Link to="/LeaderBoard">
           <ListItem button>
             <ListItemIcon>
               <TableChartIcon />
             </ListItemIcon>
             <ListItemText>LeaderBoard</ListItemText>
           </ListItem>
-        </Link> */}
+        </Link>
         <Link to="/Certificate">
           <ListItem button>
             <ListItemIcon>
