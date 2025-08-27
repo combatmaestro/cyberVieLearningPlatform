@@ -140,9 +140,9 @@ export default function CustomMenu(props) {
         {/* <Link to="/transaction">
           <MenuItem onClick={handleClose}>My Transactions</MenuItem>
         </Link> */}
-        <Link to="/leaderboard">
+        {/* <Link to="/leaderboard">
           <MenuItem onClick={handleClose}>LeaderBoard</MenuItem>
-        </Link>
+        </Link> */}
        {user.data?.certificateGenerated && ( <Link to="/Certificate">
           <MenuItem onClick={handleClose}>Certificate</MenuItem>
         </Link> )}

@@ -46,6 +46,20 @@ function App() {
   const { loading } = useSelector((state) => state.user)
   
 
+   useEffect(() => {
+    // Disable right-click globally
+    const handleContextMenu = (e) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener("contextmenu", handleContextMenu);
+
+    // Cleanup when component unmounts
+    return () => {
+      document.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
   useEffect(() => {
     // To Report Page View
     ReactGA.initialize('UA-103644054-1')
