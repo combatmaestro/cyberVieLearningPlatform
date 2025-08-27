@@ -67,7 +67,7 @@ function App() {
 
     //to refresh user
     dispatch(userRefresh())
-  }, [])
+  }, [dispatch])
 
   // const shouldRenderHeaderAndFooter = window.location.pathname !== "/";
   let location = useLocation();
