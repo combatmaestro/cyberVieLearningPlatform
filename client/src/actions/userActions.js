@@ -55,7 +55,7 @@ export const userGoogleLogin = (info) => async (dispatch) => {
       url: `${backendUrl}/user/authenticate`,
       data: { token: info.credential },
       timeout: 15000,
-      withCredentials: true,
+      //withCredentials: true,
     });
     localStorage.setItem('token', data.token);
     dispatch(userGoogleLoginSuccess(data));
@@ -76,7 +76,7 @@ export const userRefresh = () => async (dispatch) => {
   try {
     const { data } = await axios.get(`${backendUrl}/user/getDetails`, {
       timeout: 15000,          // prevents infinite pending
-      withCredentials: true,   // if your API sets cookies
+      //withCredentials: true,   // if your API sets cookies
     });
     dispatch(userRefreshSuccess(data));
   } catch (error) {
@@ -92,7 +92,7 @@ export const userSignout = () => async (dispatch) => {
       method: 'GET',
       url: `${backendUrl}/user/signout`,
       timeout: 15000,
-      withCredentials: true,
+      //withCredentials: true,
     });
     localStorage.removeItem('token');
     dispatch({ type: USER_SIGNOUT_SUCCESS, payload: data.data });
@@ -108,7 +108,7 @@ export const updateUser = (info) => async (dispatch) => {
     const { data } = await axios.put(`${backendUrl}/user/update`, info, {
       headers: { 'Content-Type': 'application/json' },
       timeout: 20000,
-      withCredentials: true,
+      //withCredentials: true,
     });
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data.data });
   } catch (error) {
@@ -123,7 +123,7 @@ export const getLeaderBoard = (page, search) => async (dispatch) => {
     const { data } = await axios.post(`${backendUrl}/user/leaderboard`, { page, search }, {
       headers: { 'Content-Type': 'application/json' },
       timeout: 20000,
-      withCredentials: true,
+      //withCredentials: true,
     });
     dispatch({ type: LEADERBOARD_SUCCESS, payload: data.data });
   } catch (error) {
@@ -141,7 +141,7 @@ export const adminGetAllUsers = () => async (dispatch) => {
   try {
     const res = await axios.get(`${backendUrl}/user/admin/allUsers`, {
       timeout: 20000,
-      withCredentials: true,
+      //withCredentials: true,
     });
     dispatch({ type: ALL_USERS_SUCCESS, payload: res.data.data });
   } catch (error) {
@@ -154,7 +154,7 @@ export const adminGetAllTeachers = () => async (dispatch) => {
   try {
     const res = await axios.get(`${backendUrl}/user/admin/getTeachers`, {
       timeout: 20000,
-      withCredentials: true,
+      //withCredentials: true,
     });
     dispatch({ type: ALL_TEACHERS_SUCCESS, payload: res.data.data });
   } catch (error) {
@@ -168,7 +168,7 @@ export const editCertainUser = (id, data) => async (dispatch) => {
     const res = await axios.post(`${backendUrl}/user/admin/editUser?id=${id}`, data, {
       headers: { 'Content-Type': 'multipart/form-data' },
       timeout: 30000,
-      withCredentials: true,
+      //withCredentials: true,
     });
     dispatch({ type: EDIT_USER_SUCCESS, payload: res.data.data });
     return { success: true };
