@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@material-ui/core'
 import {makeStyles} from '@material-ui/core'
-import logo from './logo.jpg'
+import logo from './BuildMyCareerLogo'
 import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
 // import TwitterIcon from '@material-ui/icons/Twitter';
