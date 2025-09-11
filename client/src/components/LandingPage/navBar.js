@@ -26,6 +26,7 @@ const theme = createMuiTheme({
 
 const useStyles = makeStyles((theme) => ({
   navbar: {
+    top:"-80px",
     backgroundColor: "#EDEDED",
     boxShadow: "none",
     minHeight: "70px",
