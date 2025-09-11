@@ -268,7 +268,6 @@ export default function Header() {
     </div>
   );
 
-
   return (
     <div className={classes.root}>
       <AppBar position="static">
