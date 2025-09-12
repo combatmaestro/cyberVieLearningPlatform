@@ -273,7 +273,7 @@ export default function Header() {
       <AppBar position="static">
       {isHome.length > 1  && (
             <Toolbar>
-            {/* <Typography variant="h6" className={classes.title}>
+            <Typography variant="h6" className={classes.title}>
               <div style={{ width: 130 }}>
                 <Link to="/home">
                   <img
@@ -283,7 +283,7 @@ export default function Header() {
                   />
                 </Link>
               </div>
-            </Typography> */}
+            </Typography>
             {isAuthenticated && (
               <>
                 {!isMobile ? (

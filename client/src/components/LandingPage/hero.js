@@ -171,7 +171,7 @@ const Hero = () => {
 
           <Grid item xs={12} md={6} className={classes.rightSection}>
             {/* <img src={group} alt="Group" className={classes.groupImage} /> */}
-            {/* <img src={logo} alt="Laptop" className={classes.laptopImage} /> */}
+            <img src={logo} alt="Laptop" className={classes.laptopImage} />
           </Grid>
         </Grid>
       </Container>

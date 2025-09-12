@@ -16,7 +16,7 @@ import {
   createMuiTheme,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import logo from "./images/BuildMyCareerLogo.png";
+import logo from "./images/logo.svg";
 
 const theme = createMuiTheme({
   typography: {
