@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerList: {
     width: 220,
-  },
+  }, 
   logo: {
     width: "190px",
     height: "85px",

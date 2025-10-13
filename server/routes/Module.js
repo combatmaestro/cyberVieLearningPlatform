@@ -38,4 +38,5 @@ router.get(
   moduleController.getAllStatistics
 );
 
+
 module.exports = router;
