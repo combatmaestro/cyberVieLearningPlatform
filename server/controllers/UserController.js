@@ -5,6 +5,8 @@ const sendToken = require("../utils/sendToken");
 const { OAuth2Client } = require("google-auth-library");
 const nodemailer = require("nodemailer");
 const { findByIdAndUpdate } = require("../models/User");
+const EnterpriseLead = require("../models/EnterpriseLead"); // ✅ import model
+
 const CLIENT_ID =
   "449086785583-9vop51gavcavffauj4v5jfmosfm2j988.apps.googleusercontent.com";
 // const CLIENT_ID =
@@ -428,3 +430,47 @@ function specificfilterUserProperties(user) {
 
   return objectToSend;
 }
+module.exports.enterpriseLeads = catchAsyncErrors(async (req, res, next) => {
+  try {
+    const { name, phone, message } = req.body;
+
+    if (!name || !phone || !message) {
+      return next(new ErrorHandler("All fields (name, phone, message) are required", 400));
+    }
+
+    // ✅ Save to MongoDB
+    await EnterpriseLead.create({ name, phone, message });
+
+    // ✅ Send notification email
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "info@cybervie.com",
+        pass: "rtgp rsls upgz zctc", // ⚠️ move to .env for security
+      },
+    });
+
+    const mailOptions = {
+      from: "info@cybervie.com",
+      to: "info@cybervie.com",
+      subject: "New Enterprise Lead Inquiry",
+      html: `
+        <h2>New Lead from Enterprise.AI Website</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <p><strong>Message:</strong> ${message}</p>
+        <p>Submitted on: ${new Date().toLocaleString()}</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    return res.status(200).json({
+      success: true,
+      message: "Lead submitted successfully. Our team will contact you shortly.",
+    });
+  } catch (error) {
+    console.error("Error in enterpriseLeads:", error);
+    return next(new ErrorHandler("Failed to submit lead. Try again later.", 500));
+  }
+});

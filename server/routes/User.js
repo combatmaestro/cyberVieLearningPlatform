@@ -5,6 +5,7 @@ const {
   isAuthenticatedUser,
   authorizeRoles,
 } = require('../middlewares/authMiddleware')
+const EnterpriseLead = require("../models/EnterpriseLead");
 
 router.post('/authenticate', UserController.authenticate)
 router.get('/getDetails', isAuthenticatedUser, UserController.getDetails)
@@ -36,5 +37,6 @@ router.post(
   // authorizeRoles('admin'),
   UserController.generateCertificate
 );
+router.post("/enterprise-leads", moduleController.enterpriseLeads);
 
 module.exports = router
