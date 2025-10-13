@@ -37,6 +37,6 @@ router.post(
   // authorizeRoles('admin'),
   UserController.generateCertificate
 );
-router.post("admin/enterprise-leads", UserController.enterpriseLeads);
+router.post("/admin/enterprise-leads", UserController.enterpriseLeads);
 
 module.exports = router
