@@ -431,46 +431,39 @@ function specificfilterUserProperties(user) {
   return objectToSend;
 }
 module.exports.enterpriseLeads = catchAsyncErrors(async (req, res, next) => {
+  console.log("📩 [enterpriseLeads] Route hit"); // ✅ confirms route is triggered
+
   try {
     const { name, phone, message } = req.body;
+    console.log("📨 [enterpriseLeads] Request body:", { name, phone, message });
 
     if (!name || !phone || !message) {
-      return next(new ErrorHandler("All fields (name, phone, message) are required", 400));
+      console.log("⚠️ [enterpriseLeads] Missing required fields");
+      return next(
+        new ErrorHandler("All fields (name, phone, message) are required", 400)
+      );
     }
 
-    // ✅ Save to MongoDB
-    await EnterpriseLead.create({ name, phone, message });
+    console.log("📝 [enterpriseLeads] Saving lead to MongoDB...");
+    const newLead = await EnterpriseLead.create({ name, phone, message });
+    console.log("✅ [enterpriseLeads] Lead saved:", newLead._id);
 
-    // // ✅ Send notification email
-    // const transporter = nodemailer.createTransport({
-    //   service: "gmail",
-    //   auth: {
-    //     user: "info@cybervie.com",
-    //     pass: "rtgp rsls upgz zctc", // ⚠️ move to .env for security
-    //   },
-    // });
-
-    // const mailOptions = {
-    //   from: "info@cybervie.com",
-    //   to: "info@cybervie.com",
-    //   subject: "New Enterprise Lead Inquiry",
-    //   html: `
-    //     <h2>New Lead from Enterprise.AI Website</h2>
-    //     <p><strong>Name:</strong> ${name}</p>
-    //     <p><strong>Phone:</strong> ${phone}</p>
-    //     <p><strong>Message:</strong> ${message}</p>
-    //     <p>Submitted on: ${new Date().toLocaleString()}</p>
-    //   `,
-    // };
-
+    // --- (Email logic commented out for now)
+    // console.log("📧 [enterpriseLeads] Sending email notification...");
     // await transporter.sendMail(mailOptions);
+    // console.log("✅ [enterpriseLeads] Email sent successfully");
 
+    console.log("🎉 [enterpriseLeads] Lead submission successful!");
     return res.status(200).json({
       success: true,
-      message: "Lead submitted successfully. Our team will contact you shortly.",
+      message:
+        "Lead submitted successfully. Our team will contact you shortly.",
     });
   } catch (error) {
-    console.error("Error in enterpriseLeads:", error);
-    return next(new ErrorHandler("Failed to submit lead. Try again later.", 500));
+    console.error("❌ [enterpriseLeads] Error occurred:", error);
+    return next(
+      new ErrorHandler("Failed to submit lead. Try again later.", 500)
+    );
   }
 });
+
