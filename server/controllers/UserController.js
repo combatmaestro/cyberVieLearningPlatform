@@ -441,29 +441,29 @@ module.exports.enterpriseLeads = catchAsyncErrors(async (req, res, next) => {
     // ✅ Save to MongoDB
     await EnterpriseLead.create({ name, phone, message });
 
-    // ✅ Send notification email
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: "info@cybervie.com",
-        pass: "rtgp rsls upgz zctc", // ⚠️ move to .env for security
-      },
-    });
+    // // ✅ Send notification email
+    // const transporter = nodemailer.createTransport({
+    //   service: "gmail",
+    //   auth: {
+    //     user: "info@cybervie.com",
+    //     pass: "rtgp rsls upgz zctc", // ⚠️ move to .env for security
+    //   },
+    // });
 
-    const mailOptions = {
-      from: "info@cybervie.com",
-      to: "info@cybervie.com",
-      subject: "New Enterprise Lead Inquiry",
-      html: `
-        <h2>New Lead from Enterprise.AI Website</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Message:</strong> ${message}</p>
-        <p>Submitted on: ${new Date().toLocaleString()}</p>
-      `,
-    };
+    // const mailOptions = {
+    //   from: "info@cybervie.com",
+    //   to: "info@cybervie.com",
+    //   subject: "New Enterprise Lead Inquiry",
+    //   html: `
+    //     <h2>New Lead from Enterprise.AI Website</h2>
+    //     <p><strong>Name:</strong> ${name}</p>
+    //     <p><strong>Phone:</strong> ${phone}</p>
+    //     <p><strong>Message:</strong> ${message}</p>
+    //     <p>Submitted on: ${new Date().toLocaleString()}</p>
+    //   `,
+    // };
 
-    await transporter.sendMail(mailOptions);
+    // await transporter.sendMail(mailOptions);
 
     return res.status(200).json({
       success: true,
