@@ -435,7 +435,7 @@ module.exports.enterpriseLeads = catchAsyncErrors(async (req, res, next) => {
 
   try {
     const { email, phone, message } = req.body;
-    console.log("📨 [enterpriseLeads] Request body:", { name, phone, message });
+    console.log("📨 [enterpriseLeads] Request body:", { email, phone, message });
 
     if (!email || !phone || !message) {
       console.log("⚠️ [enterpriseLeads] Missing required fields");
