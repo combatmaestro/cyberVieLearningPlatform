@@ -13,7 +13,7 @@ export const getAllEnterpriseLeads = () => async (dispatch) => {
 
     dispatch({
       type: GET_ENTERPRISE_LEADS_SUCCESS,
-      payload: data.leads,
+      payload:  { leads: data.leads },
     });
   } catch (error) {
     dispatch({

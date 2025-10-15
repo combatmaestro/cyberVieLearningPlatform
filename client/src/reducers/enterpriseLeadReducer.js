@@ -17,8 +17,8 @@ export const enterpriseLeadsReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
-        leads: action.payload.data || [],
-        total: action.payload.total,
+        leads: action.payload.leads || [],
+        total: action.payload.count,
         page: action.payload.page,
         pages: action.payload.pages,
       };

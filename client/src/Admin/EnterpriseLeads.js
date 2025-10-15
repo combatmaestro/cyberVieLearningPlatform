@@ -1,75 +1,115 @@
 import React, { useEffect } from "react";
-import { MDBDataTable } from "mdbreact";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllEnterpriseLeads } from "../actions/enterpriseLeadAction";
-import Loader from "../components/Loader/Loader";
-import SideDrawer from "./Drawer/SideDrawer";
-import { Grid, Box, Button } from "@material-ui/core";
+import { getEnterpriseLeads } from "../actions/enterpriseLeadAction";
 import { makeStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
+import TableBody from "@material-ui/core/TableBody";
+import TablePagination from "@material-ui/core/TablePagination";
+import SideDrawer from "../Drawer/SideDrawer";
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    display: "flex",
+  },
   tableContainer: {
-    paddingTop: 25,
+    flexGrow: 1,
+    padding: theme.spacing(4),
+  },
+  paper: {
+    padding: theme.spacing(3),
   },
 }));
 
-function EnterpriseLeads() {
-  document.title = "Enterprise Leads";
+const EnterpriseLeads = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  const { leads, loading, error } = useSelector((state) => state.enterpriseLeads);
+  const { leads = [], loading } = useSelector((state) => state.enterpriseLeads);
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   useEffect(() => {
-    dispatch(getAllEnterpriseLeads());
+    dispatch(getEnterpriseLeads());
   }, [dispatch]);
 
-  if (loading) return <Loader />;
-
-  const mdbLeads = () => {
-    const data = {
-      columns: [
-        { label: "Email", field: "email", sort: "asc" },
-        { label: "Phone", field: "phone", sort: "asc" },
-        { label: "Message", field: "message", sort: "asc" },
-        { label: "Created At", field: "createdAt", sort: "asc" },
-      ],
-      rows: [],
-    };
-
-    leads?.forEach((lead) => {
-      data.rows.push({
-        email: lead.email,
-        phone: lead.phone,
-        message: lead.message,
-        createdAt: new Date(lead.createdAt).toLocaleString(),
-      });
-    });
-
-    return data;
+  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <CircularProgress />
+      </div>
+    );
+  }
+
   return (
-    <Grid container className={classes.root}>
-      <Grid item xs={12} md={2}>
-        <SideDrawer />
-      </Grid>
-      <Grid className={classes.tableContainer} item xs={12} md={10}>
-        <Grid container justify="center">
-          <Grid item xs={12} md={10}>
-            <Box display="flex" alignItems="center" justifyContent="space-between">
-              <h1>Enterprise Leads</h1>
-              <Button variant="contained" color="primary" size="small" disabled>
-                Total Leads: {leads?.length || 0}
-              </Button>
-            </Box>
-            <MDBDataTable data={mdbLeads()} bordered striped hover />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+    <div className={classes.root}>
+      {/* Sidebar */}
+      <SideDrawer />
+
+      {/* Table Section */}
+      <div className={classes.tableContainer}>
+        <Paper className={classes.paper}>
+          <Typography variant="h5" gutterBottom>
+            Enterprise Leads
+          </Typography>
+
+          {leads.length === 0 ? (
+            <Typography>No leads found.</Typography>
+          ) : (
+            <>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell><strong>Email</strong></TableCell>
+                    <TableCell><strong>Phone</strong></TableCell>
+                    <TableCell><strong>Message</strong></TableCell>
+                    <TableCell><strong>Created At</strong></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {leads
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((lead) => (
+                      <TableRow key={lead._id}>
+                        <TableCell>{lead.email}</TableCell>
+                        <TableCell>{lead.phone}</TableCell>
+                        <TableCell>{lead.message}</TableCell>
+                        <TableCell>
+                          {new Date(lead.createdAt).toLocaleString()}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                </TableBody>
+              </Table>
+
+              <TablePagination
+                component="div"
+                count={leads.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                rowsPerPageOptions={[5, 10, 25]}
+              />
+            </>
+          )}
+        </Paper>
+      </div>
+    </div>
   );
-}
+};
 
 export default EnterpriseLeads;
