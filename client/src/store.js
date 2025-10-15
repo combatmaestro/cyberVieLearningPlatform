@@ -6,6 +6,7 @@ import {
   getSpecificModuleReducer,
   getAllStatsReducer
 } from "./reducers/moduleReducer";
+import { enterpriseLeadsReducer } from "./reducers/enterpriseLeadReducer";
 import {
   userReducer,
   leaderBoardReducer,
@@ -57,6 +58,7 @@ const reducer = combineReducers({
   allStats: getAllStatsReducer,
   formDataState: formDataReducer,
   subtopicDelete: subtopicDeleteReducer,
+  enterpriseLeads: enterpriseLeadsReducer
 });
 
 
