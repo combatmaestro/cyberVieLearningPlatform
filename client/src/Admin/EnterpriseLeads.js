@@ -12,7 +12,7 @@ import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import TableBody from "@material-ui/core/TableBody";
 import TablePagination from "@material-ui/core/TablePagination";
-import SideDrawer from "../Drawer/SideDrawer";
+import SideDrawer from "../Admin/Drawer/SideDrawer";
 
 const useStyles = makeStyles((theme) => ({
   root: {
