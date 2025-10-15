@@ -466,4 +466,27 @@ module.exports.enterpriseLeads = catchAsyncErrors(async (req, res, next) => {
     );
   }
 });
+module.exports.getEnterpriseLeads = catchAsyncErrors(async (req, res, next) => {
+  console.log("📋 [getEnterpriseLeads] Route hit");
+
+  try {
+    console.log("🔍 [getEnterpriseLeads] Fetching leads from MongoDB...");
+
+    // Optional: You can add query filters later if needed (e.g. ?email=abc)
+    const leads = await EnterpriseLead.find().sort({ createdAt: -1 }); // newest first
+
+    console.log(`✅ [getEnterpriseLeads] Found ${leads.length} leads`);
+
+    return res.status(200).json({
+      success: true,
+      count: leads.length,
+      leads,
+    });
+  } catch (error) {
+    console.error("❌ [getEnterpriseLeads] Error occurred:", error);
+    return next(
+      new ErrorHandler("Failed to fetch enterprise leads. Try again later.", 500)
+    );
+  }
+});
 

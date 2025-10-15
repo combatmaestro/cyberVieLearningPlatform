@@ -41,6 +41,7 @@ import ReviewList from './components/QuestionsAdminReviewSection/ReviewCards'
 import Footer from './components/Footer/Footer'
 import { Toaster } from "react-hot-toast";
 import Certificate from './components/showCert/Certificate';
+import EnterpriseLeads from './Admin/EnterpriseLeads'
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state) => state.user)
@@ -134,6 +135,12 @@ function App() {
                   exact
                   path='/admin/leads'
                   component={LeadManagement}
+                  roles={['admin', 'counsellor']}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/admin/enterprise-leads'
+                  component={EnterpriseLeads}
                   roles={['admin', 'counsellor']}
                 />
                 <ProtectedRoute
