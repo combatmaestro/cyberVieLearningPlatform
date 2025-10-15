@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEnterpriseLeads } from "../actions/enterpriseLeadAction";
 import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
@@ -17,9 +16,16 @@ import SideDrawer from "../Admin/Drawer/SideDrawer";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    minHeight: "100vh",
+  },
+  sidebar: {
+    flexBasis: "30%", // 30% width
+    maxWidth: "30%",
+    borderRight: `1px solid ${theme.palette.divider}`,
   },
   tableContainer: {
-    flexGrow: 1,
+    flexBasis: "70%", // 70% width
+    maxWidth: "70%",
     padding: theme.spacing(4),
   },
   paper: {
@@ -57,7 +63,9 @@ const EnterpriseLeads = () => {
   return (
     <div className={classes.root}>
       {/* Sidebar */}
-      <SideDrawer />
+      <div className={classes.sidebar}>
+        <SideDrawer />
+      </div>
 
       {/* Table Section */}
       <div className={classes.tableContainer}>
