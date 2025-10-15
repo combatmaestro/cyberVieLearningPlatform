@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getEnterpriseLeads } from "../actions/enterpriseLeadAction";
+import { getAllEnterpriseLeads } from "../actions/enterpriseLeadAction";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -37,7 +37,7 @@ const EnterpriseLeads = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   useEffect(() => {
-    dispatch(getEnterpriseLeads());
+    dispatch(getAllEnterpriseLeads());
   }, [dispatch]);
 
   const handleChangePage = (event, newPage) => setPage(newPage);
