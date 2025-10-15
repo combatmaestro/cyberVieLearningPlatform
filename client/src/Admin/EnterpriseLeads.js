@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { MDBDataTable } from "mdbreact";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllEnterpriseLeads } from "../actions/enterpriseLeadAction";
-import Loader from "../../components/Loader/Loader";
+import Loader from "../components/Loader/Loader";
 import SideDrawer from "../Drawer/SideDrawer";
 import { Grid, Box, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
