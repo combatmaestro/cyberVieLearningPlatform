@@ -434,10 +434,10 @@ module.exports.enterpriseLeads = catchAsyncErrors(async (req, res, next) => {
   console.log("📩 [enterpriseLeads] Route hit"); // ✅ confirms route is triggered
 
   try {
-    const { name, phone, message } = req.body;
+    const { email, phone, message } = req.body;
     console.log("📨 [enterpriseLeads] Request body:", { name, phone, message });
 
-    if (!name || !phone || !message) {
+    if (!email || !phone || !message) {
       console.log("⚠️ [enterpriseLeads] Missing required fields");
       return next(
         new ErrorHandler("All fields (name, phone, message) are required", 400)
@@ -445,7 +445,7 @@ module.exports.enterpriseLeads = catchAsyncErrors(async (req, res, next) => {
     }
 
     console.log("📝 [enterpriseLeads] Saving lead to MongoDB...");
-    const newLead = await EnterpriseLead.create({ name, phone, message });
+    const newLead = await EnterpriseLead.create({ email, phone, message });
     console.log("✅ [enterpriseLeads] Lead saved:", newLead._id);
 
     // --- (Email logic commented out for now)

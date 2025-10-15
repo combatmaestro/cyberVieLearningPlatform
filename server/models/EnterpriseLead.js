@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const enterpriseLeadSchema = new mongoose.Schema(
   {
-    name: {
+    email: {
       type: String,
-      required: [true, "Name is required"],
+      required: [true, "email is required"],
       trim: true,
     },
     phone: {
