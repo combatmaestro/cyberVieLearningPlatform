@@ -38,6 +38,6 @@ router.post(
   UserController.generateCertificate
 );
 router.post("/admin/enterprise-leads", UserController.enterpriseLeads);
-router.get("/admin/enterprise-leads", UserController.getEnterpriseLeads);
+router.get("/admin/get-enterprise-leads", UserController.getEnterpriseLeads);
 
 module.exports = router

@@ -42,7 +42,7 @@ const EnterpriseLeads = () => {
     const fetchLeads = async () => {
       try {
         const { data } = await axios.get(
-          "https://cyber-vie-learning-platform-client-ten.vercel.app/user/admin/enterprise-leads",
+          "https://cyber-vie-learning-platform-client-ten.vercel.app/user/admin/get-enterprise-leads",
           { withCredentials: true }
         );
         setLeads(data.leads || []);
