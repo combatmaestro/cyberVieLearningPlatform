@@ -42,6 +42,7 @@ import Footer from './components/Footer/Footer'
 import { Toaster } from "react-hot-toast";
 import Certificate from './components/showCert/Certificate';
 import EnterpriseLeads from './Admin/EnterpriseLeads'
+import EnterpriseBlogs from './Admin/EnterpriseBlogs/enterpriseBlogs'
 function App() {
   const dispatch = useDispatch()
   const { loading } = useSelector((state) => state.user)
@@ -141,6 +142,12 @@ function App() {
                   exact
                   path='/admin/enterprise-leads'
                   component={EnterpriseLeads}
+                  roles={['admin', 'counsellor']}
+                />
+                <ProtectedRoute
+                  exact
+                  path='/admin/enterprise-blogs'
+                  component={EnterpriseBlogs}
                   roles={['admin', 'counsellor']}
                 />
                 <ProtectedRoute

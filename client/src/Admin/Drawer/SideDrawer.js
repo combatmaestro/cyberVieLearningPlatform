@@ -119,6 +119,18 @@ const Sidebar = () => {
             </Link>
           </List>
            <List className={classes.list}>
+            <Link to="/admin/enterprise-blogs">
+              <Box>
+                <ListItem button>
+                  <ListItemIcon>
+                    <ReceiptIcon />
+                  </ListItemIcon>
+                  <ListItemText>Enterprise Blogs</ListItemText>
+                </ListItem>
+              </Box>
+            </Link>
+          </List>
+           <List className={classes.list}>
               <Link to="/admin/leads">
                 <Box>
                   <ListItem button>

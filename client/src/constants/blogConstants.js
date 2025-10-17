@@ -1,0 +1,9 @@
+// Blog Creation
+export const BLOG_CREATE_REQUEST = "BLOG_CREATE_REQUEST";
+export const BLOG_CREATE_SUCCESS = "BLOG_CREATE_SUCCESS";
+export const BLOG_CREATE_FAILURE = "BLOG_CREATE_FAILURE";
+
+// (Optional) Keep update constants if you plan to update blogs later
+export const BLOG_UPDATE_CONTENT_REQUEST = "BLOG_UPDATE_CONTENT_REQUEST";
+export const BLOG_UPDATE_CONTENT_SUCCESS = "BLOG_UPDATE_CONTENT_SUCCESS";
+export const BLOG_UPDATE_CONTENT_FAILURE = "BLOG_UPDATE_CONTENT_FAILURE";
