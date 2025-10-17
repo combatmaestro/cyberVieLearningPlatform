@@ -118,7 +118,7 @@ const Sidebar = () => {
               </Box>
             </Link>
           </List>
-           <List className={classes.list}>
+          <List className={classes.list}>
             <Link to="/admin/enterprise-blogs">
               <Box>
                 <ListItem button>
