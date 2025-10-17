@@ -5,8 +5,8 @@ import {
   BLOG_CREATE_FAILURE,
 } from "../constants/blogConstants";
 
-const backendUrl = "http://localhost:4000";
-
+// const backendUrl = "http://localhost:4000";
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app"
 // Action to create a new blog
 export const createNewBlog = (info) => async (dispatch) => {
   dispatch({ type: BLOG_CREATE_REQUEST });
