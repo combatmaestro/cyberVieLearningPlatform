@@ -139,9 +139,9 @@ const LandingPage = () => {
       ) : (
         <>
         <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <Hero/>
-      <CompanySection/>
+      {/* <CompanySection/>
       <SuccessStories/>
       <TrainingModule/>
       <ExclusiveFeatures/>
@@ -154,7 +154,7 @@ const LandingPage = () => {
       <Certification/>
       <PaymentOptions/>
       <InfoSection/>
-      <FaqSection/>
+      <FaqSection/> */}
       <SubFooter/>
     </div>
         </>

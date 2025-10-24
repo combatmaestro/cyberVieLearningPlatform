@@ -11,7 +11,9 @@ import {
 import googleIcon from "./images/google.svg";
 // import laptop from "./images/laptop.png";
 // import group from "./images/Group.png";
-import logo from "./images/CSEP Horizontal Logo.svg"
+// import logo from "./images/CSEP Horizontal Logo.svg"
+import logo from "./images/PHOTO-2025-10-24-15-05-06.jpg"
+
 import { GoogleLogin } from "@react-oauth/google";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
