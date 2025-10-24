@@ -31,7 +31,7 @@ const theme = createMuiTheme({
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: "100vh",
-    backgroundColor: "#0b1e34",
+    backgroundColor: "#0c0c48",
     display: "flex",
     alignItems: "center",
     paddingInline: "102px",
