@@ -116,7 +116,7 @@ const ModuleOverview = ({stats}) => {
     <Box className={classes.root}>
       <Box className={classes.avatarBox}>
         <Box>
-          <img alt="User Avatar" src={avtar} className={classes.avatar} />
+          {/* <img alt="User Avatar" src={avtar} className={classes.avatar} /> */}
           {/* <Typography
             variant="subtitle"
             style={{
