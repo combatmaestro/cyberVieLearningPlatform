@@ -132,7 +132,7 @@ const ModuleOverview = ({stats}) => {
           </Typography> */}
         </Box>
       </Box>
-      <Box className={classes.infoBox}>
+      {/* <Box className={classes.infoBox}>
         <Box className={classes.iconBox}>
           <BookIcon className={classes.icon} color="primary" />
           <Box>
@@ -161,7 +161,7 @@ const ModuleOverview = ({stats}) => {
             <Typography className={classes.subText}>Pending</Typography>
           </Box>
         </Box>
-      </Box>
+      </Box> */}
     </Box>
   );
 };

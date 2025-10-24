@@ -107,7 +107,7 @@ const SubFooter = () => {
     <Box className={classes.container}>
       <Box className={classes.textContent}>
         <Typography variant="h6" className={classes.heading}>
-          Join CyberVie’s CSEP Programme Today
+          Join CyberVie’s CCSA Programme Today
         </Typography>
         <Typography className={classes.title}>
           Take the First Step Towards a Thriving Cybersecurity Career
@@ -115,9 +115,9 @@ const SubFooter = () => {
         <Typography className={classes.subtitle}>
           Limited Slots Available - Hurry up and Register now.
         </Typography>
-        <Button className={classes.registerButton} variant="outlined" onClick={handleRegister}>
+        {/* <Button className={classes.registerButton} variant="outlined" onClick={handleRegister}>
           Register
-        </Button>
+        </Button> */}
       </Box>
 
       <Box className={classes.imageSection}>
