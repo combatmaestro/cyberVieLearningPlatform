@@ -160,14 +160,14 @@ function Home() {
         <>
           <Box className={classes.headerContainer}>
             <h2 className={classes.header}>Modules</h2>
-            <Button
+            {/* <Button
               type="submit"
               variant="contained"
               className={classes.playgroundButton}
               onClick={openPlayground}
             >
               Open Playground <TrendingUpIcon />
-            </Button>
+            </Button> */}
           </Box>
           {user?.mobile === "" &&
             user?.education === "" &&
