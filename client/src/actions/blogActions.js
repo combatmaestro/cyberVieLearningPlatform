@@ -14,8 +14,8 @@ import {
   BLOG_LIST_FAILURE,
 } from "../constants/blogConstants";
 
-const backendUrl = "http://localhost:4000"; 
-// const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app";
+// const backendUrl = "http://localhost:4000"; 
+const backendUrl = "https://cyber-vie-learning-platform-client-ten.vercel.app";
 
 // ✅ Create Blog
 export const createNewBlog = (info) => async (dispatch) => {
