@@ -28,6 +28,12 @@ import assessmentReducer from "./reducers/assessmentReducer";
 import { scheduleClassReducer , getClassesReducer  } from "./reducers/classess";
 import { assessmentReviewReducer } from "./reducers/assessmentReviewReducer";
 import { formDataReducer } from "./reducers/leadManagement";
+import {
+  blogCreateReducer,
+  blogEditReducer,
+  blogDeleteReducer,
+  blogListReducer,
+} from "./reducers/blogReducer";
 const initialState = {
   user: {},
   modules: {},
@@ -58,7 +64,11 @@ const reducer = combineReducers({
   allStats: getAllStatsReducer,
   formDataState: formDataReducer,
   subtopicDelete: subtopicDeleteReducer,
-  enterpriseLeads: enterpriseLeadsReducer
+  enterpriseLeads: enterpriseLeadsReducer,
+  blogCreate: blogCreateReducer,
+  blogEdit: blogEditReducer,
+  blogDelete: blogDeleteReducer,
+  blogList: blogListReducer,
 });
 
 
