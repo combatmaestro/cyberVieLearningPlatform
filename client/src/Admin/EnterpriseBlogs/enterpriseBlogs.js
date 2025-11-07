@@ -134,7 +134,7 @@ const EnterpriseBlogs = () => {
 
       const formData = { image };
       const config = { headers: { "Content-Type": "application/json" } };
-      const { data } = await axios.post("/topic/admin/upload", formData, config);
+      const { data } = await axios.post("https://cyber-vie-learning-platform-client-ten.vercel.app/topic/admin/upload", formData, config);
 
       if (uploadType === "thumbnail") {
         setThumbnail(data.url);
