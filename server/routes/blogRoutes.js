@@ -4,6 +4,7 @@ const {
   updateBlogContent,
   getBlogs,
   getBlogById,
+  deleteBlog, // <-- add this
 } = require("../controllers/blogController");
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.get("/:id", getBlogById);
 
 // Admin routes
 router.post("/admin/create", createBlog);
-router.post("/admin/content/:id", updateBlogContent);
+router.put("/admin/content/:id", updateBlogContent); // change POST → PUT
+router.delete("/admin/delete/:id", deleteBlog); // new route
 
 module.exports = router;

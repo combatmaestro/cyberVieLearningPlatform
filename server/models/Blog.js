@@ -15,6 +15,7 @@ const blogSchema = new mongoose.Schema(
       type: String,
       default: "Admin",
     },
+    thumbnail: { type: String, default: "" },
     images: [
       {
         type: String, // URLs of uploaded images

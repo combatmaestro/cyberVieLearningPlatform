@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
@@ -8,28 +8,23 @@ import Typography from "@material-ui/core/Typography";
 import SideDrawer from "../Drawer/SideDrawer";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
-import UploadDialogue from "./UploadDialogue"; // ✅ Same folder
+import UploadDialogue from "./UploadDialogue";
 import SimpleBackdrop from "../../components/BackDrop/LoaderBackdrop";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createNewBlog,
+  getAllBlogs,
+  editBlog,
+  deleteBlog,
+} from "../../actions/blogActions";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { createNewBlog } from "../../actions/blogActions";
-
+import Modal from "@material-ui/core/Modal";
+import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    backgroundColor: "#f9fafb",
-    minHeight: "100vh",
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingRight: theme.spacing(6),
-    paddingLeft: theme.spacing(4),
-  },
-  titleField: {
-    marginBottom: theme.spacing(3),
-    backgroundColor: "#fff",
-    borderRadius: 8,
-  },
+  root: { backgroundColor: "#f9fafb", minHeight: "100vh" },
+  container: { padding: theme.spacing(4, 6) },
+  titleField: { marginBottom: theme.spacing(3), backgroundColor: "#fff", borderRadius: 8 },
   buttonBox: {
     display: "flex",
     justifyContent: "space-between",
@@ -42,9 +37,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "8px 24px",
     fontWeight: 500,
     borderRadius: 8,
-    "&:hover": {
-      backgroundColor: "#125ea6",
-    },
+    "&:hover": { backgroundColor: "#125ea6" },
   },
   uploadButton: {
     backgroundColor: "#e53935",
@@ -53,9 +46,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     borderRadius: 8,
     marginRight: theme.spacing(2),
-    "&:hover": {
-      backgroundColor: "#c62828",
-    },
+    "&:hover": { backgroundColor: "#c62828" },
+  },
+  thumbnailPreview: {
+    width: 120,
+    height: 80,
+    borderRadius: 8,
+    objectFit: "cover",
+    marginLeft: theme.spacing(2),
+    boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
   },
   editorWrapper: {
     backgroundColor: "#fff",
@@ -63,116 +62,249 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
     padding: theme.spacing(3),
   },
+  blogCard: {
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+    boxShadow: "0 2px 6px rgba(0,0,0,0.1)",
+    display: "flex",
+    alignItems: "center",
+  },
+  blogInfo: { flex: 1, marginLeft: theme.spacing(2) },
+  modalPaper: {
+    position: "absolute",
+    top: "5%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "80%",
+    backgroundColor: "#fff",
+    borderRadius: 8,
+    padding: theme.spacing(4),
+    maxHeight: "90vh",
+    overflowY: "auto",
+  },
 }));
 
 const EnterpriseBlogs = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [open, setOpen] = useState(false);
-  const [openBackdrop, setOpenBackdrop] = useState(false);
-  const [append, setAppend] = useState("");
   const editorRef = useRef(null);
 
-  // Open/Close upload dialogue
-  const handleClickOpen = () => setOpen(true);
-  const handleCloseDialogue = () => setOpen(false);
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openUploader, setOpenUploader] = useState(false);
+  const [uploadType, setUploadType] = useState(""); // "thumbnail" or "editor"
 
-  // Handle image upload
- const submitImageHandler = async (e, image) => {
-  e.preventDefault();
-  try {
-    setOpenBackdrop(true);
-    setOpen(false);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [thumbnail, setThumbnail] = useState(""); // ✅ new field
+  const [editId, setEditId] = useState(null);
+  const [append, setAppend] = useState("");
 
-    const formData = { image };
+  const { blogs = [], loading } = useSelector((state) => state.blogList);
 
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+  useEffect(() => {
+    dispatch(getAllBlogs());
+  }, [dispatch]);
 
-    // ✅ Using existing endpoint
-    const { data } = await axios.post("/topic/admin/upload", formData, config);
+  const handleOpenModal = (blog = null) => {
+    if (blog) {
+      setEditId(blog._id);
+      setTitle(blog.title);
+      setContent(blog.content);
+      setThumbnail(blog.thumbnail || "");
+    } else {
+      setEditId(null);
+      setTitle("");
+      setContent("");
+      setThumbnail("");
+    }
+    setOpenModal(true);
+  };
 
-    // ✅ Append uploaded image to SunEditor content
-    const appendString = `
-      <div class="se-component se-image-container __se__float-none" contenteditable="false">
-        <figure style="margin: 0px;">
-          <img src="${data.url}" alt="" style="max-width: 100%; border-radius: 8px;" />
-        </figure>
-      </div>
-    `;
+  const handleCloseModal = () => setOpenModal(false);
 
-    setAppend(appendString);
-    setOpenBackdrop(false);
-  } catch (err) {
-    console.error("Image upload failed", err);
-    setOpenBackdrop(false);
-  }
-};
+  // ✅ Unified image uploader for both thumbnail & editor
+  const submitImageHandler = async (e, image) => {
+    e.preventDefault();
+    try {
+      setOpenBackdrop(true);
+      setOpenUploader(false);
 
+      const formData = { image };
+      const config = { headers: { "Content-Type": "application/json" } };
+      const { data } = await axios.post("/topic/admin/upload", formData, config);
 
+      if (uploadType === "thumbnail") {
+        setThumbnail(data.url);
+      } else {
+        const appendString = `
+          <div class="se-component se-image-container __se__float-none" contenteditable="false">
+            <figure style="margin: 0px;">
+              <img src="${data.url}" alt="" style="max-width: 100%; border-radius: 8px;" />
+            </figure>
+          </div>`;
+        setAppend(appendString);
+      }
+
+      setOpenBackdrop(false);
+    } catch (err) {
+      console.error("Image upload failed", err);
+      setOpenBackdrop(false);
+    }
+  };
+
+  // ✅ Create / Update Blog
   const handleSubmit = async () => {
-  const body = { title, content };
-  const { success, data } = await dispatch(createNewBlog(body));
+    const body = { title, content, thumbnail };
+    let res;
+    if (editId) res = await dispatch(editBlog(editId, body));
+    else res = await dispatch(createNewBlog(body));
 
-  if (success) {
-    alert("✅ Blog created successfully!");
-    setTitle("");
-    setContent("");
-  } else {
-    alert("❌ Error creating blog");
-  }
-};
+    if (res.success) {
+      alert(editId ? "✅ Blog updated!" : "✅ Blog created!");
+      dispatch(getAllBlogs());
+      handleCloseModal();
+    } else alert("❌ Failed to save blog");
+  };
+
+  // ✅ Delete blog
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this blog?")) {
+      const res = await dispatch(deleteBlog(id));
+      if (res.success) {
+        alert("🗑 Blog deleted");
+        dispatch(getAllBlogs());
+      }
+    }
+  };
 
   return (
     <Grid container className={classes.root}>
-      {/* Left Drawer (25%) */}
+      {/* Sidebar */}
       <Grid item xs={12} md={3}>
         <SideDrawer />
       </Grid>
 
-      {/* Right Main Editor (75%) */}
+      {/* Main Content */}
       <Grid item xs={12} md={9}>
         <Box className={classes.container}>
-          {/* Top Bar */}
           <Box className={classes.buttonBox}>
             <Typography variant="h5" style={{ fontWeight: 600 }}>
-              Create New Blog
+              Blogs Management
             </Typography>
-            <Box>
-              <Button
-                variant="contained"
-                className={classes.uploadButton}
-                onClick={handleClickOpen}
-              >
-                Upload Image
-              </Button>
-              <Button
-                variant="contained"
-                className={classes.saveButton}
-                onClick={handleSubmit}
-              >
-                Save Blog
-              </Button>
-            </Box>
+            <Button
+              variant="contained"
+              className={classes.saveButton}
+              onClick={() => handleOpenModal()}
+            >
+              + Create Blog
+            </Button>
           </Box>
 
-          {/* Blog Title */}
-          <TextField
-            fullWidth
-            variant="outlined"
-            label="Blog Title"
-            placeholder="Enter your blog title here"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className={classes.titleField}
-          />
+          {/* Blog List */}
+          {loading ? (
+            <Typography>Loading blogs...</Typography>
+          ) : blogs.length === 0 ? (
+            <Typography>No blogs found.</Typography>
+          ) : (
+            blogs.map((blog) => (
+              <Paper key={blog._id} className={classes.blogCard}>
+                {blog.thumbnail && (
+                  <img
+                    src={blog.thumbnail}
+                    alt="thumbnail"
+                    width={100}
+                    height={70}
+                    style={{ borderRadius: 6, objectFit: "cover" }}
+                  />
+                )}
+                <div className={classes.blogInfo}>
+                  <Typography variant="h6">{blog.title}</Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    style={{
+                      margin: "10px 0",
+                      maxHeight: "60px",
+                      overflow: "hidden",
+                    }}
+                    dangerouslySetInnerHTML={{ __html: blog.content }}
+                  />
+                  <Box display="flex" gap={2}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => handleOpenModal(blog)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => handleDelete(blog._id)}
+                    >
+                      Delete
+                    </Button>
+                  </Box>
+                </div>
+              </Paper>
+            ))
+          )}
+        </Box>
+      </Grid>
 
-          {/* SunEditor */}
+      {/* Blog Editor Modal */}
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Paper className={classes.modalPaper}>
+          <Typography variant="h5" gutterBottom>
+            {editId ? "Edit Blog" : "Create New Blog"}
+          </Typography>
+
+          {/* Title + Thumbnail Upload */}
+          <Box display="flex" alignItems="center" mb={2}>
+            <TextField
+              fullWidth
+              variant="outlined"
+              label="Blog Title"
+              placeholder="Enter blog title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className={classes.titleField}
+            />
+            <Button
+              variant="contained"
+              className={classes.uploadButton}
+              onClick={() => {
+                setUploadType("thumbnail");
+                setOpenUploader(true);
+              }}
+            >
+              Thumbnail Image
+            </Button>
+            {thumbnail && (
+              <img
+                src={thumbnail}
+                alt="Thumbnail Preview"
+                className={classes.thumbnailPreview}
+              />
+            )}
+          </Box>
+
+          <Box display="flex" justifyContent="flex-end" mb={2}>
+            <Button
+              variant="contained"
+              className={classes.uploadButton}
+              onClick={() => {
+                setUploadType("editor");
+                setOpenUploader(true);
+              }}
+            >
+              Upload Image
+            </Button>
+          </Box>
+
           <div className={classes.editorWrapper}>
             <SunEditor
               height="70vh"
@@ -193,13 +325,25 @@ const EnterpriseBlogs = () => {
               }}
             />
           </div>
-        </Box>
-      </Grid>
 
-      {/* Upload Modal + Loader */}
+          <Box mt={3} display="flex" justifyContent="flex-end" gap={2}>
+            <Button onClick={handleCloseModal}>Cancel</Button>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.saveButton}
+              onClick={handleSubmit}
+            >
+              {editId ? "Update" : "Save"}
+            </Button>
+          </Box>
+        </Paper>
+      </Modal>
+
+      {/* ✅ Integrated UploadDialogue and Loader */}
       <UploadDialogue
-        open={open}
-        handleClose={handleCloseDialogue}
+        open={openUploader}
+        handleClose={() => setOpenUploader(false)}
         submitImageHandler={submitImageHandler}
       />
       <SimpleBackdrop open={openBackdrop} />
