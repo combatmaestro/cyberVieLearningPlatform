@@ -1,4 +1,7 @@
+const express = require("express");
+const router = express.Router();
 const slugify = require("slugify");
+const Blog = require("../models/Blog"); // adjust the path if needed
 
 router.get("/sitemap.xml", async (req, res) => {
   try {
@@ -19,8 +22,7 @@ router.get("/sitemap.xml", async (req, res) => {
       })
       .join("");
 
-    const sitemap = `
-      <?xml version="1.0" encoding="UTF-8"?>
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         ${blogUrls}
       </urlset>
@@ -29,7 +31,10 @@ router.get("/sitemap.xml", async (req, res) => {
     res.header("Content-Type", "application/xml");
     res.send(sitemap);
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error creating sitemap");
+    console.error(error);
+    res.status(500).send("Error generating sitemap");
   }
 });
+
+// IMPORTANT
+module.exports = router;
