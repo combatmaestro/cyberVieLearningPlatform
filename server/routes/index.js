@@ -12,4 +12,5 @@ router.use("/assessment",require("./assessment"))
 router.use("/class",require("./Class"))
 router.use("/leads",require("./register"))
 router.use("/blogs",require("./blogRoutes"))
+router.use("/sitemap",require("./sitemap"))
 module.exports = router;
