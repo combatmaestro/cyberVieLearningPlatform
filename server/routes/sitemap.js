@@ -5,6 +5,7 @@ const Blog = require("../models/Blog"); // adjust the path if needed
 
 router.get("/sitemap.xml", async (req, res) => {
   try {
+     console.log("📌 /sitemap.xml endpoint hit"); 
     const blogs = await Blog.find({ published: true }).lean();
 
     const blogUrls = blogs
