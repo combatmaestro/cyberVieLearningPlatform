@@ -16,16 +16,22 @@ app.use(fileupload());
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+// Register API ROUTES FIRST
 app.use("/", require("./routes/index"));
 
-//forroduction only
+// Production only — MUST come AFTER your routes
 if (process.env.NODE_ENV === "PRODUCTION") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
+  // keep sitemap available in production
+  app.get("/sitemap/sitemap.xml", (req, res, next) => next());
+
+  // React fallback (catch-all)
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/build/index.html"));
   });
 }
+
 app.use(errorMiddleware);
 
 module.exports = app;
