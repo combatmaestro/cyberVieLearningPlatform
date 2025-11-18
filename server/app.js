@@ -24,7 +24,10 @@ if (process.env.NODE_ENV === "PRODUCTION") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
   // keep sitemap available in production
-  app.get("/sitemap/sitemap.xml", (req, res, next) => next());
+  app.use("/sitemap/sitemap.xml", (req, res, next) => {
+    console.log("📌 Letting sitemap through to router");
+    next();
+  });
 
   // React fallback (catch-all)
   app.get("*", (req, res) => {
