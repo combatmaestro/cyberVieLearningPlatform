@@ -3,6 +3,8 @@ const router = express.Router();
 const slugify = require("slugify");
 const Blog = require("../models/Blog"); // adjust the path if needed
 
+
+console.log("📌 Sitemap routes loaded");
 router.get("/sitemap.xml", async (req, res) => {
   try {
      console.log("📌 /sitemap.xml endpoint hit"); 
