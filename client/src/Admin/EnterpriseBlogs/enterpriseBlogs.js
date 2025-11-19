@@ -121,7 +121,11 @@ const EnterpriseBlogs = () => {
       setSlug(blog.slug || "");
       setMetaTitle(blog.metaTitle || "");
       setMetaDescription(blog.metaDescription || "");
-      setMetaKeywords(blog.metaKeywords || "");
+      setMetaKeywords(
+        Array.isArray(blog.metaKeywords)
+          ? blog.metaKeywords.join(", ")
+          : blog.metaKeywords || ""
+      );
       setContent(blog.content);
       setThumbnail(blog.thumbnail || "");
       setArticleType(blog?.articleType || "blog-post");
