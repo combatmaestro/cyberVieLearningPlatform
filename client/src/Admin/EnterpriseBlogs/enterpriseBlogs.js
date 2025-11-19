@@ -318,7 +318,6 @@ const EnterpriseBlogs = () => {
             onChange={(e) => setMetaTitle(e.target.value)}
             className={classes.titleField}
           />
-
           <TextField
             fullWidth
             variant="outlined"
