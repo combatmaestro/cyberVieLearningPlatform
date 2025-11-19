@@ -186,7 +186,7 @@ const EnterpriseBlogs = () => {
       slug,
       metaTitle,
       metaDescription,
-      metaKeywords: keywordsArray, 
+      metaKeywords, 
       content,
       thumbnail,
       articleType, 
