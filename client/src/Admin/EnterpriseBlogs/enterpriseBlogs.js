@@ -134,7 +134,7 @@ const EnterpriseBlogs = () => {
       setMetaKeywords("");
       setContent("");
       setThumbnail("");
-      setArticleType("");
+      setArticleType(undefined || "blog-post")  // works!
     }
     setOpenModal(true);
   };
@@ -175,12 +175,18 @@ const EnterpriseBlogs = () => {
   };
 
   const handleSubmit = async () => {
+
+    const keywordsArray = metaKeywords
+    .split(",")
+    .map(k => k.trim().toLowerCase())
+    .filter(k => k);
+
     const body = {
       title,
       slug,
       metaTitle,
       metaDescription,
-      metaKeywords,
+      metaKeywords: keywordsArray, 
       content,
       thumbnail,
       articleType, 
