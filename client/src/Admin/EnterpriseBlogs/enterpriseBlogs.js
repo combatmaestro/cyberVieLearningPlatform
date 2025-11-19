@@ -176,10 +176,10 @@ const EnterpriseBlogs = () => {
 
   const handleSubmit = async () => {
 
-    const keywordsArray = metaKeywords
-    .split(",")
-    .map(k => k.trim().toLowerCase())
-    .filter(k => k);
+    // const keywordsArray = metaKeywords
+    // .split(",")
+    // .map(k => k.trim().toLowerCase())
+    // .filter(k => k);
 
     const body = {
       title,
