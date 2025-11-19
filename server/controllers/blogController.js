@@ -64,8 +64,6 @@ const updateBlogContent = async (req, res) => {
       },
       { new: true }
     );
-    
-
     if (!blog) {
       return res.status(404).json({ success: false, message: "Blog not found" });
     }
