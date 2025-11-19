@@ -94,11 +94,16 @@ const EnterpriseBlogs = () => {
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openUploader, setOpenUploader] = useState(false);
-  const [uploadType, setUploadType] = useState(""); // "thumbnail" or "editor"
+  const [uploadType, setUploadType] = useState("");
 
   const [title, setTitle] = useState("");
+  const [slug, setSlug] = useState("");
+  const [metaTitle, setMetaTitle] = useState("");
+  const [metaDescription, setMetaDescription] = useState("");
+  const [metaKeywords, setMetaKeywords] = useState("");
+
   const [content, setContent] = useState("");
-  const [thumbnail, setThumbnail] = useState(""); // ✅ new field
+  const [thumbnail, setThumbnail] = useState("");
   const [editId, setEditId] = useState(null);
   const [append, setAppend] = useState("");
 
@@ -112,11 +117,19 @@ const EnterpriseBlogs = () => {
     if (blog) {
       setEditId(blog._id);
       setTitle(blog.title);
+      setSlug(blog.slug || "");
+      setMetaTitle(blog.metaTitle || "");
+      setMetaDescription(blog.metaDescription || "");
+      setMetaKeywords(blog.metaKeywords || "");
       setContent(blog.content);
       setThumbnail(blog.thumbnail || "");
     } else {
       setEditId(null);
       setTitle("");
+      setSlug("");
+      setMetaTitle("");
+      setMetaDescription("");
+      setMetaKeywords("");
       setContent("");
       setThumbnail("");
     }
@@ -125,7 +138,6 @@ const EnterpriseBlogs = () => {
 
   const handleCloseModal = () => setOpenModal(false);
 
-  // ✅ Unified image uploader for both thumbnail & editor
   const submitImageHandler = async (e, image) => {
     e.preventDefault();
     try {
@@ -134,7 +146,11 @@ const EnterpriseBlogs = () => {
 
       const formData = { image };
       const config = { headers: { "Content-Type": "application/json" } };
-      const { data } = await axios.post("https://cyber-vie-learning-platform-client-ten.vercel.app/topic/admin/upload", formData, config);
+      const { data } = await axios.post(
+        "https://cyber-vie-learning-platform-client-ten.vercel.app/topic/admin/upload",
+        formData,
+        config
+      );
 
       if (uploadType === "thumbnail") {
         setThumbnail(data.url);
@@ -155,9 +171,17 @@ const EnterpriseBlogs = () => {
     }
   };
 
-  // ✅ Create / Update Blog
   const handleSubmit = async () => {
-    const body = { title, content, thumbnail };
+    const body = {
+      title,
+      slug,
+      metaTitle,
+      metaDescription,
+      metaKeywords,
+      content,
+      thumbnail,
+    };
+
     let res;
     if (editId) res = await dispatch(editBlog(editId, body));
     else res = await dispatch(createNewBlog(body));
@@ -169,7 +193,6 @@ const EnterpriseBlogs = () => {
     } else alert("❌ Failed to save blog");
   };
 
-  // ✅ Delete blog
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this blog?")) {
       const res = await dispatch(deleteBlog(id));
@@ -182,12 +205,10 @@ const EnterpriseBlogs = () => {
 
   return (
     <Grid container className={classes.root}>
-      {/* Sidebar */}
       <Grid item xs={12} md={3}>
         <SideDrawer />
       </Grid>
 
-      {/* Main Content */}
       <Grid item xs={12} md={9}>
         <Box className={classes.container}>
           <Box className={classes.buttonBox}>
@@ -203,7 +224,6 @@ const EnterpriseBlogs = () => {
             </Button>
           </Box>
 
-          {/* Blog List */}
           {loading ? (
             <Typography>Loading blogs...</Typography>
           ) : blogs.length === 0 ? (
@@ -222,6 +242,11 @@ const EnterpriseBlogs = () => {
                 )}
                 <div className={classes.blogInfo}>
                   <Typography variant="h6">{blog.title}</Typography>
+
+                  <Typography variant="caption" color="textSecondary">
+                    Slug: {blog.slug} | Meta Title: {blog.metaTitle}
+                  </Typography>
+
                   <Typography
                     variant="body2"
                     color="textSecondary"
@@ -255,24 +280,33 @@ const EnterpriseBlogs = () => {
         </Box>
       </Grid>
 
-      {/* Blog Editor Modal */}
       <Modal open={openModal} onClose={handleCloseModal}>
         <Paper className={classes.modalPaper}>
           <Typography variant="h5" gutterBottom>
             {editId ? "Edit Blog" : "Create New Blog"}
           </Typography>
 
-          {/* Title + Thumbnail Upload */}
+          {/* Title + Slug */}
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Blog Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className={classes.titleField}
+          />
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Slug (unique URL)"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
+            className={classes.titleField}
+          />
+
+          {/* Thumbnail Upload */}
           <Box display="flex" alignItems="center" mb={2}>
-            <TextField
-              fullWidth
-              variant="outlined"
-              label="Blog Title"
-              placeholder="Enter blog title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className={classes.titleField}
-            />
             <Button
               variant="contained"
               className={classes.uploadButton}
@@ -283,6 +317,7 @@ const EnterpriseBlogs = () => {
             >
               Thumbnail Image
             </Button>
+
             {thumbnail && (
               <img
                 src={thumbnail}
@@ -292,6 +327,37 @@ const EnterpriseBlogs = () => {
             )}
           </Box>
 
+          {/* SEO Fields */}
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Meta Title"
+            value={metaTitle}
+            onChange={(e) => setMetaTitle(e.target.value)}
+            className={classes.titleField}
+          />
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            multiline
+            rows={3}
+            label="Meta Description"
+            value={metaDescription}
+            onChange={(e) => setMetaDescription(e.target.value)}
+            className={classes.titleField}
+          />
+
+          <TextField
+            fullWidth
+            variant="outlined"
+            label="Meta Keywords (comma separated)"
+            value={metaKeywords}
+            onChange={(e) => setMetaKeywords(e.target.value)}
+            className={classes.titleField}
+          />
+
+          {/* Editor Image Upload */}
           <Box display="flex" justifyContent="flex-end" mb={2}>
             <Button
               variant="contained"
@@ -305,6 +371,7 @@ const EnterpriseBlogs = () => {
             </Button>
           </Box>
 
+          {/* Editor */}
           <div className={classes.editorWrapper}>
             <SunEditor
               height="70vh"
@@ -340,7 +407,6 @@ const EnterpriseBlogs = () => {
         </Paper>
       </Modal>
 
-      {/* ✅ Integrated UploadDialogue and Loader */}
       <UploadDialogue
         open={openUploader}
         handleClose={() => setOpenUploader(false)}
