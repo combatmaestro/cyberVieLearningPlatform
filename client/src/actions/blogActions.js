@@ -47,7 +47,7 @@ export const editBlog = (id, info) => async (dispatch) => {
   try {
     const config = { headers: { "Content-Type": "application/json" } };
     const { data } = await axios.put(
-      `${backendUrl}/blogs/admin/edit/${id}`,
+      `${backendUrl}/blogs/admin/content/${id}`,
       info,
       config
     );
@@ -92,6 +92,6 @@ export const getAllBlogs = () => async (dispatch) => {
       type: BLOG_LIST_FAILURE,
       payload: error.response?.data?.message || error.message,
     });
-    
+
   }
 };
