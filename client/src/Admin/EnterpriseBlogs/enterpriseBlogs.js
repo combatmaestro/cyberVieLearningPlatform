@@ -101,6 +101,7 @@ const EnterpriseBlogs = () => {
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [metaKeywords, setMetaKeywords] = useState("");
+  const [articleType, setArticleType] = useState("blog-post");
 
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState("");
@@ -123,6 +124,7 @@ const EnterpriseBlogs = () => {
       setMetaKeywords(blog.metaKeywords || "");
       setContent(blog.content);
       setThumbnail(blog.thumbnail || "");
+      setArticleType(blog?.articleType || "blog-post");
     } else {
       setEditId(null);
       setTitle("");
@@ -132,6 +134,7 @@ const EnterpriseBlogs = () => {
       setMetaKeywords("");
       setContent("");
       setThumbnail("");
+      setArticleType("");
     }
     setOpenModal(true);
   };
@@ -180,6 +183,7 @@ const EnterpriseBlogs = () => {
       metaKeywords,
       content,
       thumbnail,
+      articleType, 
     };
 
     let res;
@@ -305,27 +309,7 @@ const EnterpriseBlogs = () => {
             className={classes.titleField}
           />
 
-          {/* Thumbnail Upload */}
-          <Box display="flex" alignItems="center" mb={2}>
-            <Button
-              variant="contained"
-              className={classes.uploadButton}
-              onClick={() => {
-                setUploadType("thumbnail");
-                setOpenUploader(true);
-              }}
-            >
-              Thumbnail Image
-            </Button>
-
-            {thumbnail && (
-              <img
-                src={thumbnail}
-                alt="Thumbnail Preview"
-                className={classes.thumbnailPreview}
-              />
-            )}
-          </Box>
+         
 
           {/* SEO Fields */}
           <TextField
@@ -357,19 +341,61 @@ const EnterpriseBlogs = () => {
             className={classes.titleField}
           />
 
-          {/* Editor Image Upload */}
-          <Box display="flex" justifyContent="flex-end" mb={2}>
-            <Button
-              variant="contained"
-              className={classes.uploadButton}
-              onClick={() => {
-                setUploadType("editor");
-                setOpenUploader(true);
-              }}
-            >
-              Upload Image
-            </Button>
+          <TextField
+            select
+            fullWidth
+            variant="outlined"
+            label="Article Type"
+            value={articleType}
+            onChange={(e) => setArticleType(e.target.value)}
+            className={classes.titleField}
+            SelectProps={{ native: true }}
+          >
+            <option value="blog-post">Blog Post</option>
+            <option value="news-article">News Article</option>
+            <option value="tutorial">Tutorial</option>
+            <option value="review">Review</option>
+            <option value="how-to-guide">How-To Guide</option>
+          </TextField>
+
+          <Box display="flex" alignItems="center" justifyContent="flex-end" mb={2}>
+              
+              {/* Left side: Thumbnail upload + preview */}
+              <Box display="flex" alignItems="center">
+                <Button
+                  variant="contained"
+                  className={classes.uploadButton}
+                  onClick={() => {
+                    setUploadType("thumbnail");
+                    setOpenUploader(true);
+                  }}
+                >
+                  Thumbnail Image
+                </Button>
+
+                {thumbnail && (
+                  <img
+                    src={thumbnail}
+                    alt="Thumbnail Preview"
+                    className={classes.thumbnailPreview}
+                    style={{ marginLeft: 16 }}
+                  />
+                )}
+              </Box>
+
+              {/* Right side: Editor image upload */}
+              <Button
+                variant="contained"
+                className={classes.uploadButton}
+                onClick={() => {
+                  setUploadType("editor");
+                  setOpenUploader(true);
+                }}
+              >
+                Upload Image
+              </Button>
           </Box>
+
 
           {/* Editor */}
           <div className={classes.editorWrapper}>
