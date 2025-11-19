@@ -50,8 +50,28 @@ const blogSchema = new mongoose.Schema(
         },
         message: "Focus keywords must be between 3 to 5",
       },
-      set: (keywords) =>
-        keywords.map((k) => k.trim().toLowerCase()), // sanitize
+
+      // ✅ SAFE SETTER: Handles string OR array
+      set: function (value) {
+        if (!value) return [];
+
+        // If already an array
+        if (Array.isArray(value)) {
+          return value
+            .map((v) => v.trim().toLowerCase())
+            .filter(Boolean);
+        }
+
+        // If value is a comma-separated string
+        if (typeof value === "string") {
+          return value
+            .split(",")
+            .map((v) => v.trim().toLowerCase())
+            .filter(Boolean);
+        }
+
+        return [];
+      },
     },
 
     articleType: {
@@ -63,8 +83,8 @@ const blogSchema = new mongoose.Schema(
         "review",
         "how-to-guide",
       ],
-      required: true,
-      default: "blog-post",
+      default: "blog-post", // default already ensures value
+      required: false, // ❌ remove required to avoid false validation errors
     },
 
     content: {

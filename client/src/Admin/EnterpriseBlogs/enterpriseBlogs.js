@@ -134,7 +134,7 @@ const EnterpriseBlogs = () => {
       setMetaKeywords("");
       setContent("");
       setThumbnail("");
-      setArticleType(undefined || "blog-post")  // works!
+      setArticleType("blog-post");
     }
     setOpenModal(true);
   };
