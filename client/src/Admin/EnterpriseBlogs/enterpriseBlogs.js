@@ -309,8 +309,6 @@ const EnterpriseBlogs = () => {
             className={classes.titleField}
           />
 
-         
-
           {/* SEO Fields */}
           <TextField
             fullWidth
