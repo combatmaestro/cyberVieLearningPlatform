@@ -1,5 +1,12 @@
 const mongoose = require("mongoose");
 
+// Helper to auto-generate excerpt
+function generateExcerpt(content) {
+  if (!content) return "";
+  const plain = content.replace(/<[^>]+>/g, ""); // remove HTML tags
+  return plain.substring(0, 300);
+}
+
 const blogSchema = new mongoose.Schema(
   {
     title: {
@@ -12,17 +19,17 @@ const blogSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
       trim: true,
     },
 
     excerpt: {
       type: String,
-      required: true,
       trim: true,
-      maxlength: 300, // optional
+      maxlength: 300,
     },
 
-    seoTitle: {
+    metaTitle: {
       type: String,
       required: true,
       trim: true,
@@ -35,14 +42,16 @@ const blogSchema = new mongoose.Schema(
       maxlength: 300,
     },
 
-    focusKeywords: {
-      type: [String], // Array of keywords
+    metaKeywords: {
+      type: [String],
       validate: {
         validator: function (arr) {
           return arr.length >= 3 && arr.length <= 5;
         },
         message: "Focus keywords must be between 3 to 5",
       },
+      set: (keywords) =>
+        keywords.map((k) => k.trim().toLowerCase()), // sanitize
     },
 
     articleType: {
@@ -66,13 +75,17 @@ const blogSchema = new mongoose.Schema(
     author: {
       type: String,
       default: "Admin",
+      trim: true,
     },
 
-    thumbnail: { type: String, default: "" },
+    thumbnail: {
+      type: String,
+      default: "",
+    },
 
     images: [
       {
-        type: String, // URLs of uploaded images
+        type: String,
       },
     ],
 
@@ -82,8 +95,16 @@ const blogSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: true, // adds createdAt + updatedAt
+    timestamps: true,
   }
 );
+
+// Auto-generate excerpt if not provided
+blogSchema.pre("save", function (next) {
+  if (!this.excerpt && this.content) {
+    this.excerpt = generateExcerpt(this.content);
+  }
+  next();
+});
 
 module.exports = mongoose.model("Blog", blogSchema);
